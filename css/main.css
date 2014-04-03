@@ -156,12 +156,94 @@ nav a:hover {
 
 /* ==========================================================================
    Author's custom styles
+   color pallet:
+   blue: 334D5C
+   green: 45B29D
+   yellow: EFC94C
+   orange: E27A3F
+   red: DF5A49
    ========================================================================== */
 
+  body {
+    background-color: #334D5C;
+  }
+
+  h1 {
+    color: #FFFFFF;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  #board {
+    border: 2px solid #EFC94C;
+    margin: auto;
+    margin-top: 10px;
+  }
+
+  #board td {
+    height: 5em;
+    width: 5em;
+    border: 1px solid #EFC94C;
+    background-color: #EFC94C;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  #board tr:nth-child(odd) td:nth-child(even),
+  #board tr:nth-child(even) td:nth-child(odd) {
+    background-color: #E27A3F;
+  }
+
+  .piece {
+    font-size: 3em;
+  }
+
+  a[class*='white'] {
+    color: #FFFFFF;
+  }
+  .white-tower:before {
+    content: "♖";
+  }
+  .white-queen:before {
+    content: "♕";
+  }
+  .white-king:before {
+    content: "♔";
+  }
+  .white-bishop:before {
+    content: "♗";
+  }
+  .white-knight:before {
+    content: "♘";
+  }
+  .white-pawn:before {
+    content: "♙";
+  }
 
 
-
-
+  a[class*='black'] {
+    color: #000000;
+  }
+  .black-tower:before {
+    content: "♜";
+  }
+  .black-queen:before {
+    content: "♛";
+  }
+  .black-king:before {
+    content: "♚";
+  }
+  .black-bishop:before {
+    content: "♝";
+  }
+  .black-knight:before {
+    content: "♞";
+  }
+  .black-pawn:before {
+    content: "♟";
+  }
 
 
 
