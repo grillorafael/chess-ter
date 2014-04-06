@@ -12,6 +12,11 @@ function Chess() {
     ['t', 'n', 'b', 'q', 'k', 'b', 'n', 't']
   ];
 
+  _self.unselectPiece = function() {
+    _self.selectedPiece.removeClass('selected');
+    _self.selectedPiece = null;
+  };
+
   _self.handlePieceClick = function(e) {
     if(_self.selectedPiece == null) {
       $(this).addClass('selected');
@@ -23,9 +28,18 @@ function Chess() {
     }
 
     return false;
-  }
+  };
+
+  _self.handleSquareClick = function(e) {
+    if(_self.selectedPiece != null) {
+      $(this).html('');
+      $(this).append(_self.selectedPiece);
+      _self.unselectPiece();
+    }
+  };
 
   $('.piece').click(_self.handlePieceClick);
+  $('td').click(_self.handleSquareClick);
 };
 
 var chess = new Chess();
