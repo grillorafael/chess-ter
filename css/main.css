@@ -200,6 +200,10 @@ nav a:hover {
     font-size: 3em;
   }
 
+  .piece.selected {
+    color: #45B29D;
+  }
+
   a[class*='white'] {
     color: #FFFFFF;
   }
