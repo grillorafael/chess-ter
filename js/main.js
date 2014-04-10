@@ -92,8 +92,70 @@ function Chess() {
     switch(_self.table[piecePosition[0]][piecePosition[1]].toLowerCase()){
     case 'p':
       return possibleMovementsForPawn(piecePosition);
+    case 'k':
+      return possibleMovementsForKing(piecePosition);
     }
   }
+
+  possibleMovementsForKing = function(piecePosition) {
+    var possibleMovements = [];
+    try {
+      // Down
+      if(validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1]])) {
+        possibleMovements.push([piecePosition[0] + 1, piecePosition[1]]);
+      }
+    }catch (e) {};
+    try {
+      // Up
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1]])) {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1]]);
+      }
+    }catch (e) {};
+
+    try {
+      // Left
+      if(validSquare(piecePosition, [piecePosition[0], piecePosition[1] - 1])) {
+        possibleMovements.push([piecePosition[0], piecePosition[1] - 1]);
+      }
+    }catch (e) {};
+
+    try {
+      // Right
+      if(validSquare(piecePosition, [piecePosition[0], piecePosition[1] + 1])) {
+        possibleMovements.push([piecePosition[0], piecePosition[1] + 1]);
+      }
+    }catch (e) {};
+
+    try {
+      // Upper Right
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] + 1])) {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] + 1]);
+      }
+    }catch (e) {};
+
+    try {
+      // Upper Left
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] - 1])) {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] - 1]);
+      }
+    }catch (e) {};
+
+    try {
+      // Down Left
+      if(validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] - 1])) {
+        possibleMovements.push([piecePosition[0] + 1, piecePosition[1] - 1]);
+      }
+    }catch (e) {};
+
+    try {
+      // Upper Right
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] + 1])) {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] + 1]);
+      }
+    }catch (e) {};
+
+    return possibleMovements;
+  };
 
   possibleMovementsForPawn = function(piecePosition) {
     var piece = _self.table[piecePosition[0]][piecePosition[1]];
@@ -140,6 +202,21 @@ function Chess() {
     }
 
     return possibleMovements;
+  };
+
+  validSquare = function(piecePosition, squarePosition) {
+    return emptyPosition(squarePosition) || !samePieceTypeOf(piecePosition, squarePosition);
+  }
+
+  samePieceTypeOf = function(piecePosition, squarePosition) {
+    // Returns true if pieces are the same collor
+    var pieceUpper = _self.table[piecePosition[0]][piecePosition[1]].toUpperCase() == _self.table[piecePosition[0]][piecePosition[1]];
+    var squareUpper = _self.table[squarePosition[0]][squarePosition[1]].toUpperCase() == _self.table[squarePosition[0]][squarePosition[1]];
+    return (pieceUpper && squareUpper);
+  };
+
+  emptyPosition = function(position) {
+    return _self.table[position[0]][position[1]] == '';
   };
 
   // Adding event listeners
