@@ -12,12 +12,12 @@ function Chess() {
     ['t', 'n', 'b', 'q', 'k', 'b', 'n', 't']
   ];
 
-  _self.unselectPiece = function() {
+  unselectPiece = function() {
     _self.selectedPiece.removeClass('selected');
     _self.selectedPiece = null;
   };
 
-  _self.handlePieceClick = function(e) {
+  handlePieceClick = function(e) {
     // it selects a piece
     if(_self.selectedPiece == null) {
       $(this).addClass('selected');
@@ -30,39 +30,39 @@ function Chess() {
     }
     // it moves towards another piece
     else {
-      _self.moveFromTo(_self.getPiecePosition(_self.selectedPiece), _self.getCellPosition($(this).parents('td')));
+      moveFromTo(getPiecePosition(_self.selectedPiece), getCellPosition($(this).parents('td')));
     }
 
     return false;
   };
 
-  _self.handleSquareClick = function(e) {
-    var tdPosition = _self.getCellPosition($(this));
+  handleSquareClick = function(e) {
+    var tdPosition = getCellPosition($(this));
 
     if(_self.selectedPiece != null) {
-      var piecePosition = _self.getPiecePosition();
-      _self.moveFromTo(piecePosition, tdPosition);
+      var piecePosition = getPiecePosition();
+      moveFromTo(piecePosition, tdPosition);
     }
   };
 
-  _self.getPiecePosition = function(piece) {
+  getPiecePosition = function(piece) {
     if(piece === undefined) {
       piece = _self.selectedPiece;
     }
     var pieceTd = piece.parents('td');
-    var piecePosition = _self.getCellPosition(pieceTd);
+    var piecePosition = getCellPosition(pieceTd);
     return piecePosition;
   };
 
-  _self.getCellPosition = function(cell) {
+  getCellPosition = function(cell) {
     var column = cell[0].cellIndex;
     var row = cell[0].parentNode.rowIndex;
     var tdPosition = [row, column];
     return tdPosition;
   };
 
-  _self.moveFromTo = function(from, to) {
-    if(!_self.canMoveFromTo(from, to)) return;
+  moveFromTo = function(from, to) {
+    if(!canMoveFromTo(from, to)) return;
 
     var piece = $('#' + from[0] + '' + from[1]).find('.piece');
     var cell = $('#' + to[0] + '' + to[1]);
@@ -73,11 +73,11 @@ function Chess() {
     cell.html('');
     cell.append(piece);
 
-    _self.unselectPiece();
+    unselectPiece();
   };
 
-  _self.canMoveFromTo = function(from, to) {
-    var possibleMovements = _self.possibleMovementsFor(from);
+  canMoveFromTo = function(from, to) {
+    var possibleMovements = possibleMovementsFor(from);
     var totalMovements = possibleMovements.length;
     for(var i = 0; i < totalMovements; i++) {
       var actualMovement = possibleMovements[i];
@@ -88,14 +88,14 @@ function Chess() {
     return false;
   };
 
-  _self.possibleMovementsFor = function(piecePosition) {
+  possibleMovementsFor = function(piecePosition) {
     switch(_self.table[piecePosition[0]][piecePosition[1]].toLowerCase()){
     case 'p':
-      return _self.possibleMovementsForPawn(piecePosition);
+      return possibleMovementsForPawn(piecePosition);
     }
   }
 
-  _self.possibleMovementsForPawn = function(piecePosition) {
+  possibleMovementsForPawn = function(piecePosition) {
     var piece = _self.table[piecePosition[0]][piecePosition[1]];
     var possibleMovements = [];
     if(piece == piece.toLowerCase()) {
@@ -143,8 +143,8 @@ function Chess() {
   };
 
   // Adding event listeners
-  $('.piece').click(_self.handlePieceClick);
-  $('td').click(_self.handleSquareClick);
+  $('.piece').click(handlePieceClick);
+  $('td').click(handleSquareClick);
 };
 
 var chess = new Chess();
