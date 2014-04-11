@@ -77,7 +77,7 @@ function Chess() {
   };
 
   canMoveFromTo = function(from, to) {
-    var possibleMovements = possibleMovementsFor(from);
+    var possibleMovements = possibleMovementsFor(from, to);
     var totalMovements = possibleMovements.length;
     for(var i = 0; i < totalMovements; i++) {
       var actualMovement = possibleMovements[i];
@@ -88,14 +88,110 @@ function Chess() {
     return false;
   };
 
-  possibleMovementsFor = function(piecePosition) {
+  possibleMovementsFor = function(piecePosition, targetSquare) {
     switch(_self.table[piecePosition[0]][piecePosition[1]].toLowerCase()){
     case 'p':
       return possibleMovementsForPawn(piecePosition);
     case 'k':
       return possibleMovementsForKing(piecePosition);
+    case 'n':
+      return possibleMovementsForKnight(piecePosition);
+    case 't':
+      return possibleMovementsForTower(piecePosition, targetSquare);
     }
   }
+
+  possibleMovementsForKnight = function(piecePosition)
+  {
+    var possibleMovements = [];
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] + 2, piecePosition[1] + 1]))
+      {
+        possibleMovements.push([piecePosition[0] + 2, piecePosition[1] + 1]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] + 2, piecePosition[1] - 1]))
+      {
+        possibleMovements.push([piecePosition[0] + 2, piecePosition[1] - 1]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] + 2]))
+      {
+        possibleMovements.push([piecePosition[0] + 1, piecePosition[1] + 2]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] - 2]))
+      {
+        possibleMovements.push([piecePosition[0] + 1, piecePosition[1] - 2]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] - 2, piecePosition[1] + 1]))
+      {
+        possibleMovements.push([piecePosition[0] - 2, piecePosition[1] + 1]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] - 2, piecePosition[1] - 1]))
+      {
+        possibleMovements.push([piecePosition[0] - 2, piecePosition[1] - 1]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] - 2]))
+      {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] - 2]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] + 2]))
+      {
+        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] + 2]);
+      }
+    } catch(e) {};
+
+    return possibleMovements;
+  };
+
+  possibleMovementsForTower = function(piecePosition, targetSquare)
+  {
+    var possibleMovements = [];
+    try
+    {
+      if(!hasVerticalCollision(piecePosition, targetSquare) && validSquare(piecePosition, [targetSquare[0], piecePosition[1]]))
+      {
+        possibleMovements.push([targetSquare[0], piecePosition[1]]);
+      }
+    } catch(e) {};
+
+    try
+    {
+      if(!hasHorizontalCollision(piecePosition, targetSquare) && validSquare(piecePosition, [piecePosition[0], targetSquare[1]]))
+      {
+        possibleMovements.push([piecePosition[0], targetSquare[1]]);
+      }
+    } catch(e) {};
+
+    return possibleMovements;
+  };
 
   possibleMovementsForKing = function(piecePosition) {
     var possibleMovements = [];
@@ -148,9 +244,9 @@ function Chess() {
     }catch (e) {};
 
     try {
-      // Upper Right
-      if(validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] + 1])) {
-        possibleMovements.push([piecePosition[0] - 1, piecePosition[1] + 1]);
+      // Down Right
+      if(validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] + 1])) {
+        possibleMovements.push([piecePosition[0] + 1, piecePosition[1] + 1]);
       }
     }catch (e) {};
 
@@ -217,6 +313,40 @@ function Chess() {
 
   emptyPosition = function(position) {
     return _self.table[position[0]][position[1]] == '';
+  };
+
+  hasHorizontalCollision = function(from, to)
+  {
+    for(var j=from[1]+1; j<to[1]; j++)
+    {
+      if(_self.table[from[0]][j] != '')
+        return true;
+    }
+
+    for(var j=from[1]-1; j>to[1]; j--)
+    {
+      if(_self.table[from[0]][j] != '')
+        return true;
+    }
+
+      return false;
+  };
+
+  hasVerticalCollision = function(from, to)
+  {
+    for(var i=from[0]+1; i<to[0]; i++)
+    {
+      if(_self.table[i][to[1]] != '')
+        return true;
+    }
+
+    for(var i=from[0]-1; i>to[0]; i--)
+    {
+      if(_self.table[i][to[1]] != '')
+        return true;
+    }
+
+    return false;
   };
 
   // Adding event listeners
