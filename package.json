@@ -1,0 +1,23 @@
+{
+  "name": "chess-ter",
+  "version": "0.0.0",
+  "description": "A JS Chess implementation",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/grillorafael/chess-ter.git"
+  },
+  "author": "Rafael Grillo Abreu <grillorafael@gmail.com> (http://rgrillo.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grillorafael/chess-ter/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "latest",
+    "grunt-contrib-jshint": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.2",
+    "load-grunt-tasks": "~0.2.0",
+    "jshint-stylish": "~0.1.3"
+  }
+}
