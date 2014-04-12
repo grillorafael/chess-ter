@@ -42,9 +42,9 @@ describe('Pawn', function(){
           ['', '', '', 'P', 'P', 'P', '', 'P'],
           ['', '', '', '', '', '', '', ''],
           ['P', 'P', 'P', '', '', '', 'P', ''],
-          ['', 'p', '', '', '', 'p', '', ''],
+          ['', 'p', '', '', '', 'p', '', 'p'],
           ['', '', '', '', '', '', '', ''],
-          ['p', '', 'p', 'p', '', 'p', 'p', 'p'],
+          ['p', '', 'p', 'p', '', 'p', 'p', ''],
           ['t', 'n', 'b', 'q', 'k', 'b', 'n', 't']
         ];
       });
@@ -60,6 +60,7 @@ describe('Pawn', function(){
           it('moves only towards enemy', function(){
             var movements = Pawn.possibleMovements([3, 6], midGameTable);
             expect(movements).toContain([4, 5]);
+            expect(movements).toContain([4, 7]);
           });
         });
       });
