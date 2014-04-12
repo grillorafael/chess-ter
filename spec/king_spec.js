@@ -1,4 +1,4 @@
-describe('Pawn', function(){
+describe('King', function(){
   var table;
   beforeEach(function(){
     table = [
