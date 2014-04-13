@@ -103,7 +103,7 @@ function Chess() {
     case 't':
       return Tower.possibleMovements(piecePosition, targetSquare, _self.table);
     case 'b':
-      return Bishop.possibleMovements(piecePosition, targetSquare, _self.table);
+      return Bishop.possibleMovements(piecePosition, _self.table);
     case 'q':
       return Queen.possibleMovements(piecePosition, targetSquare, _self.table);
     }
