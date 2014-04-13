@@ -8,7 +8,7 @@ TableUtil.emptyPosition = function(position, table) {
 TableUtil.samePieceTypeOf = function(piecePosition, squarePosition, table) {
   var pieceIsLowerCase = /[a-z]/.test(table[piecePosition[0]][piecePosition[1]]);
   var squareIsLowerCase = /[a-z]/.test(table[squarePosition[0]][squarePosition[1]]);
-  return (pieceIsLowerCase && squareIsLowerCase);
+  return (pieceIsLowerCase && squareIsLowerCase) || (!pieceIsLowerCase && !squareIsLowerCase);
 };
 
 TableUtil.validSquare = function(piecePosition, squarePosition, table) {
