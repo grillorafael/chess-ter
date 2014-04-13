@@ -1,0 +1,2 @@
+1) Após a saída do estado inicial as peças, tanto pretas quanto as brancas, estão podendo se comer
+2) Modificar a forma atual de seleção de peças. Após selecionar uma peça outra só pode ser selecionada se "deselecionar" peça já selecionada.
