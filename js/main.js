@@ -30,6 +30,12 @@ function Chess() {
       $(this).removeClass('selected');
       _self.selectedPiece = null;
     }
+    // it selected another piece
+    else if(TableUtil.samePieceTypeOf(getPiecePosition($(this)), getPiecePosition(_self.selectedPiece), _self.table)) {
+      _self.selectedPiece.removeClass('selected');
+      _self.selectedPiece = $(this);
+      $(this).addClass('selected');
+    }
     // it moves towards another piece
     else {
       moveFromTo(getPiecePosition(_self.selectedPiece), getCellPosition($(this).parents('td')));
