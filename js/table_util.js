@@ -6,9 +6,9 @@ TableUtil.emptyPosition = function(position, table) {
 };
 
 TableUtil.samePieceTypeOf = function(piecePosition, squarePosition, table) {
-  var pieceUpper = table[piecePosition[0]][piecePosition[1]].toUpperCase() == table[piecePosition[0]][piecePosition[1]];
-  var squareUpper = table[squarePosition[0]][squarePosition[1]].toUpperCase() == table[squarePosition[0]][squarePosition[1]];
-  return (pieceUpper && squareUpper);
+  var pieceIsLowerCase = /[a-z]/.test(table[piecePosition[0]][piecePosition[1]]);
+  var squareIsLowerCase = /[a-z]/.test(table[squarePosition[0]][squarePosition[1]]);
+  return (pieceIsLowerCase && squareIsLowerCase);
 };
 
 TableUtil.validSquare = function(piecePosition, squarePosition, table) {
