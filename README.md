@@ -12,7 +12,7 @@ After everything is installed run ```npm install``` at your projects folder.
 Run ```npm install``` at your projects folder.
 
 # Running jshint
-Just type ```pm install -g grunt-cli``` to install grunt globally available on your system.
+Just type ```npm install -g grunt-cli``` to install grunt globally available on your system.
 
 # Testing
 To run the test suit just type ```grunt jasmine``` and this will run all specs under ```spec/```
