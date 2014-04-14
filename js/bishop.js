@@ -8,7 +8,7 @@ Bishop.possibleMovements = function(piecePosition, table) {
   while(hasValidRightUpPositions) {
     var newPosition = [tmpPosition[0] - 1, tmpPosition[1] + 1];
     try {
-      if(TableUtil.validSquare(piecePosition, newPosition, table)) {
+      if(TableUtil.validSquare(tmpPosition, newPosition, table)) {
         possibleMovements.push(newPosition);
       }
       else {
