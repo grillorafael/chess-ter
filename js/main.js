@@ -1,9 +1,7 @@
 'use strict';
 
-function Chess() {
-  var _self = this;
-  _self.selectedPiece = null;
-  _self.table = [
+var Chess = (function () {
+  var _this = this, selectedPiece = null, table = [
     ['T', 'N', 'B', 'Q', 'K', 'B', 'N', 'T'],
     ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
     ['', '', '', '', '', '', '', ''],
@@ -15,30 +13,30 @@ function Chess() {
   ];
 
   var unselectPiece = function() {
-    _self.selectedPiece.removeClass('selected');
-    _self.selectedPiece = null;
+    selectedPiece.removeClass('selected');
+    selectedPiece = null;
   };
 
   var handlePieceClick = function(e) {
     // it selects a piece
-    if(_self.selectedPiece == null) {
+    if(selectedPiece == null) {
       $(this).addClass('selected');
-      _self.selectedPiece = $(this);
+      selectedPiece = $(this);
     }
     // it unselects a piece
-    else if($(this).is(_self.selectedPiece)) {
+    else if($(this).is(selectedPiece)) {
       $(this).removeClass('selected');
-      _self.selectedPiece = null;
+      selectedPiece = null;
     }
     // it selected another piece
-    else if(TableUtil.samePieceTypeOf(getPiecePosition($(this)), getPiecePosition(_self.selectedPiece), _self.table)) {
-      _self.selectedPiece.removeClass('selected');
-      _self.selectedPiece = $(this);
+    else if(TableUtil.samePieceTypeOf(getPiecePosition($(this)), getPiecePosition(selectedPiece), table)) {
+      selectedPiece.removeClass('selected');
+      selectedPiece = $(this);
       $(this).addClass('selected');
     }
     // it moves towards another piece
     else {
-      moveFromTo(getPiecePosition(_self.selectedPiece), getCellPosition($(this).parents('td')));
+      moveFromTo(getPiecePosition(selectedPiece), getCellPosition($(this).parents('td')));
     }
 
     return false;
@@ -47,7 +45,7 @@ function Chess() {
   var handleSquareClick = function(e) {
     var tdPosition = getCellPosition($(this));
 
-    if(_self.selectedPiece != null) {
+    if(selectedPiece != null) {
       var piecePosition = getPiecePosition();
       moveFromTo(piecePosition, tdPosition);
     }
@@ -55,7 +53,7 @@ function Chess() {
 
   var getPiecePosition = function(piece) {
     if(piece === undefined) {
-      piece = _self.selectedPiece;
+      piece = selectedPiece;
     }
     var pieceTd = piece.parents('td');
     var piecePosition = getCellPosition(pieceTd);
@@ -77,8 +75,8 @@ function Chess() {
     var piece = $('#' + from[0] + '' + from[1]).find('.piece');
     var cell = $('#' + to[0] + '' + to[1]);
 
-    _self.table[to[0]][to[1]] = _self.table[from[0]][from[1]];
-    _self.table[from[0]][from[1]] = '';
+    table[to[0]][to[1]] = table[from[0]][from[1]];
+    table[from[0]][from[1]] = '';
 
     cell.html('');
     cell.append(piece);
@@ -99,25 +97,25 @@ function Chess() {
   };
 
   var possibleMovementsFor = function(piecePosition, targetSquare) {
-    switch(_self.table[piecePosition[0]][piecePosition[1]].toLowerCase()){
+    switch(table[piecePosition[0]][piecePosition[1]].toLowerCase()){
     case 'p':
-      return Pawn.possibleMovements(piecePosition, _self.table);
+      return Pawn.possibleMovements(piecePosition, table);
     case 'k':
-      return King.possibleMovements(piecePosition, _self.table);
+      return King.possibleMovements(piecePosition, table);
     case 'n':
-      return Knight.possibleMovements(piecePosition, _self.table);
+      return Knight.possibleMovements(piecePosition, table);
     case 't':
-      return Tower.possibleMovements(piecePosition, targetSquare, _self.table);
+      return Tower.possibleMovements(piecePosition, targetSquare, table);
     case 'b':
-      return Bishop.possibleMovements(piecePosition, _self.table);
+      return Bishop.possibleMovements(piecePosition, table);
     case 'q':
-      return Queen.possibleMovements(piecePosition, targetSquare, _self.table);
+      return Queen.possibleMovements(piecePosition, targetSquare, table);
     }
   };
 
   // Adding event listeners
   $('.piece').click(handlePieceClick);
   $('td').click(handleSquareClick);
-}
+});
 
 var chess = new Chess();
