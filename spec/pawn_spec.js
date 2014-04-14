@@ -16,21 +16,21 @@ describe('Pawn', function(){
 
       describe('black pieces', function(){
         it('moves 1 row down', function(){
-          var movements = Pawn.possibleMovements([1, 0], initialTable);
+          var movements = new Pawn(Piece.BLACK, initialTable).possibleMovements([1, 0]);
           expect(movements).toContain([2, 0]);
         });
         it('moves 2 rows down', function(){
-          var movements = Pawn.possibleMovements([1, 0], initialTable);
+          var movements = new Pawn(Piece.BLACK, initialTable).possibleMovements([1, 0]);
           expect(movements).toContain([3, 0]);
         });
       });
       describe('white pieces', function(){
         it('moves 1 row up', function(){
-          var movements = Pawn.possibleMovements([6, 0], initialTable);
+          var movements = new Pawn(Piece.WHITE, initialTable).possibleMovements([6, 0]);
           expect(movements).toContain([5, 0]);
         });
         it('moves 2 rows up', function(){
-          var movements = Pawn.possibleMovements([6, 0], initialTable);
+          var movements = new Pawn(Piece.WHITE, initialTable).possibleMovements([6, 0]);
           expect(movements).toContain([4, 0]);
         });
       });
@@ -51,14 +51,14 @@ describe('Pawn', function(){
       describe('black pieces', function(){
         describe('empty square', function(){
           it('moves only 1 row down', function(){
-            var movements = Pawn.possibleMovements([3, 2], midGameTable);
+            var movements = new Pawn(Piece.BLACK, midGameTable).possibleMovements([3, 2]);
             expect(movements).toContain([4, 2]);
             expect(movements).not.toContain([5, 2]);
           });
         });
         describe('enemy at diagonal', function(){
           it('moves only towards enemy', function(){
-            var movements = Pawn.possibleMovements([3, 6], midGameTable);
+            var movements = new Pawn(Piece.BLACK, midGameTable).possibleMovements([3, 6]);
             expect(movements).toContain([4, 5]);
             expect(movements).toContain([4, 7]);
           });
@@ -67,14 +67,14 @@ describe('Pawn', function(){
       describe('white pieces', function(){
         describe('empty square', function(){
           it('moves only 1 row up', function(){
-            var movements = Pawn.possibleMovements([4, 5], midGameTable);
+            var movements = new Pawn(Piece.WHITE, midGameTable).possibleMovements([4, 5]);
             expect(movements).toContain([3, 5]);
             expect(movements).not.toContain([2, 5]);
           });
         });
         describe('enemy at diagonal', function(){
           it('moves only towards enemy', function(){
-            var movements = Pawn.possibleMovements([4, 1], midGameTable);
+            var movements = new Pawn(Piece.WHITE, midGameTable).possibleMovements([4, 1]);
             expect(movements).toContain([3, 0]);
             expect(movements).toContain([3, 2]);
           });
