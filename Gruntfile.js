@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jasmine: {
-      src: 'js/*.js',
+      src: ['js/piece/*.js', 'js/*.js'],
       options: {
         vendor: 'js/vendor/*.js',
         specs: 'spec/*_spec.js',
