@@ -1,91 +1,21 @@
-'use strict';
-var Tower = (function(){});
-Tower.possibleMovements = function(piecePosition, targetSquare, table) {
-  var possibleMovements = [];
-  
-  var tmpPosition = piecePosition;
-  var hasValidDownVerticalPositions = true;
-  while(hasValidDownVerticalPositions)
-  {
-    var newPostion = [tmpPosition[0] + 1, tmpPosition[1]];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
+function Tower(player) {
+  Piece.call(this, player);
+};
 
-      else
-      { 
-        hasValidDownVerticalPositions = false;
-      }
 
-      tmpPosition = newPostion;
-    } catch(e) {hasValidDownVerticalPositions = false};
+Tower.prototype = new Tower();
+Tower.prototype.constructor = Tower;
+
+
+Tower.prototype.possibleMovements = function (position) {
+  if(position instanceof BoardPosition) {
+    var possibleMovements = [];
+
+    return possibleMovements;
   }
-
-  tmpPosition = piecePosition;
-  var hasValidUpVerticalPositions = true;
-  while(hasValidUpVerticalPositions)
-  {
-    var newPostion = [tmpPosition[0] - 1, tmpPosition[1]];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
-
-      else
-      { 
-        hasValidUpVerticalPositions = false;
-      }
-
-      tmpPosition = newPostion;
-    } catch(e) {hasValidUpVerticalPositions = false};
+  else {
+    var msg = "Tower#possibleMovements: position should be a BoardPosition";
+    alert(msg);
+    throw msg;
   }
-
-  tmpPosition = piecePosition;
-  var hasValidHorizontalRightPositions = true;
-  while(hasValidHorizontalRightPositions)
-  {
-    var newPostion = [tmpPosition[0], tmpPosition[1] + 1];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
-
-      else
-      { 
-        hasValidHorizontalRightPositions = false;
-      }
-
-      tmpPosition = newPostion;
-    } catch(e) {hasValidHorizontalRightPositions = false};
-  }
-
-  tmpPosition = piecePosition;
-  var hasValidHorizontalLeftPositions = true;
-  while(hasValidHorizontalLeftPositions)
-  {
-    var newPostion = [tmpPosition[0], tmpPosition[1] - 1];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
-
-      else
-      { 
-        hasValidHorizontalLeftPositions = false;
-      }
-
-      tmpPosition = newPostion;
-    } catch(e) {hasValidHorizontalLeftPositions = false};
-  }
-
-  return possibleMovements;
 };

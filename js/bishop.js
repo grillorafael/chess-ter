@@ -1,67 +1,21 @@
-'use strict';
-var Bishop = (function(){});
-Bishop.possibleMovements = function(piecePosition, table) {
-  var possibleMovements = [];
+function Bishop(player) {
+  Piece.call(this, player);
+};
 
-  var tmpPosition = piecePosition;
-  var hasValidRightUpPositions = true;
-  while(hasValidRightUpPositions) {
-    var newPosition = [tmpPosition[0] - 1, tmpPosition[1] + 1];
-    try {
-      if(TableUtil.validSquare(tmpPosition, newPosition, table)) {
-        possibleMovements.push(newPosition);
-      }
-      else {
-        hasValidRightUpPositions = false;
-      }
-    } catch(e) { hasValidRightUpPositions = false; }
-    tmpPosition = newPosition;
+
+Bishop.prototype = new Bishop();
+Bishop.prototype.constructor = Bishop;
+
+
+Bishop.prototype.possibleMovements = function (position) {
+  if(position instanceof BoardPosition) {
+    var possibleMovements = [];
+
+    return possibleMovements;
   }
-
-  tmpPosition = piecePosition;
-  var hasValidRightDownPositions = true;
-  while(hasValidRightDownPositions) {
-    var newPosition = [tmpPosition[0] + 1, tmpPosition[1] + 1];
-    try {
-      if(TableUtil.validSquare(piecePosition, newPosition, table)) {
-        possibleMovements.push(newPosition);
-      }
-      else {
-        hasValidRightDownPositions = false;
-      }
-    } catch(e) { hasValidRightDownPositions = false; }
-    tmpPosition = newPosition;
+  else {
+    var msg = "Bishop#possibleMovements: position should be a BoardPosition";
+    alert(msg);
+    throw msg;
   }
-
-  tmpPosition = piecePosition;
-  var hasValidLeftDownPositions = true;
-  while(hasValidLeftDownPositions) {
-    var newPosition = [tmpPosition[0] + 1, tmpPosition[1] - 1];
-    try {
-      if(TableUtil.validSquare(piecePosition, newPosition, table)) {
-        possibleMovements.push(newPosition);
-      }
-      else {
-        hasValidLeftDownPositions = false;
-      }
-    } catch(e) { hasValidLeftDownPositions = false; }
-    tmpPosition = newPosition;
-  }
-
-  tmpPosition = piecePosition;
-  var hasValidLeftUpPositions = true;
-  while(hasValidLeftUpPositions) {
-    var newPosition = [tmpPosition[0] - 1, tmpPosition[1] - 1];
-    try {
-      if(TableUtil.validSquare(piecePosition, newPosition, table)) {
-        possibleMovements.push(newPosition);
-      }
-      else {
-        hasValidLeftUpPositions = false;
-      }
-    } catch(e) { hasValidLeftUpPositions = false; }
-    tmpPosition = newPosition;
-  }
-
-  return possibleMovements;
 };
