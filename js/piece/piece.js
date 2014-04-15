@@ -5,8 +5,7 @@ function Piece(player) {
     return player;
   };
 };
-Piece.BLACK = 'b';
-Piece.WHITE = 'w';
+
 
 Piece.prototype.possibleMovements = function (position) {
   var msg = "Piece#possibleMovements: Not yet implemented";

@@ -14,4 +14,5 @@ function Player(_color) {
   }
 };
 
-
+Player.BLACK = 'black';
+Player.WHITE = 'white';
