@@ -32,7 +32,7 @@ function Board(fen) {
 Board.prototype.buildBoard = function(fen) {
   this.board = [];
 
-  if(!this.validate_fen(fen).valid) {
+  if(!this.validateFen(fen).valid) {
     var msg = "Board#buildBoard: invalid fen";
     alert(msg);
     throw msg;
@@ -56,7 +56,7 @@ Board.prototype.buildBoard = function(fen) {
   }
 };
 
-Board.prototype.validate_fen = function(fen) {
+Board.prototype.validateFen = function(fen) {
   var errors = {
      7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
      8: '1st field (piece positions) is invalid [consecutive numbers].',
@@ -74,25 +74,25 @@ Board.prototype.validate_fen = function(fen) {
   /* 8th criterion: every row is valid? */
   for (var i = 0; i < rows.length; i++) {
     /* check for right sum of fields AND not two numbers in succession */
-    var sum_fields = 0;
-    var previous_was_number = false;
+    var sumFields = 0;
+    var previousWasNumber = false;
 
     for (var k = 0; k < rows[i].length; k++) {
       if (!isNaN(rows[i][k])) {
-        if (previous_was_number) {
+        if (previousWasNumber) {
           return {valid: false, error_number: 8, error: errors[8]};
         }
-        sum_fields += parseInt(rows[i][k], 10);
-        previous_was_number = true;
+        sumFields += parseInt(rows[i][k], 10);
+        previousWasNumber = true;
       } else {
         if (!/^[prnbqkPRNBQK]$/.test(rows[i][k])) {
           return {valid: false, error_number: 9, error: errors[9]};
         }
-        sum_fields += 1;
-        previous_was_number = false;
+        sumFields += 1;
+        previousWasNumber = false;
       }
     }
-    if (sum_fields !== 8) {
+    if (sumFields !== 8) {
       return {valid: false, error_number: 10, error: errors[10]};
     }
   }
