@@ -32,7 +32,7 @@ function Board(fen) {
 Board.prototype.buildBoard = function(fen) {
   this.board = [];
 
-  if(!this.validate_fen(fen).valid) {
+  if(!this.validateFen(fen).valid) {
     var msg = "Board#buildBoard: invalid fen";
     alert(msg);
     throw msg;
@@ -56,7 +56,7 @@ Board.prototype.buildBoard = function(fen) {
   }
 };
 
-Board.prototype.validate_fen = function(fen) {
+Board.prototype.validateFen = function(fen) {
   var errors = {
      7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
      8: '1st field (piece positions) is invalid [consecutive numbers].',
