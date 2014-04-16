@@ -13,9 +13,8 @@ Pawn.prototype.possibleMovements = function (position, board) {
   };
 
   var possibleMovements = [];
-
   if(this.player().isWhite()) {
-    if(position.line() == 2 && board.at(position.nextLine().nextLine()).empty()) {
+    if(position.line() == 2 && board.at(position.nextLine()).empty() && board.at(position.nextLine().nextLine()).empty()) {
       possibleMovements.push(position.nextLine().nextLine());
     }
 
@@ -36,7 +35,7 @@ Pawn.prototype.possibleMovements = function (position, board) {
     }
   }
   else {
-    if(position.line() == 7 && board.at(position.previousLine().previousLine()).empty()) {
+    if(position.line() == 7 && board.at(position.previousLine()).empty() && board.at(position.previousLine().previousLine()).empty()) {
       possibleMovements.push(position.previousLine().previousLine());
     }
 
@@ -44,15 +43,15 @@ Pawn.prototype.possibleMovements = function (position, board) {
       possibleMovements.push(position.previousLine());
     }
 
-    // rightup
+    // rightdown
     var rightDown = board.at(position.previousLine().nextColumn());
     if(!rightDown.empty() && this.isEnemyOf(rightDown)) {
       possibleMovements.push(position.previousLine().nextColumn());
     }
 
-    // lefttup
+    // lefttdown
     var leftDown = board.at(position.previousLine().previousColumn());
-    if(!leftDown.empty() && this.isEnemyOf(leftUp)) {
+    if(!leftDown.empty() && this.isEnemyOf(leftDown)) {
       possibleMovements.push(position.previousLine().previousColumn());
     }
   }
