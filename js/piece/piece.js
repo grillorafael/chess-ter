@@ -1,20 +1,20 @@
 function Piece(player) {
-
-  this.player = function () {
-    //TODO: Fazer verificação se player é uma instancia da classe player
-    return player;
-  };
-
-  this.empty = function() {
-    return false;
-  }
+  this._player = player;
 };
 
+
+Piece.prototype.player = function() {
+  return this._player;
+};
+
+Piece.prototype.empty = function() {
+  return false;
+};
 
 Piece.prototype.possibleMovements = function (position, board) {
   var msg = "Piece#possibleMovements: Not yet implemented";
   alert(msg);
-  throw msg;
+  throw Error(msg);
 };
 
 Piece.prototype.isEnemyOf = function(pi) {
