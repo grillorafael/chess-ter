@@ -3,7 +3,7 @@ function Tower(player) {
 };
 
 
-Tower.prototype = new Tower();
+Tower.prototype = new Piece();
 Tower.prototype.constructor = Tower;
 
 

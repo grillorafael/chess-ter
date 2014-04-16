@@ -3,7 +3,7 @@ function Knight(player) {
 };
 
 
-Knight.prototype = new Knight();
+Knight.prototype = new Piece();
 Knight.prototype.constructor = Knight;
 
 

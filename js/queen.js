@@ -3,7 +3,7 @@ function Queen(player) {
 };
 
 
-Queen.prototype = new Queen();
+Queen.prototype = new Piece();
 Queen.prototype.constructor = Queen;
 
 

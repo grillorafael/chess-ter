@@ -3,7 +3,7 @@ function Bishop(player) {
 };
 
 
-Bishop.prototype = new Bishop();
+Bishop.prototype = new Piece();
 Bishop.prototype.constructor = Bishop;
 
 

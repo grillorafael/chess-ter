@@ -3,7 +3,7 @@ function King(player) {
 };
 
 
-King.prototype = new King();
+King.prototype = new Piece();
 King.prototype.constructor = King;
 
 
