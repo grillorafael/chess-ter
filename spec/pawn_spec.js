@@ -55,7 +55,7 @@ describe('Pawn', function () {
       });
     });
 
-    describe('subsequent movements of pawn whithout enemy', function () {
+    xdescribe('subsequent movements of pawn whithout enemy', function () {
       beforeEach(function () {
         board = new Board();
       });
