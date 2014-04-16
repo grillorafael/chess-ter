@@ -1,10 +1,17 @@
 describe('BoardPosition', function () {
   var position = null;
   beforeEach(function () {
-    position = new BoardPosition();
+    position = new BoardPosition('a1');
   });
 
   describe('A board position', function () {
+    describe("#constructor", function(){
+      it("should not allow empty params", function(){
+        expect(function(){
+          new BoardPosition();
+        }).toThrow(Error("BoardPosition#new: position valid"));
+      });
+    });
     describe("#setLine", function () {
       it("should allow line 1", function () {
         expect(function () {
