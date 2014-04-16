@@ -7,14 +7,15 @@ function BoardPosition(position) {
 
   this.setColumn(position.charAt(0));
   this.setLine(parseInt(position.charAt(1)));
-  this.column = function() {
-    return this._column;
-  };
-
-  this.line = function() {
-    return this._line;
-  };
 }
+
+BoardPosition.prototype.column = function() {
+  return this._column;
+};
+
+BoardPosition.prototype.line = function() {
+  return this._line;
+};
 
 BoardPosition.prototype.getColumnNumber = function() {
   var base = "a".charCodeAt(0);
@@ -34,25 +35,37 @@ BoardPosition.prototype.isLeftColumn = function() {
 };
 
 BoardPosition.prototype.isRightColumn = function() {
-  return this.column() == 'a';
+  return this.column() == 'h';
 };
 
 BoardPosition.prototype.previousLine = function() {
+  if(this.isBottomLine()) {
+    return this;
+  }
   var nextLine = this.line() - 1;
   return new BoardPosition(this.column() + "" + nextLine);
 }
 
 BoardPosition.prototype.nextLine = function() {
+  if(this.isTopLine()) {
+    return this;
+  }
   var nextLine = this.line() + 1;
   return new BoardPosition(this.column() + "" + nextLine);
 }
 
 BoardPosition.prototype.previousColumn = function() {
+  if(this.isLeftColumn()) {
+    return this;
+  }
   var nextColumn = this.column().charCodeAt(0) - 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
 }
 
 BoardPosition.prototype.nextColumn = function() {
+  if(this.isRightColumn()) {
+    return this;
+  }
   var nextColumn = this.column().charCodeAt(0) + 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
 }
@@ -85,7 +98,7 @@ Board.prototype.at = function(position) {
     alert(msg);
     throw Error(msg);
   }
-  return this.board[position.line() - 1][position.getColumnNumber()];
+  return this.board[Math.abs(7 - (position.line() - 1))][position.getColumnNumber()];
 };
 
 Board.prototype.buildBoard = function(fen) {
@@ -107,7 +120,7 @@ Board.prototype.buildBoard = function(fen) {
       }
       else {
         for(var empty = 0, total = parseInt(token); empty < total; empty++) {
-          currentLine.push({empty: function(){return true;}});
+          currentLine.push( { empty: function(){ return true; } } );
         }
       }
     }

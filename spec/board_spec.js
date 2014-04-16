@@ -1,5 +1,5 @@
 describe('BoardPosition', function () {
-  var position = null;
+  var position;
   beforeEach(function () {
     position = new BoardPosition('a1');
   });
@@ -12,6 +12,40 @@ describe('BoardPosition', function () {
         }).toThrow(Error("BoardPosition#new: position valid"));
       });
     });
+    describe("#nextLine", function(){
+      it("should return a new BoardPosition with next line", function(){
+        expect(position.nextLine()).toEqual(new BoardPosition('a2'));
+      });
+      it("should be able to stack", function(){
+        expect(position.nextLine().nextLine()).toEqual(new BoardPosition('a3'));
+      });
+    });
+    describe("#nextColumn", function(){
+      it("should return a new BoardPosition with next column", function(){
+        expect(position.nextColumn()).toEqual(new BoardPosition('b1'));
+      });
+      it("should be able to stack", function(){
+        expect(position.nextColumn().nextColumn()).toEqual(new BoardPosition('c1'));
+      });
+    });
+
+    describe("#previousLine", function(){
+      it("should return a new BoardPosition with next line", function(){
+        expect(new BoardPosition('b4').previousLine()).toEqual(new BoardPosition('b3'));
+      });
+      it("should be able to stack", function(){
+        expect(new BoardPosition('b4').previousLine().previousLine()).toEqual(new BoardPosition('b2'));
+      });
+    });
+    describe("#nextColumn", function(){
+      it("should return a new BoardPosition with next column", function(){
+        expect(position.nextColumn()).toEqual(new BoardPosition('b1'));
+      });
+      it("should be able to stack", function(){
+        expect(position.nextColumn().nextColumn()).toEqual(new BoardPosition('c1'));
+      });
+    });
+
     describe("#setLine", function () {
       it("should allow line 1", function () {
         expect(function () {
@@ -54,6 +88,7 @@ describe('BoardPosition', function () {
         }).toThrow(Error("BoardPosition#setLine: Linha inválida"));
       });
     });
+
     describe("#setColumn", function () {
       it("should allow column 'a'", function () {
         expect(function () {
