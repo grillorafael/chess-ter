@@ -1,32 +1,91 @@
 function BoardPosition(position) {
-  //TODO: Tornar privado e validar
-  if(position !== undefined && position.length == 2) {
-    this.column = this.setColumn(position.charAt(0));
-    this.line = this.setLine(parseInt(position.charAt(1)));
-  }
+  if(!(position && position.length == 2)) {
+    var msg = "BoardPosition#new: position valid";
+    alert(msg);
+    throw Error(msg);
+  };
+
+  this.setColumn(position.charAt(0));
+  this.setLine(parseInt(position.charAt(1)));
+  this.column = function() {
+    return this._column;
+  };
+
+  this.line = function() {
+    return this._line;
+  };
+}
+
+BoardPosition.prototype.getColumnNumber = function() {
+  var base = "a".charCodeAt(0);
+  return this.column().charCodeAt(0) - base;
+};
+
+BoardPosition.prototype.isBottomLine = function() {
+  return this.line() == 1;
+};
+
+BoardPosition.prototype.isTopLine = function() {
+  return this.line() == 8;
+};
+
+BoardPosition.prototype.isLeftColumn = function() {
+  return this.column() == 'a';
+};
+
+BoardPosition.prototype.isRightColumn = function() {
+  return this.column() == 'a';
+};
+
+BoardPosition.prototype.previousLine = function() {
+  var nextLine = this.line() - 1;
+  return new BoardPosition(this.column() + "" + nextLine);
+}
+
+BoardPosition.prototype.nextLine = function() {
+  var nextLine = this.line() + 1;
+  return new BoardPosition(this.column() + "" + nextLine);
+}
+
+BoardPosition.prototype.previousColumn = function() {
+  var nextColumn = this.column().charCodeAt(0) - 1;
+  return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
+}
+
+BoardPosition.prototype.nextColumn = function() {
+  var nextColumn = this.column().charCodeAt(0) + 1;
+  return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
 }
 
 BoardPosition.prototype.setLine = function (val) {
   if ((!((typeof val).toLowerCase() == 'number') || isNaN(val)) || (val < 1 || val > 8)) {
     throw Error("BoardPosition#setLine: Linha inválida");
   }
-  this.line = val;
+  this._line = val;
 }
 
 BoardPosition.prototype.setColumn = function (val) {
   if (!((typeof val).toLowerCase() == 'string') || (val < 'a' || val > 'h')) {
     throw Error("BoardPosition#setColumn: Coluna inválida");
   }
-  this.column = val;
+  this._column = val;
 };
 
 
 function Board(fen) {
-  if(fen == undefined) {
-    fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
-  }
+  fen = fen || Board.initialFen;
+
   this.board = [];
   this.buildBoard(fen);
+};
+
+Board.prototype.at = function(position) {
+  if(!(position instanceof BoardPosition)) {
+    var msg = "Board#at: Invalid position";
+    alert(msg);
+    throw Error(msg);
+  }
+  return this.board[position.line() - 1][position.getColumnNumber()];
 };
 
 Board.prototype.buildBoard = function(fen) {
@@ -43,12 +102,12 @@ Board.prototype.buildBoard = function(fen) {
     var tokens = lines[i], currentLine = [];
     for(var j = 0, lt = tokens.length; j < lt; j++) {
       var token = tokens.charAt(j);
-      if(Board.fen_map.hasOwnProperty(token)) {
-        currentLine.push(Board.fen_map[token]());
+      if(Board.fenMap.hasOwnProperty(token)) {
+        currentLine.push(Board.fenMap[token]());
       }
       else {
         for(var empty = 0, total = parseInt(token); empty < total; empty++) {
-          currentLine.push(null);
+          currentLine.push({empty: function(){return true;}});
         }
       }
     }
@@ -101,41 +160,42 @@ Board.prototype.validateFen = function(fen) {
   return {valid: true, error_number: 0, error: errors[0]};
 };
 
-Board.fen_map = {
+Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+Board.fenMap = {
   'r': function() {
-    return new Tower(new Player(Piece.BLACK));
+    return new Tower(new Player(Player.BLACK));
   },
   'n': function() {
-    return new Knight(new Player(Piece.BLACK));
+    return new Knight(new Player(Player.BLACK));
   },
   'b': function() {
-    return new Bishop(new Player(Piece.BLACK));
+    return new Bishop(new Player(Player.BLACK));
   },
   'q': function() {
-    return new Queen(new Player(Piece.BLACK));
+    return new Queen(new Player(Player.BLACK));
   },
   'k': function() {
-    return new King(new Player(Piece.BLACK));
+    return new King(new Player(Player.BLACK));
   },
   'p': function() {
-    return new Pawn(new Player(Piece.BLACK));
+    return new Pawn(new Player(Player.BLACK));
   },
   'R': function() {
-    return new Tower(new Player(Piece.WHITE));
+    return new Tower(new Player(Player.WHITE));
   },
   'N': function() {
-    return new Knight(new Player(Piece.WHITE));
+    return new Knight(new Player(Player.WHITE));
   },
   'B': function() {
-    return new Bishop(new Player(Piece.WHITE));
+    return new Bishop(new Player(Player.WHITE));
   },
   'Q': function() {
-    return new Queen(new Player(Piece.WHITE));
+    return new Queen(new Player(Player.WHITE));
   },
   'K': function() {
-    return new King(new Player(Piece.WHITE));
+    return new King(new Player(Player.WHITE));
   },
   'P': function() {
-    return new Pawn(new Player(Piece.WHITE));
+    return new Pawn(new Player(Player.WHITE));
   }
 };
