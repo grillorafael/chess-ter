@@ -9,6 +9,10 @@ function BoardPosition(position) {
   this.setLine(parseInt(position.charAt(1)));
 }
 
+BoardPosition.prototype.prettyPrint = function() {
+  return this.column() + this.line();
+};
+
 BoardPosition.prototype.column = function() {
   return this._column;
 };
