@@ -13,10 +13,16 @@ Bishop.prototype.possibleMovements = function (position, board) {
     throw Error(msg);
   };
 
-  var hasUperRight = true, hasUperLeft = true, hasDownRight = true, hasDownLeft = true, tmpPosition = position.nextLine().nextColumn(), possibleMovements = [], lastPosition = position;
-  while(hasUperRight) {
+  var hasUpperRight = true,
+    hasUpperLeft = true,
+    hasDownRight = true,
+    hasDownLeft = true,
+    tmpPosition = position.nextLine().nextColumn(),
+    possibleMovements = [],
+    lastPosition = position;
+  while(hasUpperRight) {
     if(tmpPosition == lastPosition) {
-      hasUperRight = false;
+      hasUpperRight = false;
     }
     else if(board.at(tmpPosition).empty()) {
       possibleMovements.push(tmpPosition);
@@ -25,7 +31,7 @@ Bishop.prototype.possibleMovements = function (position, board) {
       if(this.isEnemyOf(board.at(tmpPosition))) {
         possibleMovements.push(tmpPosition);
       }
-      hasUperRight = false;
+      hasUpperRight = false;
     }
 
     lastPosition = tmpPosition;
@@ -34,9 +40,9 @@ Bishop.prototype.possibleMovements = function (position, board) {
 
   tmpPosition = position.nextLine().previousColumn();
   lastPosition = position;
-  while(hasUperLeft) {
+  while(hasUpperLeft) {
     if(tmpPosition == lastPosition) {
-      hasUperLeft = false;
+      hasUpperLeft = false;
     }
     else if(board.at(tmpPosition).empty()) {
       possibleMovements.push(tmpPosition);
@@ -45,7 +51,7 @@ Bishop.prototype.possibleMovements = function (position, board) {
       if(this.isEnemyOf(board.at(tmpPosition))) {
         possibleMovements.push(tmpPosition);
       }
-      hasUperLeft = false;
+      hasUpperLeft = false;
     }
 
     lastPosition = tmpPosition;
