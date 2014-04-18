@@ -10,7 +10,7 @@ describe('Tower', function(){
 
   describe('.possibleMovements', function(){
     it('moves to a upper line until find a enemy', function(){
-      board = new Board('rnbqkbnr/pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR');
       var movements = whiteTower.possibleMovements(new BoardPosition('a1'), board);
       var expected = [
         new BoardPosition('a2'),
@@ -25,7 +25,7 @@ describe('Tower', function(){
     });
 
     it('moves to a previous line until find a enemy', function(){
-      board = new Board('rnbqkbnr/1ppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/1ppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
       var movements = blackTower.possibleMovements(new BoardPosition('a8'), board);
       var expected = [
         new BoardPosition('a7'),
@@ -40,7 +40,7 @@ describe('Tower', function(){
     });
 
     it('moves to right column until find a enemy', function(){
-      board = new Board('1nbqkbnr/pppppppp/r7/8/8/8/PPPPPPPP/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, '1nbqkbnr/pppppppp/r7/8/8/8/PPPPPPPP/RNBQKBNR');
       var movements = blackTower.possibleMovements(new BoardPosition('a6'), board);
       var expected = [
         new BoardPosition('b6'),
@@ -60,7 +60,7 @@ describe('Tower', function(){
     });
 
     it('moves to left column until find a enemy', function(){
-      board = new Board('rnbqkbn1/pppppppp/7r/8/8/8/PPPPPPPP/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbn1/pppppppp/7r/8/8/8/PPPPPPPP/RNBQKBNR');
       var movements = blackTower.possibleMovements(new BoardPosition('h6'), board);
       var expected = [
         new BoardPosition('a6'),

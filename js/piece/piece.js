@@ -18,5 +18,5 @@ Piece.prototype.possibleMovements = function (position, board) {
 };
 
 Piece.prototype.isEnemyOf = function(pi) {
-  return !((pi.player().isBlack() && this.player().isBlack()) || (pi.player().isWhite() && this.player().isWhite()));
+  return this.player().isWhite() != pi.player().isWhite();
 };

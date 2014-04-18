@@ -1,6 +1,16 @@
 'use strict';
 
-var Chess = (function () {
+var Chess = (function (player1, player2) {
+
+  this.player1 = player1;
+  this.player2 = player2;
+
+  var game = new Board(player1, player2);
+
+  this.getGame = function() {
+    return game;
+  }
+
   var _this = this, selectedPiece = null, table = [
     ['T', 'N', 'B', 'Q', 'K', 'B', 'N', 'T'],
     ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
@@ -118,4 +128,5 @@ var Chess = (function () {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess();
+var chess = new Chess(new Player(Player.WHITE), new Player(Player.BLACK));
+var a  = chess.getGame();

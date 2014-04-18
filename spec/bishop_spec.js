@@ -13,7 +13,7 @@ describe('Bishop', function(){
   {
     it('moves diagonally upper right until finds an enemy', function()
     {
-      board = new Board('rnbqkbnr/pppppp1p/8/6p1/8/2P5/PP1BPPPP/RNQ1KBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppp1p/8/6p1/8/2P5/PP1BPPPP/RNQ1KBNR');
       var movements = whiteBishop.possibleMovements(new BoardPosition('d2'), board);
       var expected = 
       [
@@ -27,7 +27,7 @@ describe('Bishop', function(){
 
     it('moves diagonally upper left until finds an enemy', function()
     {
-      board = new Board('rnbqkbnr/p1pppppp/8/1p6/8/5P2/PPP1BPPP/RNBQ1KNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/p1pppppp/8/1p6/8/5P2/PPP1BPPP/RNBQ1KNR');
       var movements = whiteBishop.possibleMovements(new BoardPosition('e2'), board);
       var expected = 
       [
@@ -41,7 +41,7 @@ describe('Bishop', function(){
 
     it('moves diagonally down right until finds an enemy', function()
     {
-      board = new Board('rnq1kbnr/pp1bpppp/2p5/8/6P1/8/PPPPPP1P/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnq1kbnr/pp1bpppp/2p5/8/6P1/8/PPPPPP1P/RNBQKBNR');
       var movements = blackBishop.possibleMovements(new BoardPosition('d7'), board);
       var expected = 
       [
@@ -55,7 +55,7 @@ describe('Bishop', function(){
 
     it('moves diagonally down left until finds an enemy', function()
     {
-      board = new Board('rnbq1knr/ppppb1pp/5p2/8/1P6/8/P1PPPPPP/RNBQKBNR');
+      board = new Board(whitePlayer, blackPlayer, 'rnbq1knr/ppppb1pp/5p2/8/1P6/8/P1PPPPPP/RNBQKBNR');
       var movements = blackBishop.possibleMovements(new BoardPosition('e7'), board);
       var expected = 
       [

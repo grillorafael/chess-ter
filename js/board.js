@@ -1,12 +1,14 @@
-function Board(fen) {
+function Board(player_white, player_black, fen) {
   fen = fen || Board.initialFen;
 
   this.board = [];
+  this.player_white = player_white;
+  this.player_black = player_black;
   this.buildBoard(fen);
 };
 
-Board.prototype.at = function(position) {
-  if(!(position instanceof BoardPosition)) {
+Board.prototype.at = function (position) {
+  if (!(position instanceof BoardPosition)) {
     var msg = "Board#at: Invalid position";
     alert(msg);
     throw Error(msg);
@@ -14,38 +16,55 @@ Board.prototype.at = function(position) {
   return this.board[Math.abs(7 - (position.line() - 1))][position.getColumnNumber()];
 };
 
-Board.prototype.buildBoard = function(fen) {
+Board.prototype.buildBoard = function (fen) {
   this.board = [];
 
-  if(!this.validateFen(fen).valid) {
+  if (!this.validateFen(fen).valid) {
     var msg = "Board#buildBoard: invalid fen";
     alert(msg);
     throw msg;
   }
 
   var lines = fen.split('/');
-  for(var i = 0, l = lines.length; i < l; i++) {
+
+  for (var i = 0, l = lines.length; i < l; i++) {
     var tokens = lines[i], currentLine = [];
-    for(var j = 0, lt = tokens.length; j < lt; j++) {
+    for (var j = 0, lt = tokens.length; j < lt; j++) {
       var token = tokens.charAt(j);
-      if(Board.fenMap.hasOwnProperty(token)) {
-        currentLine.push(Board.fenMap[token]());
-      }
-      else {
-        for(var empty = 0, total = parseInt(token); empty < total; empty++) {
-          currentLine.push( { empty: function(){ return true; } } );
+      var piece = this.getPositionFromToken(token);
+      if ($.isArray(piece)) {
+        for (var k = 0, lp = piece.length; k < lp; k++) {
+          currentLine.push(piece[k]);
         }
       }
+      else {
+        currentLine.push(piece);
+      }
+
     }
     this.board.push(currentLine);
   }
 };
 
-Board.prototype.validateFen = function(fen) {
+Board.prototype.getPositionFromToken = function (token) {
+  if (Board.fenMap.hasOwnProperty(token)) {
+    var player = ((token == token.toLowerCase()) ? this.player_black : this.player_white);
+    return Board.fenMap[token](player);
+  }
+  else {
+    var position = [];
+    for (var empty = 0, total = parseInt(token); empty < total; empty++) {
+      position.push({empty : function(){return true}});
+    }
+    return position;
+  }
+};
+
+Board.prototype.validateFen = function (fen) {
   var errors = {
-     7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
-     8: '1st field (piece positions) is invalid [consecutive numbers].',
-     9: '1st field (piece positions) is invalid [invalid piece].',
+    7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
+    8: '1st field (piece positions) is invalid [consecutive numbers].',
+    9: '1st field (piece positions) is invalid [invalid piece].',
     10: '1st field (piece positions) is invalid [row too large].',
   };
   var tokens = fen.split(/\s+/);
@@ -88,40 +107,40 @@ Board.prototype.validateFen = function(fen) {
 
 Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 Board.fenMap = {
-  'r': function() {
-    return new Tower(new Player(Player.BLACK));
+  'r': function (player) {
+    return new Tower(player);
   },
-  'n': function() {
-    return new Knight(new Player(Player.BLACK));
+  'n': function (player) {
+    return new Knight(player);
   },
-  'b': function() {
-    return new Bishop(new Player(Player.BLACK));
+  'b': function (player) {
+    return new Bishop(player);
   },
-  'q': function() {
-    return new Queen(new Player(Player.BLACK));
+  'q': function (player) {
+    return new Queen(player);
   },
-  'k': function() {
-    return new King(new Player(Player.BLACK));
+  'k': function (player) {
+    return new King(player);
   },
-  'p': function() {
-    return new Pawn(new Player(Player.BLACK));
+  'p': function (player) {
+    return new Pawn(player);
   },
-  'R': function() {
-    return new Tower(new Player(Player.WHITE));
+  'R': function (player) {
+    return new Tower(player);
   },
-  'N': function() {
-    return new Knight(new Player(Player.WHITE));
+  'N': function (player) {
+    return new Knight(player);
   },
-  'B': function() {
-    return new Bishop(new Player(Player.WHITE));
+  'B': function (player) {
+    return new Bishop(player);
   },
-  'Q': function() {
-    return new Queen(new Player(Player.WHITE));
+  'Q': function (player) {
+    return new Queen(player);
   },
-  'K': function() {
-    return new King(new Player(Player.WHITE));
+  'K': function (player) {
+    return new King(player);
   },
-  'P': function() {
-    return new Pawn(new Player(Player.WHITE));
+  'P': function (player) {
+    return new Pawn(player);
   }
 };
