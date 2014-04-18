@@ -2,64 +2,59 @@ function Pawn(player) {
   Piece.call(this, player);
 };
 
-
-Pawn.prototype = new Pawn();
+Pawn.prototype = new Piece();
 Pawn.prototype.constructor = Pawn;
 
+Pawn.prototype.possibleMovements = function (position, board) {
+  if(!(position instanceof BoardPosition)) {
+    var msg = "Pawn#possibleMovements: position should be a BoardPosition";
+    alert(msg);
+    throw Error(msg);
+  };
 
-Pawn.prototype.possibleMovements = function (position) {
-
-  //TODO: Fazer verificação se position é uma instancia da classe BoardPosition
-
-
-
-  var piece = this.table[position[0]][position[1]];
   var possibleMovements = [];
-  if (this.color == Piece.WHITE) {
-    if (TableUtil.emptyPosition([position[0] - 1, position[1]], this.table)) {
-      possibleMovements.push([position[0] - 1, position[1]]);
-    }
-    if (position[0] == 6 && TableUtil.emptyPosition([position[0] - 2, position[1]], this.table)) {
-      possibleMovements.push([position[0] - 2, position[1]]);
+  if(this.player().isWhite()) {
+    if(position.line() == 2 && board.at(position.nextLine()).empty() && board.at(position.nextLine().nextLine()).empty()) {
+      possibleMovements.push(position.nextLine().nextLine());
     }
 
-    try {
-      if (!TableUtil.emptyPosition([position[0] - 1, position[1] + 1], this.table) && !TableUtil.samePieceTypeOf(position, [position[0] - 1, position[1] + 1], this.table)) {
-        possibleMovements.push([position[0] - 1, position[1] + 1]);
-      }
-    } catch (e) {
+    if(board.at(position.nextLine()).empty()) {
+      possibleMovements.push(position.nextLine());
     }
 
-    try {
-      if (!TableUtil.emptyPosition([position[0] - 1, position[1] - 1], this.table) && !TableUtil.samePieceTypeOf(position, [position[0] - 1, position[1] - 1], this.table)) {
-        possibleMovements.push([position[0] - 1, position[1] - 1]);
-      }
-    } catch (e) {
+    // rightup
+    var rightUp = board.at(position.nextLine().nextColumn());
+    if(!rightUp.empty() && this.isEnemyOf(rightUp)) {
+      possibleMovements.push(position.nextLine().nextColumn());
+    }
+
+    // lefttup
+    var leftUp = board.at(position.nextLine().previousColumn());
+    if(!leftUp.empty() && this.isEnemyOf(leftUp)) {
+      possibleMovements.push(position.nextLine().previousColumn());
     }
   }
   else {
-    if (TableUtil.emptyPosition([position[0] + 1, position[1]], this.table)) {
-      possibleMovements.push([position[0] + 1, position[1]]);
-    }
-    if (position[0] == 1 && TableUtil.emptyPosition([position[0] + 2, position[1]], this.table)) {
-      possibleMovements.push([position[0] + 2, position[1]]);
+    if(position.line() == 7 && board.at(position.previousLine()).empty() && board.at(position.previousLine().previousLine()).empty()) {
+      possibleMovements.push(position.previousLine().previousLine());
     }
 
-    try {
-      if (!TableUtil.emptyPosition([position[0] + 1, position[1] + 1], this.table) && !TableUtil.samePieceTypeOf(position, [position[0] + 1, position[1] + 1], this.table)) {
-        possibleMovements.push([position[0] + 1, position[1] + 1]);
-      }
-    } catch (e) {
+    if(board.at(position.previousLine()).empty()) {
+      possibleMovements.push(position.previousLine());
     }
 
-    try {
-      if (!TableUtil.emptyPosition([position[0] + 1, position[1] - 1], this.table) && !TableUtil.samePieceTypeOf(position, [position[0] + 1, position[1] - 1], this.table)) {
-        possibleMovements.push([position[0] + 1, position[1] - 1]);
-      }
-    } catch (e) {
+    // rightdown
+    var rightDown = board.at(position.previousLine().nextColumn());
+    if(!rightDown.empty() && this.isEnemyOf(rightDown)) {
+      possibleMovements.push(position.previousLine().nextColumn());
+    }
+
+    // lefttdown
+    var leftDown = board.at(position.previousLine().previousColumn());
+    if(!leftDown.empty() && this.isEnemyOf(leftDown)) {
+      possibleMovements.push(position.previousLine().previousColumn());
     }
   }
 
   return possibleMovements;
 };
-

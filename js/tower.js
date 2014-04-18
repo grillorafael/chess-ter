@@ -1,91 +1,99 @@
-'use strict';
-var Tower = (function(){});
-Tower.possibleMovements = function(piecePosition, targetSquare, table) {
-  var possibleMovements = [];
-  
-  var tmpPosition = piecePosition;
-  var hasValidDownVerticalPositions = true;
-  while(hasValidDownVerticalPositions)
-  {
-    var newPostion = [tmpPosition[0] + 1, tmpPosition[1]];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
+function Tower(player) {
+  Piece.call(this, player);
+};
 
-      else
-      { 
-        hasValidDownVerticalPositions = false;
-      }
 
-      tmpPosition = newPostion;
-    } catch(e) {hasValidDownVerticalPositions = false};
+Tower.prototype = new Piece();
+Tower.prototype.constructor = Tower;
+
+Tower.prototype.possibleMovements = function (position, board) {
+  if(!(position instanceof BoardPosition)) {
+    var msg = "Tower#possibleMovements: position should be a BoardPosition";
+    alert(msg);
+    throw Error(msg);
+  };
+
+  var hasNextLine = true, hasPreviousLine = true, hasNextColumn = true, hasPreviousColumn = true, tmpPosition = position.nextLine(), possibleMovements = [], lastPosition = position;
+  while(hasNextLine) {
+    if(tmpPosition == lastPosition) {
+      hasNextLine = false;
+    }
+    else if(board.at(tmpPosition).empty()) {
+      possibleMovements.push(tmpPosition);
+    }
+    else {
+      if(this.isEnemyOf(board.at(tmpPosition))) {
+        possibleMovements.push(tmpPosition);
+      }
+      hasNextLine = false;
+    }
+
+    lastPosition = tmpPosition;
+    tmpPosition = tmpPosition.nextLine();
   }
 
-  tmpPosition = piecePosition;
-  var hasValidUpVerticalPositions = true;
-  while(hasValidUpVerticalPositions)
-  {
-    var newPostion = [tmpPosition[0] - 1, tmpPosition[1]];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
+  tmpPosition = position.previousLine();
+  lastPosition = position;
+  while(hasPreviousLine) {
+    if(tmpPosition == lastPosition) {
+      hasPreviousLine = false;
+    }
+    else if(board.at(tmpPosition).empty()) {
+      possibleMovements.push(tmpPosition);
+    }
+    else {
+      if(this.isEnemyOf(board.at(tmpPosition))) {
+        possibleMovements.push(tmpPosition);
       }
+      hasPreviousLine = false;
+    }
 
-      else
-      { 
-        hasValidUpVerticalPositions = false;
-      }
-
-      tmpPosition = newPostion;
-    } catch(e) {hasValidUpVerticalPositions = false};
+    lastPosition = tmpPosition;
+    tmpPosition = tmpPosition.previousLine();
   }
 
-  tmpPosition = piecePosition;
-  var hasValidHorizontalRightPositions = true;
-  while(hasValidHorizontalRightPositions)
-  {
-    var newPostion = [tmpPosition[0], tmpPosition[1] + 1];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
+  tmpPosition = position.nextColumn();
+  lastPosition = position;
+  while(hasNextColumn) {
+    if(tmpPosition == lastPosition) {
+      hasNextColumn = false;
+    }
+    else if(board.at(tmpPosition).empty()) {
+      possibleMovements.push(tmpPosition);
+    }
+    else {
+      if(this.isEnemyOf(board.at(tmpPosition))) {
+        possibleMovements.push(tmpPosition);
       }
+      hasNextColumn = false;
+    }
 
-      else
-      { 
-        hasValidHorizontalRightPositions = false;
-      }
-
-      tmpPosition = newPostion;
-    } catch(e) {hasValidHorizontalRightPositions = false};
+    lastPosition = tmpPosition;
+    tmpPosition = tmpPosition.nextColumn();
   }
 
-  tmpPosition = piecePosition;
-  var hasValidHorizontalLeftPositions = true;
-  while(hasValidHorizontalLeftPositions)
-  {
-    var newPostion = [tmpPosition[0], tmpPosition[1] - 1];
-    try
-    {
-      if(TableUtil.validSquare(tmpPosition, newPostion, table)) 
-      {
-        possibleMovements.push(newPostion);
-      }
 
-      else
-      { 
-        hasValidHorizontalLeftPositions = false;
+  tmpPosition = position.previousColumn();
+  lastPosition = position;
+  while(hasPreviousColumn) {
+    if(tmpPosition == lastPosition) {
+      hasPreviousColumn = false;
+    }
+    else if(board.at(tmpPosition).empty()) {
+      possibleMovements.push(tmpPosition);
+    }
+    else {
+      if(this.isEnemyOf(board.at(tmpPosition))) {
+        possibleMovements.push(tmpPosition);
       }
+      hasPreviousColumn = false;
+    }
 
-      tmpPosition = newPostion;
-    } catch(e) {hasValidHorizontalLeftPositions = false};
+    lastPosition = tmpPosition;
+    tmpPosition = tmpPosition.previousColumn();
   }
+
+
 
   return possibleMovements;
 };

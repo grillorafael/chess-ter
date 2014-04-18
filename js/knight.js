@@ -1,54 +1,21 @@
-'use strict';
-var Knight = (function(){});
-Knight.possibleMovements = function(piecePosition, table) {
-  var possibleMovements = [];
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] + 2, piecePosition[1] + 1], table)) {
-      possibleMovements.push([piecePosition[0] + 2, piecePosition[1] + 1]);
-    }
-  } catch(e) {}
+function Knight(player) {
+  Piece.call(this, player);
+};
 
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] + 2, piecePosition[1] - 1], table)) {
-      possibleMovements.push([piecePosition[0] + 2, piecePosition[1] - 1]);
-    }
-  } catch(e) {}
 
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] + 2], table)) {
-      possibleMovements.push([piecePosition[0] + 1, piecePosition[1] + 2]);
-    }
-  } catch(e) {}
+Knight.prototype = new Piece();
+Knight.prototype.constructor = Knight;
 
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] + 1, piecePosition[1] - 2], table)) {
-      possibleMovements.push([piecePosition[0] + 1, piecePosition[1] - 2]);
-    }
-  } catch(e) {}
 
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] - 2, piecePosition[1] + 1], table)) {
-      possibleMovements.push([piecePosition[0] - 2, piecePosition[1] + 1]);
-    }
-  } catch(e) {}
+Knight.prototype.possibleMovements = function (position) {
+  if(position instanceof BoardPosition) {
+    var possibleMovements = [];
 
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] - 2, piecePosition[1] - 1], table)) {
-      possibleMovements.push([piecePosition[0] - 2, piecePosition[1] - 1]);
-    }
-  } catch(e) {}
-
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] - 2], table)) {
-      possibleMovements.push([piecePosition[0] - 1, piecePosition[1] - 2]);
-    }
-  } catch(e) {}
-
-  try {
-    if(TableUtil.validSquare(piecePosition, [piecePosition[0] - 1, piecePosition[1] + 2], table)) {
-      possibleMovements.push([piecePosition[0] - 1, piecePosition[1] + 2]);
-    }
-  } catch(e) {}
-
-  return possibleMovements;
+    return possibleMovements;
+  }
+  else {
+    var msg = "Knight#possibleMovements: position should be a BoardPosition";
+    alert(msg);
+    throw msg;
+  }
 };

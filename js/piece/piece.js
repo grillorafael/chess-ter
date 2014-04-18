@@ -1,15 +1,22 @@
 function Piece(player) {
-
-  this.player = function () {
-    //TODO: Fazer verificação se player é uma instancia da classe player
-    return player;
-  };
+  this._player = player;
 };
-Piece.BLACK = 'b';
-Piece.WHITE = 'w';
 
-Piece.prototype.possibleMovements = function (position) {
+
+Piece.prototype.player = function() {
+  return this._player;
+};
+
+Piece.prototype.empty = function() {
+  return false;
+};
+
+Piece.prototype.possibleMovements = function (position, board) {
   var msg = "Piece#possibleMovements: Not yet implemented";
   alert(msg);
-  throw msg;
+  throw Error(msg);
+};
+
+Piece.prototype.isEnemyOf = function(pi) {
+  return !((pi.player().isBlack() && this.player().isBlack()) || (pi.player().isWhite() && this.player().isWhite()));
 };
