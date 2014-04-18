@@ -172,6 +172,31 @@ nav a:hover {
     color: #FFFFFF;
   }
 
+  h1#home {
+    font-size: 6em;
+  }
+
+  .main-btn{
+    border: 1px solid #45B29D;
+    background-color: #334D5C;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size:12px;
+    padding: 10px 10px 10px 10px;
+    text-decoration:none;
+    display:inline-block;
+    font-weight:bold;
+    color: #FFFFFF;
+  }
+  .container {
+    width: 100%;
+    position: relative;
+  }
+  .main-btn:hover {
+    background-color: #45B29D;
+  }
+
   .text-center {
     text-align: center;
   }

@@ -1,57 +1,29 @@
 <!DOCTYPE html>
 <html class="no-js" >
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Chesster</title>
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-
-      <style type="text/css">
-
-.button_example{
-border:1px solid #cb9b14; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
- background-color: #eab92d; background-image: -webkit-gradient(linear, left top, left bottom, from(#eab92d), to(#c79810));
- background-image: -webkit-linear-gradient(top, #eab92d, #c79810);
- background-image: -moz-linear-gradient(top, #eab92d, #c79810);
- background-image: -ms-linear-gradient(top, #eab92d, #c79810);
- background-image: -o-linear-gradient(top, #eab92d, #c79810);
- background-image: linear-gradient(to bottom, #eab92d, #c79810);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#eab92d, endColorstr=#c79810);
-}
-.conteiner:
-{
-width: 100%;
-position: relative;
-}
-.button_example:hover{
- border:1px solid #a17b10;
- background-color: #cf9f15; background-image: -webkit-gradient(linear, left top, left bottom, from(#cf9f15), to(#98740c));
- background-image: -webkit-linear-gradient(top, #cf9f15, #98740c);
- background-image: -moz-linear-gradient(top, #cf9f15, #98740c);
- background-image: -ms-linear-gradient(top, #cf9f15, #98740c);
- background-image: -o-linear-gradient(top, #cf9f15, #98740c);
- background-image: linear-gradient(to bottom, #cf9f15, #98740c);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#cf9f15, endColorstr=#98740c);
-}
-</style>
-    </head>
-    <body>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Chesster</title>
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <div class='container'>
+      <div class='text-center' style="margin:50px;">
+        <h1 id="home">♕</h1>
         <h1 class='text-center'>Chesster</h1>
-		<div class='conteiner'>
-		<div class='text-center' style="margin:50px;">
-			<img src=".\asset\home.jpg">
-		</div>
-			<div class='text-center' style="margin:auto;">
-				<a href="chesster.html?type=pvp" >
-					<span id="pvp" class="button_example" style="cursor:pointer;margin:10px;">Player vs Player</span>
-				</a>
-				<a href="chesster.html?type=pve" >
-					<span id="pve" class="button_example" style="cursor:pointer;margin:10px;">Player vs Computer</span>
-				</a>
-				<a href="chesster.html?type=eve" >
-					<span id="eve" class="button_example" style="cursor:pointer;margin:10px;">Computer vs Computer</span>
-				</a>
-		   </div>
-	   </div>
-    </body>
+      </div>
+      <div class='text-center' style="margin:auto;">
+        <a class='main-btn' href="chesster.html?type=pvp">
+        	Player vs Player
+        </a>
+        <a class='main-btn' href="chesster.html?type=pve">
+        	Player vs Computer
+        </a>
+        <a class='main-btn' href="chesster.html?type=eve">
+        	Computer vs Computer
+        </a>
+      </div>
+    </div>
+  </body>
 </html>
