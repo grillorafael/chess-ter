@@ -9,6 +9,12 @@ function BoardPosition(position) {
   this.setLine(parseInt(position.charAt(1)));
 }
 
+BoardPosition.prototype.in = function(list) {
+  var listMap = _(list).map(function(el){ return JSON.stringify(el); }),
+    jsonThis = JSON.stringify(this);
+  return _.indexOf(listMap, jsonThis) != -1;
+};
+
 BoardPosition.prototype.prettyPrint = function() {
   return this.column() + this.line();
 };
