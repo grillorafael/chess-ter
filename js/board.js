@@ -7,6 +7,34 @@ function Board(player_white, player_black, fen) {
   this.buildBoard(fen);
 };
 
+Board.prototype.moveFromTo = function(fromPosition , toPosition) {
+  if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
+    var msg = "Board#moveFromTo: Invalid position";
+    alert(msg);
+    throw Error(msg);
+  }
+
+  var from = this.at(fromPosition);
+  var to = this.at(toPosition);
+
+  if(!from.empty() && toPosition.in(from.possibleMovements(fromPosition, this))) {
+    this.setPosition(fromPosition, Board.EMPTY);
+    this.setPosition(toPosition, from);
+    return true;
+  }
+  return false;
+};
+
+Board.prototype.setPosition = function(position, value) {
+  if (!(position instanceof BoardPosition)) {
+    var msg = "Board#setPosition: Invalid position";
+    alert(msg);
+    throw Error(msg);
+  }
+
+  this.board[Math.abs(7 - (position.line() - 1))][position.getColumnNumber()] = value;
+};
+
 Board.prototype.at = function (position) {
   if (!(position instanceof BoardPosition)) {
     var msg = "Board#at: Invalid position";
@@ -54,7 +82,7 @@ Board.prototype.getPositionFromToken = function (token) {
   else {
     var position = [];
     for (var empty = 0, total = parseInt(token); empty < total; empty++) {
-      position.push({empty : function(){return true}});
+      position.push(Board.EMPTY);
     }
     return position;
   }
@@ -105,6 +133,7 @@ Board.prototype.validateFen = function (fen) {
   return {valid: true, error_number: 0, error: errors[0]};
 };
 
+Board.EMPTY = {empty : function(){return true}};
 Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 Board.fenMap = {
   'r': function (player) {
