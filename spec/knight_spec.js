@@ -1,19 +1,18 @@
 describe('Knight', function(){
-  var table;
-  beforeEach(function(){
-    table = [
-      ['T', 'N', 'B', 'Q', 'K', 'B', 'N', 'T'],
-      ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
-      ['t', 'n', 'b', 'q', 'k', 'b', 'n', 't']
-    ];
+  var board, blackPlayer, whitePlayer, blackKnight, whiteKnight;
+  beforeEach(function()
+  {
+    blackPlayer = new Player(Player.BLACK);
+    whitePlayer = new Player(Player.WHITE);
+
+    blackKnight = new Knight(blackPlayer);
+    whiteKnight = new Knight(whitePlayer);
   });
 
   describe('.possibleMovements', function(){
-
+    it('should return 2 movements if in start position', function()
+    {
+      board = new Board('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
+    });
   });
 });
