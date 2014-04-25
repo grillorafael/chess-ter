@@ -30,11 +30,6 @@ var Chess = (function (player1, player2) {
       $(this).removeClass('selected');
       selectedPiece = null;
     }
-    else if(!game.at(clickedPosition).isEnemyOf(game.at(selectedPiecePosition))) {
-      selectedPiece.removeClass('selected');
-      selectedPiece = $(this);
-      $(this).addClass('selected');
-    }
     else {
       if(game.moveFromTo(selectedPiecePosition, clickedPosition)) {
         uimoveFromTo(selectedPiecePosition, clickedPosition);
