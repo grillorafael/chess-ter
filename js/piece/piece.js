@@ -20,3 +20,7 @@ Piece.prototype.possibleMovements = function (position, board) {
 Piece.prototype.isEnemyOf = function(pi) {
   return this.player().isWhite() != pi.player().isWhite();
 };
+
+Piece.prototype.isEnemyOfPlayer = function(pl) {
+  return this.player().isWhite() != pl.isWhite();
+};
