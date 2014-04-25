@@ -9,6 +9,10 @@ function BoardPosition(position) {
   this.setLine(parseInt(position.charAt(1)));
 }
 
+BoardPosition.prototype.sameAs = function(bp) {
+  return JSON.stringify(this) == JSON.stringify(bp);
+};
+
 BoardPosition.prototype.in = function(list) {
   var listMap = _(list).map(function(el){ return JSON.stringify(el); }),
     jsonThis = JSON.stringify(this);
@@ -30,6 +34,10 @@ BoardPosition.prototype.line = function() {
 BoardPosition.prototype.getColumnNumber = function() {
   var base = "a".charCodeAt(0);
   return this.column().charCodeAt(0) - base;
+};
+
+BoardPosition.getColumnByNumber = function(val) {
+  return String.fromCharCode("a".charCodeAt(0) + val);
 };
 
 BoardPosition.prototype.isBottomLine = function() {
