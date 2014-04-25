@@ -9,7 +9,7 @@ King.prototype.constructor = King;
 
 King.prototype.possibleMovements = function (position, board) {
   if(position instanceof BoardPosition) {
-    var possibleMovements = [];
+    var possibleMovements = [], currentPlayer = board.at(position).player();
 
     var up = board.at(position.nextLine());
     if(up.empty() || this.isEnemyOf(up))
@@ -58,6 +58,30 @@ King.prototype.possibleMovements = function (position, board) {
     {
       possibleMovements.push(position.previousLine().previousColumn());
     }
+
+    // Roque
+    // if(board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
+    //   if(player.isWhite() && !board.isPositionVulnerable(new BoardPosition('a1'))
+    //     && !board.isPositionVulnerable(new BoardPosition('h1'))) {
+    //
+    //     if(board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
+    //       possibleMovements.push(new BoardPosition('a1'));
+    //     }
+    //     if(board.hasHorizontalCollision(position, new BoardPosition('h1'))) {
+    //       possibleMovements.push(new BoardPosition('h1'));
+    //     }
+    //   }
+    //   else if(player.isBlack() && !board.isPositionVulnerable(new BoardPosition('a8'))
+    //     && !board.isPositionVulnerable(new BoardPosition('h8'))) {
+    //
+    //     if(board.hasHorizontalCollision(position, new BoardPosition('a8'))) {
+    //       possibleMovements.push(new BoardPosition('a8'));
+    //     }
+    //     if(board.hasHorizontalCollision(position, new BoardPosition('h8'))) {
+    //       possibleMovements.push(new BoardPosition('h8'));
+    //     }
+    //   }
+    // }
 
     return possibleMovements;
   }

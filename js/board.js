@@ -1,11 +1,83 @@
 function Board(player_white, player_black, fen) {
   fen = fen || Board.initialFen;
 
+
+  this.blackTowerOrKingMoved = false;
+  this.whiteTowerOrKingMoved = false;
+
   this.board = [];
   this.player_white = player_white;
   this.player_black = player_black;
   this.buildBoard(fen);
 };
+
+Board.prototype.hasHorizontalCollision = function(from, to) {
+  if(from.column() > to.column()) {
+    while(!from.previousColumn().sameAs(to)) {
+      from = from.previousColumn();
+      if(!from.empty()) {
+        return true;
+      }
+    }
+  }
+  else {
+    while(!from.nextColumn().sameAs(to)) {
+      from = from.nextColumn();
+      if(!from.empty()) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+Board.prototype.kingPositionOf = function(player) {
+  var i, j, li = this.board[0].length, lj = this.board.length;
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = new BoardPosition(BoardPosition.getColumnByNumber(j) + (i + 1)),
+        currentPositionPiece = this.at(currentPosition);
+      if(!currentPositionPiece.empty() && currentPositionPiece.player().isSame(player) && (currentPositionPiece instanceof King)) {
+        return currentPosition;
+      }
+    }
+  }
+};
+
+Board.prototype.isPositionVulnerable = function(position) {
+  var player = this.at(position).player(),
+    i,
+    j,
+    li = this.board[0].length,
+    lj = this.board.length;
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = new BoardPosition(BoardPosition.getColumnByNumber(j) + (i + 1)),
+        currentPositionPiece = this.at(currentPosition);
+      if(!currentPosition.sameAs(position)) {
+        console.log("SAMEAS", JSON.stringify(currentPosition) + " :: " + JSON.stringify(position));
+        if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
+          var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+          if(position.in(possibleMovements)) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+Board.prototype.isPlayerInCheck = function(player) {
+  var kingPosition = this.kingPositionOf(player);
+  return this.isPositionVulnerable(kingPosition);
+};
+
+Board.prototype.canPlayerRoque = function(player) {
+  return !(player.isWhite() ? this.whiteTowerOrKingMoved : this.blackTowerOrKingMoved);
+}
 
 Board.prototype.moveFromTo = function(fromPosition , toPosition) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
@@ -18,8 +90,31 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition) {
   var to = this.at(toPosition);
 
   if(!from.empty() && toPosition.in(from.possibleMovements(fromPosition, this))) {
-    this.setPosition(fromPosition, Board.EMPTY);
-    this.setPosition(toPosition, from);
+
+    if((from instanceof Tower) || (from instanceof King)) {
+      if(from.player.isWhite()) {
+        this.whiteTowerOrKingMoved = true;
+      }
+      else {
+        this.blackTowerOrKingMoved = true;
+      }
+    }
+
+    if((!to.empty() && !to.isEnemyOf(from))) {
+      this.setPosition(fromPosition, to);
+      this.setPosition(toPosition, Board.EMPTY);
+
+      if(toPosition.column() > fromPosition.column()) {
+        this.setPosition(fromPosition.nextColumn().nextColumn(), from);
+      }
+      else {
+        this.setPosition(fromPosition.previousColumn().previousColumn(), from);
+      }
+    }
+    else {
+      this.setPosition(fromPosition, Board.EMPTY);
+      this.setPosition(toPosition, from);
+    }
     return true;
   }
   return false;
