@@ -58,7 +58,7 @@ BoardPosition.prototype.isRightColumn = function() {
 
 BoardPosition.prototype.previousLine = function() {
   if(this.isBottomLine()) {
-    return this;
+    return false;
   }
   var nextLine = this.line() - 1;
   return new BoardPosition(this.column() + "" + nextLine);
@@ -66,7 +66,7 @@ BoardPosition.prototype.previousLine = function() {
 
 BoardPosition.prototype.nextLine = function() {
   if(this.isTopLine()) {
-    return this;
+    return false;
   }
   var nextLine = this.line() + 1;
   return new BoardPosition(this.column() + "" + nextLine);
@@ -74,7 +74,7 @@ BoardPosition.prototype.nextLine = function() {
 
 BoardPosition.prototype.previousColumn = function() {
   if(this.isLeftColumn()) {
-    return this;
+    return false;
   }
   var nextColumn = this.column().charCodeAt(0) - 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
@@ -82,7 +82,7 @@ BoardPosition.prototype.previousColumn = function() {
 
 BoardPosition.prototype.nextColumn = function() {
   if(this.isRightColumn()) {
-    return this;
+    return false;
   }
   var nextColumn = this.column().charCodeAt(0) + 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
