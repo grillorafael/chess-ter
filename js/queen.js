@@ -14,7 +14,7 @@ Queen.prototype.possibleMovements = function (position, board) {
     /* INÍCIO DOS MOVIMENTOS VERTICAIS E HORIZONTAIS */
      var hasNextLine = true, hasPreviousLine = true, hasNextColumn = true, hasPreviousColumn = true, tmpPosition = position.nextLine(), lastPosition = position;
   while(hasNextLine) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasNextLine = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -28,13 +28,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextLine()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextLine();
   }
 
   tmpPosition = position.previousLine();
   lastPosition = position;
   while(hasPreviousLine) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasPreviousLine = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -48,13 +51,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousLine()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousLine();
   }
 
   tmpPosition = position.nextColumn();
   lastPosition = position;
   while(hasNextColumn) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasNextColumn = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -68,6 +74,9 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextColumn();
   }
 
@@ -75,7 +84,7 @@ Queen.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.previousColumn();
   lastPosition = position;
   while(hasPreviousColumn) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasPreviousColumn = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -89,6 +98,9 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousColumn();
   }
     /* FIM DOS MOVIMENTOS VERTICAIS E HORIZONTAIS */
@@ -101,7 +113,7 @@ Queen.prototype.possibleMovements = function (position, board) {
     tmpPosition = position.nextLine().nextColumn();
     lastPosition = position;
   while(hasUpperRight) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasUpperRight = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -115,13 +127,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextLine() || !tmpPosition.nextLine().nextColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextLine().nextColumn();
   }
 
   tmpPosition = position.nextLine().previousColumn();
   lastPosition = position;
   while(hasUpperLeft) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasUpperLeft = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -135,13 +150,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextLine() || !tmpPosition.nextLine().previousColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextLine().previousColumn();
   }
 
   tmpPosition = position.previousLine().nextColumn();
   lastPosition = position;
   while(hasDownRight) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasDownRight = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -155,6 +173,9 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousLine() || !tmpPosition.previousLine().nextColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousLine().nextColumn();
   }
 
@@ -162,7 +183,7 @@ Queen.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.previousLine().previousColumn();
   lastPosition = position;
   while(hasDownLeft) {
-    if(tmpPosition == lastPosition) {
+    if(tmpPosition.sameAs(lastPosition)) {
       hasDownLeft = false;
     }
     else if(board.at(tmpPosition).empty()) {
@@ -176,6 +197,9 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousLine() || !tmpPosition.previousLine().previousColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousLine().previousColumn();
   }
     /* FIM DOS MOVIMENTOS DIAGONAIS */

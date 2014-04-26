@@ -23,15 +23,19 @@ Pawn.prototype.possibleMovements = function (position, board) {
     }
 
     // rightup
-    var rightUp = board.at(position.nextLine().nextColumn());
-    if(!rightUp.empty() && this.isEnemyOf(rightUp)) {
-      possibleMovements.push(position.nextLine().nextColumn());
+    if(position.nextLine() && position.nextLine().nextColumn()) {
+      var rightUp = board.at(position.nextLine().nextColumn());
+      if(!rightUp.empty() && this.isEnemyOf(rightUp)) {
+        possibleMovements.push(position.nextLine().nextColumn());
+      }
     }
 
     // lefttup
-    var leftUp = board.at(position.nextLine().previousColumn());
-    if(!leftUp.empty() && this.isEnemyOf(leftUp)) {
-      possibleMovements.push(position.nextLine().previousColumn());
+    if(position.nextLine() && position.nextLine().previousColumn()) {
+      var leftUp = board.at(position.nextLine().previousColumn());
+      if(!leftUp.empty() && this.isEnemyOf(leftUp)) {
+        possibleMovements.push(position.nextLine().previousColumn());
+      }
     }
   }
   else {
@@ -44,15 +48,19 @@ Pawn.prototype.possibleMovements = function (position, board) {
     }
 
     // rightdown
-    var rightDown = board.at(position.previousLine().nextColumn());
-    if(!rightDown.empty() && this.isEnemyOf(rightDown)) {
-      possibleMovements.push(position.previousLine().nextColumn());
+    if(position.previousLine() && position.previousLine().nextColumn()) {
+      var rightDown = board.at(position.previousLine().nextColumn());
+      if(!rightDown.empty() && this.isEnemyOf(rightDown)) {
+        possibleMovements.push(position.previousLine().nextColumn());
+      }
     }
 
     // lefttdown
-    var leftDown = board.at(position.previousLine().previousColumn());
-    if(!leftDown.empty() && this.isEnemyOf(leftDown)) {
-      possibleMovements.push(position.previousLine().previousColumn());
+    if(position.previousLine() && position.previousLine().previousColumn()) {
+      var leftDown = board.at(position.previousLine().previousColumn());
+      if(!leftDown.empty() && this.isEnemyOf(leftDown)) {
+        possibleMovements.push(position.previousLine().previousColumn());
+      }
     }
   }
 

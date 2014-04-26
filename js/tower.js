@@ -15,6 +15,10 @@ Tower.prototype.possibleMovements = function (position, board) {
 
   var hasNextLine = true, hasPreviousLine = true, hasNextColumn = true, hasPreviousColumn = true, tmpPosition = position.nextLine(), possibleMovements = [], lastPosition = position;
   while(hasNextLine) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition == lastPosition) {
       hasNextLine = false;
     }
@@ -35,6 +39,10 @@ Tower.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.previousLine();
   lastPosition = position;
   while(hasPreviousLine) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition == lastPosition) {
       hasPreviousLine = false;
     }
@@ -55,6 +63,10 @@ Tower.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.nextColumn();
   lastPosition = position;
   while(hasNextColumn) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition == lastPosition) {
       hasNextColumn = false;
     }
@@ -76,6 +88,9 @@ Tower.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.previousColumn();
   lastPosition = position;
   while(hasPreviousColumn) {
+    if(!tmpPosition) {
+      break;
+    }
     if(tmpPosition == lastPosition) {
       hasPreviousColumn = false;
     }

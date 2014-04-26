@@ -35,6 +35,9 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextLine() || !tmpPosition.nextLine().nextColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextLine().nextColumn();
   }
 
@@ -55,6 +58,9 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.nextLine() || !tmpPosition.nextLine().previousColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.nextLine().previousColumn();
   }
 
@@ -75,6 +81,9 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousLine() || !tmpPosition.previousLine().nextColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousLine().nextColumn();
   }
 
@@ -96,6 +105,9 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
+    if(!tmpPosition.previousLine() || !tmpPosition.previousLine().previousColumn()) {
+      break;
+    }
     tmpPosition = tmpPosition.previousLine().previousColumn();
   }
 
