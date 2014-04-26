@@ -14,6 +14,9 @@ Queen.prototype.possibleMovements = function (position, board) {
     /* INÍCIO DOS MOVIMENTOS VERTICAIS E HORIZONTAIS */
      var hasNextLine = true, hasPreviousLine = true, hasNextColumn = true, hasPreviousColumn = true, tmpPosition = position.nextLine(), lastPosition = position;
   while(hasNextLine) {
+    if(!tmpPosition) {
+      break;
+    }
     if(tmpPosition.sameAs(lastPosition)) {
       hasNextLine = false;
     }
@@ -28,15 +31,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
-    if(!tmpPosition.nextLine()) {
-      break;
-    }
     tmpPosition = tmpPosition.nextLine();
   }
 
   tmpPosition = position.previousLine();
   lastPosition = position;
   while(hasPreviousLine) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition.sameAs(lastPosition)) {
       hasPreviousLine = false;
     }
@@ -51,15 +55,16 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
-    if(!tmpPosition.previousLine()) {
-      break;
-    }
     tmpPosition = tmpPosition.previousLine();
   }
 
   tmpPosition = position.nextColumn();
   lastPosition = position;
   while(hasNextColumn) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition.sameAs(lastPosition)) {
       hasNextColumn = false;
     }
@@ -74,9 +79,6 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
-    if(!tmpPosition.nextColumn()) {
-      break;
-    }
     tmpPosition = tmpPosition.nextColumn();
   }
 
@@ -84,6 +86,10 @@ Queen.prototype.possibleMovements = function (position, board) {
   tmpPosition = position.previousColumn();
   lastPosition = position;
   while(hasPreviousColumn) {
+    if(!tmpPosition) {
+      break;
+    }
+
     if(tmpPosition.sameAs(lastPosition)) {
       hasPreviousColumn = false;
     }
@@ -98,20 +104,25 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
 
     lastPosition = tmpPosition;
-    if(!tmpPosition.previousColumn()) {
-      break;
-    }
     tmpPosition = tmpPosition.previousColumn();
   }
     /* FIM DOS MOVIMENTOS VERTICAIS E HORIZONTAIS */
 
     /* INÍCIO DOS MOVIMENTOS DIAGONAIS */
-    var hasUpperRight = true,
+  var hasUpperRight = true,
     hasUpperLeft = true,
     hasDownRight = true,
     hasDownLeft = true;
+
+  if(position.nextLine() && position.nextLine().nextColumn()) {
     tmpPosition = position.nextLine().nextColumn();
-    lastPosition = position;
+  }
+  else {
+    hasUpperRight = false;
+  }
+
+  tmpPosition = position.nextLine().nextColumn();
+  lastPosition = position;
   while(hasUpperRight) {
     if(tmpPosition.sameAs(lastPosition)) {
       hasUpperRight = false;
@@ -133,7 +144,13 @@ Queen.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.nextLine().nextColumn();
   }
 
-  tmpPosition = position.nextLine().previousColumn();
+
+  if(position.nextLine() && position.nextLine().previousColumn()) {
+    tmpPosition = position.nextLine().previousColumn();
+  }
+  else {
+    hasUpperLeft = false;
+  }
   lastPosition = position;
   while(hasUpperLeft) {
     if(tmpPosition.sameAs(lastPosition)) {
@@ -156,7 +173,12 @@ Queen.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.nextLine().previousColumn();
   }
 
-  tmpPosition = position.previousLine().nextColumn();
+  if(position.previousLine() && position.previousLine().nextColumn()) {
+    tmpPosition = position.previousLine().nextColumn();
+  }
+  else {
+    hasDownRight = false;
+  }
   lastPosition = position;
   while(hasDownRight) {
     if(tmpPosition.sameAs(lastPosition)) {
@@ -180,7 +202,12 @@ Queen.prototype.possibleMovements = function (position, board) {
   }
 
 
-  tmpPosition = position.previousLine().previousColumn();
+  if(position.previousLine() && position.previousLine().previousColumn()) {
+    tmpPosition = position.previousLine().previousColumn();
+  }
+  else {
+    hasDownLeft = false;
+  }
   lastPosition = position;
   while(hasDownLeft) {
     if(tmpPosition.sameAs(lastPosition)) {
