@@ -221,6 +221,14 @@ nav a:hover {
     background-color: #E27A3F;
   }
 
+  #board td.header-cell {
+    width: 1em;
+  }
+
+  #board .header-line td {
+    height: 1em;
+  }
+
   .piece {
     font-size: 3em;
   }
