@@ -1,7 +1,6 @@
 function Board(player_white, player_black, fen) {
   fen = fen || Board.initialFen;
 
-
   this.blackTowerOrKingMoved = false;
   this.whiteTowerOrKingMoved = false;
 
