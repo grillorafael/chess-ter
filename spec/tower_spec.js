@@ -82,7 +82,6 @@ describe('Tower', function(){
 
   function compareMovementsAndExpected(movements, expected) {
     expect(movements.length).toEqual(expected.length);
-
     for (var i = 0, l = expected.length; i < l; i++) {
       expect(movements).toContain(expected[i])
     }
