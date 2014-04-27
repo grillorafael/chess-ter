@@ -17,9 +17,18 @@ Bishop.prototype.possibleMovements = function (position, board) {
     hasUpperLeft = true,
     hasDownRight = true,
     hasDownLeft = true,
-    tmpPosition = position.nextLine().nextColumn(),
     possibleMovements = [],
+    tmpPosition,
+    lastPosition;
+
+  if(position.nextLine() && position.nextLine().nextColumn()) {
+    tmpPosition = position.nextLine().nextColumn();
     lastPosition = position;
+  }
+  else {
+    hasUpperRight = false;
+  }
+
   while(hasUpperRight) {
     if(tmpPosition == lastPosition) {
       hasUpperRight = false;
@@ -41,8 +50,14 @@ Bishop.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.nextLine().nextColumn();
   }
 
-  tmpPosition = position.nextLine().previousColumn();
-  lastPosition = position;
+  if(position.nextLine() && position.nextLine().previousColumn()) {
+    tmpPosition = position.nextLine().previousColumn();
+    lastPosition = position;
+  }
+  else {
+    hasUpperLeft = false;
+  }
+
   while(hasUpperLeft) {
     if(tmpPosition == lastPosition) {
       hasUpperLeft = false;
@@ -64,8 +79,14 @@ Bishop.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.nextLine().previousColumn();
   }
 
-  tmpPosition = position.previousLine().nextColumn();
-  lastPosition = position;
+  if(position.previousLine() && position.previousLine().nextColumn()) {
+    tmpPosition = position.previousLine().nextColumn();
+    lastPosition = position;
+  }
+  else {
+    hasDownRight = false;
+  }
+
   while(hasDownRight) {
     if(tmpPosition == lastPosition) {
       hasDownRight = false;
@@ -87,9 +108,14 @@ Bishop.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.previousLine().nextColumn();
   }
 
+  if(position.previousLine() && position.previousLine().previousColumn()) {
+    tmpPosition = position.previousLine().previousColumn();
+    lastPosition = position;
+  }
+  else {
+    hasDownLeft = false;
+  }
 
-  tmpPosition = position.previousLine().previousColumn();
-  lastPosition = position;
   while(hasDownLeft) {
     if(tmpPosition == lastPosition) {
       hasDownLeft = false;
@@ -110,8 +136,6 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
     tmpPosition = tmpPosition.previousLine().previousColumn();
   }
-
-
-
+  
   return possibleMovements;
 };

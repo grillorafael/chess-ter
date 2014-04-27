@@ -120,8 +120,6 @@ Queen.prototype.possibleMovements = function (position, board) {
   else {
     hasUpperRight = false;
   }
-
-  tmpPosition = position.nextLine().nextColumn();
   lastPosition = position;
   while(hasUpperRight) {
     if(tmpPosition.sameAs(lastPosition)) {
