@@ -17,7 +17,17 @@ Piece.prototype.possibleMovements = function (position, board) {
   throw Error(msg);
 };
 
+Piece.prototype.sameAs = function(pi) {
+  return !this.isEnemyOf(pi);
+};
+
 Piece.prototype.isEnemyOf = function(pi) {
+  if(!(pi instanceof Piece)) {
+    var msg = "Piece#isEnemyOf: parameter should be a piece";
+    alert(msg);
+    throw Error(msg);
+  }
+
   return this.player().isWhite() != pi.player().isWhite();
 };
 
