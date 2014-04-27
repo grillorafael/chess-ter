@@ -1,7 +1,6 @@
 describe('King', function(){
   var board, blackPlayer, whitePlayer, blackKing, whiteKing;
-  beforeEach(function()
-  {
+  beforeEach(function() {
     blackPlayer = new Player(Player.BLACK);
     whitePlayer = new Player(Player.WHITE);
 
@@ -9,8 +8,8 @@ describe('King', function(){
     whiteKing = new King(whitePlayer);
   });
 
-  describe('.possibleMovements', function(){
-    it('it should move right if only right available', function() {
+  describe('.possibleMovements', function() {
+    it('should move right if only right available', function() {
       board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/6PB/PPPPPP1P/RNBQK1NR');
 
       var movements = whiteKing.possibleMovements(new BoardPosition('e1'), board);
@@ -19,6 +18,18 @@ describe('King', function(){
       ];
 
       compareMovementsAndExpected(movements, expected);
+    });
+
+    describe('roque', function() {
+      it('should be able to do a roque with left tower', function() {
+        board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/1NBQ4/PPPPPPPP/R3KBNR');
+        var movements = whiteKing.possibleMovements(new BoardPosition('e1'), board);
+        var expected = [
+          new BoardPosition('a1'),
+          new BoardPosition('d1'),
+        ];
+        compareMovementsAndExpected(movements, expected);
+      });
     });
   });
 

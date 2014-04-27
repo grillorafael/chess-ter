@@ -46,6 +46,14 @@ describe('BoardPosition', function () {
       });
     });
 
+    describe("#byArray", function(){
+      it('should return a new board position based on [j, i]', function(){
+        expect(BoardPosition.byColumnLineArray([0,0])).toEqual(new BoardPosition('a8'));
+        expect(BoardPosition.byColumnLineArray([1,1])).toEqual(new BoardPosition('b7'));
+        expect(BoardPosition.byColumnLineArray([7,7])).toEqual(new BoardPosition('h1'));
+      });
+    });
+
     describe("#setLine", function () {
       it("should allow line 1", function () {
         expect(function () {
