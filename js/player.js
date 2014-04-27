@@ -14,7 +14,7 @@ function Player(_color) {
   }
 };
 
-Player.prototype.isSame = function(p) {
+Player.prototype.sameAs = function(p) {
   return this.isWhite() == p.isWhite();
 }
 
