@@ -1,13 +1,24 @@
-function Board(player_white, player_black, fen) {
+function Board(playerWhite, playerBlack, fen) {
   fen = fen || Board.initialFen;
 
   this.blackTowerOrKingMoved = false;
   this.whiteTowerOrKingMoved = false;
 
   this.board = [];
-  this.player_white = player_white;
-  this.player_black = player_black;
+  this.playerWhite = playerWhite;
+  this.playerBlack = playerBlack;
+
+  this.playerTurn = playerWhite;
+
   this.buildBoard(fen);
+};
+
+Board.prototype.switchTurn = function() {
+  this.playerTurn = this.playerTurn.isWhite() ? this.playerBlack : this.playerWhite;
+};
+
+Board.prototype.isTurnOfPiecePosition = function(position) {
+  return this.at(position).player().sameAs(this.playerTurn);
 };
 
 Board.prototype.hasHorizontalCollision = function(from, to) {
@@ -114,8 +125,10 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition) {
       this.setPosition(fromPosition, Board.EMPTY);
       this.setPosition(toPosition, from);
     }
+    this.switchTurn();
     return true;
   }
+
   return false;
 };
 
@@ -170,7 +183,7 @@ Board.prototype.buildBoard = function (fen) {
 
 Board.prototype.getPositionFromToken = function (token) {
   if (Board.fenMap.hasOwnProperty(token)) {
-    var player = ((token == token.toLowerCase()) ? this.player_black : this.player_white);
+    var player = ((token == token.toLowerCase()) ? this.playerBlack : this.playerWhite);
     return Board.fenMap[token](player);
   }
   else {

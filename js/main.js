@@ -21,10 +21,14 @@ var Chess = (function (player1, player2) {
     var clickedPosition = getPiecePosition($(this)),
       selectedPiecePosition = selectedPiece != null ? getPiecePosition() : null;
 
-
     if(selectedPiece == null) {
-      $(this).addClass('selected');
-      selectedPiece = $(this);
+      if(game.isTurnOfPiecePosition(clickedPosition)) {
+        $(this).addClass('selected');
+        selectedPiece = $(this);
+      }
+      else {
+        return false;
+      }
     }
     else if($(selectedPiece).is($(this))) {
       $(this).removeClass('selected');
