@@ -48,7 +48,7 @@ Board.prototype.kingPositionOf = function(player) {
     for(j = 0; j < lj; j++) {
       var currentPosition = new BoardPosition(BoardPosition.getColumnByNumber(j) + (i + 1)),
         currentPositionPiece = this.at(currentPosition);
-      if(!currentPositionPiece.empty() && currentPositionPiece.player().isSame(player) && (currentPositionPiece instanceof King)) {
+      if(!currentPositionPiece.empty() && currentPositionPiece.player().sameAs(player) && (currentPositionPiece instanceof King)) {
         return currentPosition;
       }
     }
@@ -61,17 +61,14 @@ Board.prototype.isPositionVulnerable = function(position) {
     j,
     li = this.board[0].length,
     lj = this.board.length;
+
   for(i = 0; i < li; i++) {
     for(j = 0; j < lj; j++) {
-      var currentPosition = new BoardPosition(BoardPosition.getColumnByNumber(j) + (i + 1)),
-        currentPositionPiece = this.at(currentPosition);
-      if(!currentPosition.sameAs(position)) {
-        console.log("SAMEAS", JSON.stringify(currentPosition) + " :: " + JSON.stringify(position));
-        if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-          var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
-          if(position.in(possibleMovements)) {
-            return true;
-          }
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+      if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        if(position.in(possibleMovements)) {
+          return true;
         }
       }
     }
@@ -280,3 +277,4 @@ Board.fenMap = {
     return new Pawn(player);
   }
 };
+//
