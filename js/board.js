@@ -102,7 +102,7 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition) {
   if(!from.empty() && toPosition.in(from.possibleMovements(fromPosition, this))) {
 
     if((from instanceof Tower) || (from instanceof King)) {
-      if(from.player.isWhite()) {
+      if(from.player().isWhite()) {
         this.whiteTowerOrKingMoved = true;
       }
       else {
