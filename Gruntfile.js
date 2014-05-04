@@ -32,11 +32,23 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         'js/*.js'
       ]
+    },
+    inline: {
+      options: {
+        cssmin: true,
+        uglify: true,
+        tag: ''
+      },
+      dist: {
+        src: [ 'index.html' ],
+        dest: ['dest/']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-inline');
   grunt.registerTask('default', ['watch']);
 };
