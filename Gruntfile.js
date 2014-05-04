@@ -1,9 +1,15 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     jasmine: {
-      src: ['js/piece/*.js', 'js/*.js'],
+      src: [
+        'js/pieces/piece/*.js',
+        'js/pieces/*.js',
+        'js/board_position.js',
+        'js/board.js',
+        'js/player.js',
+        'js/main.js'],
       options: {
         vendor: 'js/vendor/*.js',
         specs: 'spec/*_spec.js',
