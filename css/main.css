@@ -56,7 +56,6 @@ textarea {
     padding: 0.2em 0;
 }
 
-
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
    ========================================================================== */
@@ -164,132 +163,153 @@ nav a:hover {
    red: DF5A49
    ========================================================================== */
 
-  body {
+body {
     background-color: #334D5C;
-  }
+    padding: 0 20px;
+}
 
-  h1 {
+h1 {
     color: #FFFFFF;
-  }
+}
 
-  h1#home {
-    font-size: 6em;
-  }
+h1#home {
+    margin-top: 1.5em;
+}
 
-  .main-btn{
+h1#home .title {
+    font-size: 2em;
+}
+
+h1#home .piece {
+    font-size: 4em;
+}
+
+.main-btn {
     border: 1px solid #45B29D;
     background-color: #334D5C;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    font-size:12px;
-    padding: 10px 10px 10px 10px;
-    text-decoration:none;
-    display:inline-block;
-    font-weight:bold;
+    font-size: 12px;
+    padding: 3% 0;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
     color: #FFFFFF;
-  }
-  .container {
+    margin: 0 10%;
+    width: 90%;
+
+}
+
+.main-btn-container3 {
+    width: 33.3%;
+    float: left;
+}
+
+.container {
     width: 100%;
     position: relative;
-  }
-  .main-btn:hover {
+}
+
+.main-btn:hover {
     background-color: #45B29D;
-  }
+}
 
-  .text-center {
+.text-center {
     text-align: center;
-  }
+}
 
-  #board {
+#board {
     border: 2px solid #EFC94C;
     margin: auto;
     margin-top: 10px;
-  }
+}
 
-  #board td {
+#board td {
     height: 5em;
     width: 5em;
     border: 1px solid #EFC94C;
     background-color: #EFC94C;
     text-align: center;
     vertical-align: middle;
-  }
+}
 
-  #board tr:nth-child(odd) td:nth-child(even),
-  #board tr:nth-child(even) td:nth-child(odd) {
+#board tr:nth-child(odd) td:nth-child(even),
+#board tr:nth-child(even) td:nth-child(odd) {
     background-color: #E27A3F;
-  }
+}
 
-  #board td.header-cell {
+#board td.header-cell {
     width: 1em;
-  }
+}
 
-  #board .header-line td {
+#board .header-line td {
     height: 1em;
-  }
+}
 
-  .piece {
+.piece {
     font-size: 3em;
-  }
+}
 
-  .piece.selected {
+.piece.selected {
     color: #45B29D;
-  }
+}
 
-  a[class*='white'] {
+a[class*='white'] {
     color: #FFFFFF;
-  }
-  .white-tower:before {
+}
+
+.white-tower:before {
     content: "♖";
-  }
-  .white-queen:before {
+}
+
+.white-queen:before {
     content: "♕";
-  }
-  .white-king:before {
+}
+
+.white-king:before {
     content: "♔";
-  }
-  .white-bishop:before {
+}
+
+.white-bishop:before {
     content: "♗";
-  }
-  .white-knight:before {
+}
+
+.white-knight:before {
     content: "♘";
-  }
-  .white-pawn:before {
+}
+
+.white-pawn:before {
     content: "♙";
-  }
+}
 
-
-  a[class*='black'] {
+a[class*='black'] {
     color: #000000;
-  }
-  .black-tower:before {
+}
+
+.black-tower:before {
     content: "♜";
-  }
-  .black-queen:before {
+}
+
+.black-queen:before {
     content: "♛";
-  }
-  .black-king:before {
+}
+
+.black-king:before {
     content: "♚";
-  }
-  .black-bishop:before {
+}
+
+.black-bishop:before {
     content: "♝";
-  }
-  .black-knight:before {
+}
+
+.black-knight:before {
     content: "♞";
-  }
-  .black-pawn:before {
+}
+
+.black-pawn:before {
     content: "♟";
-  }
-
-
-
-
-
-
-
-
-
+}
 
 /* ==========================================================================
    Media Queries
@@ -297,10 +317,9 @@ nav a:hover {
 
 @media only screen and (min-width: 480px) {
 
-/* ====================
-    INTERMEDIATE: Menu
-   ==================== */
-
+    /* ====================
+        INTERMEDIATE: Menu
+       ==================== */
     nav a {
         float: left;
         width: 27%;
@@ -317,10 +336,9 @@ nav a:hover {
         margin-right: 0;
     }
 
-/* ========================
-    INTERMEDIATE: IE Fixes
-   ======================== */
-
+    /* ========================
+        INTERMEDIATE: IE Fixes
+       ======================== */
     nav ul li {
         display: inline;
     }
@@ -332,51 +350,80 @@ nav a:hover {
 
 @media only screen and (min-width: 768px) {
 
-/* ====================
-    WIDE: CSS3 Effects
-   ==================== */
-
+    /* ====================
+        WIDE: CSS3 Effects
+       ==================== */
     .header-container,
     .main aside {
         -webkit-box-shadow: 0 5px 10px #aaa;
-           -moz-box-shadow: 0 5px 10px #aaa;
-                box-shadow: 0 5px 10px #aaa;
+        -moz-box-shadow: 0 5px 10px #aaa;
+        box-shadow: 0 5px 10px #aaa;
     }
 
-/* ============
-    WIDE: Menu
-   ============ */
-
-    .title {
+    /* ============
+        WIDE: Menu
+       ============ */
+    header {
+        width: 40%;
         float: left;
     }
 
     nav {
-        float: right;
-        width: 38%;
+        float: right;;
+        width: 60%;
+        margin-top: 2em;
     }
 
-/* ============
-    WIDE: Main
-   ============ */
-
-    .main article {
+    main {
+        clear: both;
         float: left;
-        width: 57%;
+
+        text-align: center;
+        width: 100%;
     }
 
-    .main aside {
-        float: right;
-        width: 28%;
+    section.select_game {
+        clear: both;
+        float: left;
+        text-align: center;
+        width: 100%;
     }
+
+    section.select_game .select_game_message {
+        color: #FFFFFF;
+        font-size: 2em;
+        margin-top: 5em;
+    }
+
+    main section.board {
+        width: 65%;
+        float: left;
+    }
+
+    main aside.right_pane {
+        border: 1px solid #45B29D;
+        background-color: #5F6F7F;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font-size: 12px;
+        /*padding: 10px 10px 10px 10px;*/
+        text-decoration: none;
+        display: inline-block;
+        font-weight: bold;
+        color: #FFFFFF;
+        float: right;
+        width: 30%;
+        min-height: 700px;
+    }
+
 }
 
 @media only screen and (min-width: 1140px) {
 
-/* ===============
-    Maximal Width
-   =============== */
-
+    /* ===============
+        Maximal Width
+       =============== */
     .wrapper {
         width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;

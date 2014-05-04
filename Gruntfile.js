@@ -9,7 +9,8 @@ module.exports = function (grunt) {
         'js/board_position.js',
         'js/board.js',
         'js/player.js',
-        'js/main.js'],
+        'js/main.js',
+        'js/scripts.js'],
       options: {
         vendor: 'js/vendor/*.js',
         specs: 'spec/*_spec.js',
