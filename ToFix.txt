@@ -1,3 +1,0 @@
-1) Após a saída do estado inicial as peças, tanto pretas quanto as brancas, estão podendo se comer
-2) As peças rainha, bispo e torre estão podendo "passar por cima" das peças adversárias.
- Os movimentos válidos não estão parando ao encontrar uma peça adversária na frente.
