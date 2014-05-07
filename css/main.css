@@ -184,6 +184,16 @@ h1#home .piece {
     font-size: 4em;
 }
 
+#currentTurn {
+  width: 100%;
+  height: 30px;
+  background-color: #000000;
+}
+
+#currentTurn.white {
+  background-color: #FFFFFF;
+}
+
 .main-btn {
     border: 1px solid #45B29D;
     background-color: #334D5C;
@@ -219,7 +229,16 @@ h1#home .piece {
     text-align: center;
 }
 
+#board.inverse {
+  transform: rotate(180deg) scaleX(-1);
+}
+
+#board.inverse td {
+  transform: rotate(180deg) scaleX(-1);
+}
+
 #board {
+    transition: transform .7s;
     border: 2px solid #EFC94C;
     margin: auto;
     margin-top: 10px;
