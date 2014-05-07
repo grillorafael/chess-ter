@@ -1,6 +1,5 @@
 # Chess-ter
 
-
 # Configuring
 To run all tasks in this project you need ```npm```.
 
@@ -11,7 +10,7 @@ After everything is installed run ```npm install``` at your projects folder.
 Just type ```npm install -g grunt-cli``` to install grunt globally available on your system.
 
 #To run grunt from command line
-Run ```npm install``` at your projects folder.
+Run ```grunt``` at your projects folder.
 
 # Running jshint
 Type ```grunt watch``` or ```grunt``` to start watching your js files
