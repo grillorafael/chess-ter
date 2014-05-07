@@ -1,29 +1,170 @@
 <!DOCTYPE html>
-<html class="no-js" >
-  <head>
+<html class="no-js">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Chesster</title>
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/main.css">
-  </head>
-  <body>
+</head>
+<body>
+<header>
+    <h1 id="home">
+        <span class="piece">♕</span>
+        <span class="title">Chesster</span>
+        <span class="piece">♕</span>
+    </h1>
+</header>
+<nav>
     <div class='container'>
-      <div class='text-center' style="margin:50px;">
-        <h1 id="home">♕</h1>
-        <h1 class='text-center'>Chesster</h1>
-      </div>
-      <div class='text-center' style="margin:auto;">
-        <a class='main-btn' href="chesster.html?type=pvp">
-          Player vs Player
-        </a>
-        <a class='main-btn' href="chesster.html?type=pve">
-          Player vs Computer
-        </a>
-        <a class='main-btn' href="chesster.html?type=eve">
-          Computer vs Computer
-        </a>
-      </div>
+        <div class='text-center' style="margin:auto;">
+            <div class="main-btn-container3">
+                <a class='main-btn' href="javascript:void(0)" id="start-pvp-game" >
+                    Player vs Player
+                </a>
+            </div>
+            <div class="main-btn-container3">
+                <a class='main-btn' href="javascript:void(0)" id="start-pve-game" >
+                    Player vs Computer
+                </a>
+            </div>
+            <div class="main-btn-container3">
+                <a class='main-btn' href="javascript:void(0)" id="start-eve-game" >
+                    Computer vs Computer
+                </a>
+            </div>
+        </div>
     </div>
-  </body>
+</nav>
+
+<section class="select_game">
+    <div class="select_game_message">
+        Selecione um modo de jogo no menu superior.
+    </div>
+</section>
+
+<main id="main_board" style="display: none">
+
+    <section class="board">
+        <table id="board" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="header-cell">8</td>
+                <td id="a8"><a href="#" class="piece black-tower"></a></td>
+                <td id="b8"><a href="#" class="piece black-knight"></a></td>
+                <td id="c8"><a href="#" class="piece black-bishop"></a></td>
+                <td id="d8"><a href="#" class="piece black-king"></a></td>
+                <td id="e8"><a href="#" class="piece black-queen"></a></td>
+                <td id="f8"><a href="#" class="piece black-bishop"></a></td>
+                <td id="g8"><a href="#" class="piece black-knight"></a></td>
+                <td id="h8"><a href="#" class="piece black-tower"></a></td>
+            </tr>
+            <tr>
+                <td class="header-cell">7</td>
+                <td id="a7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="b7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="c7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="d7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="e7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="f7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="g7"><a href="#" class="piece black-pawn"></a></td>
+                <td id="h7"><a href="#" class="piece black-pawn"></a></td>
+            </tr>
+            <tr>
+                <td class="header-cell">6</td>
+                <td id="a6"></td>
+                <td id="b6"></td>
+                <td id="c6"></td>
+                <td id="d6"></td>
+                <td id="e6"></td>
+                <td id="f6"></td>
+                <td id="g6"></td>
+                <td id="h6"></td>
+            </tr>
+            <tr>
+                <td class="header-cell">5</td>
+                <td id="a5"></td>
+                <td id="b5"></td>
+                <td id="c5"></td>
+                <td id="d5"></td>
+                <td id="e5"></td>
+                <td id="f5"></td>
+                <td id="g5"></td>
+                <td id="h5"></td>
+            </tr>
+            <tr>
+                <td class="header-cell">4</td>
+                <td id="a4"></td>
+                <td id="b4"></td>
+                <td id="c4"></td>
+                <td id="d4"></td>
+                <td id="e4"></td>
+                <td id="f4"></td>
+                <td id="g4"></td>
+                <td id="h4"></td>
+            </tr>
+            <tr>
+                <td class="header-cell">3</td>
+                <td id="a3"></td>
+                <td id="b3"></td>
+                <td id="c3"></td>
+                <td id="d3"></td>
+                <td id="e3"></td>
+                <td id="f3"></td>
+                <td id="g3"></td>
+                <td id="h3"></td>
+            </tr>
+            <tr>
+                <td class="header-cell">2</td>
+                <td id="a2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="b2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="c2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="d2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="e2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="f2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="g2"><a href="#" class="piece white-pawn"></a></td>
+                <td id="h2"><a href="#" class="piece white-pawn"></a></td>
+            </tr>
+            <tr>
+                <td class="header-cell">1</td>
+                <td id="a1"><a href="#" class="piece white-tower"></a></td>
+                <td id="b1"><a href="#" class="piece white-knight"></a></td>
+                <td id="c1"><a href="#" class="piece white-bishop"></a></td>
+                <td id="d1"><a href="#" class="piece white-king"></a></td>
+                <td id="e1"><a href="#" class="piece white-queen"></a></td>
+                <td id="f1"><a href="#" class="piece white-bishop"></a></td>
+                <td id="g1"><a href="#" class="piece white-knight"></a></td>
+                <td id="h1"><a href="#" class="piece white-tower"></a></td>
+            </tr>
+            <tr class="header-line">
+                <td class="header-cell"></td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>G</td>
+                <td>H</td>
+            </tr>
+        </table>
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/pieces/piece/piece.js"></script>
+        <script src="js/board_position.js"></script>
+        <script src="js/board.js"></script>
+        <script src="js/player.js"></script>
+        <script src="js/pieces/bishop.js"></script>
+        <script src="js/pieces/king.js"></script>
+        <script src="js/pieces/knight.js"></script>
+        <script src="js/pieces/pawn.js"></script>
+        <script src="js/pieces/queen.js"></script>
+        <script src="js/pieces/tower.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/scripts.js"></script>
+    </section>
+    <aside class="right_pane">
+        Informacoes do jogo
+    </aside>
+</main>
+</body>
 </html>

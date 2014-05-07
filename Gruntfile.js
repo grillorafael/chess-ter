@@ -1,9 +1,16 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     jasmine: {
-      src: ['js/piece/*.js', 'js/*.js'],
+      src: [
+        'js/pieces/piece/*.js',
+        'js/pieces/*.js',
+        'js/board_position.js',
+        'js/board.js',
+        'js/player.js',
+        'js/main.js',
+        'js/scripts.js'],
       options: {
         vendor: 'js/vendor/*.js',
         specs: 'spec/*_spec.js',
@@ -25,11 +32,23 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'js/*.js'
       ]
+    },
+    inline: {
+      options: {
+        cssmin: true,
+        uglify: true,
+        tag: ''
+      },
+      dist: {
+        src: [ 'index.html' ],
+        dest: ['dest/']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-inline');
   grunt.registerTask('default', ['watch']);
 };
