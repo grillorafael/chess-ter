@@ -1,3 +1,45 @@
+describe('Board', function() {
+  describe('#moveFromTo', function() {
+    it('moves a piece from a position to another', function() {
+      var board, blackPlayer, whitePlayer, blackPawn, whitePawn;
+      blackPlayer = new Player(Player.BLACK);
+      whitePlayer = new Player(Player.WHITE);
+
+      blackPawn = new Pawn(blackPlayer);
+      whitePawn = new Pawn(whitePlayer);
+
+      board = new Board(whitePlayer, blackPlayer);
+
+      board.moveFromTo(new BoardPosition('a2'), new BoardPosition('a3'));
+
+      expect(board.at(new BoardPosition('a2')).empty()).toBeTruthy();
+      expect(board.at(new BoardPosition('a3')).empty()).toBeFalsy();
+    });
+    describe('roque', function() {
+      describe('white piece', function() {
+        it('does roque with left tower', function() {
+          var board, blackPlayer, whitePlayer, blackKing, whiteKing;
+          blackPlayer = new Player(Player.BLACK);
+          whitePlayer = new Player(Player.WHITE);
+
+          blackKing = new King(blackPlayer);
+          whiteKing = new King(whitePlayer);
+
+          board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/1NBQ4/PPPPPPPP/R3KBNR');
+
+          board.moveFromTo(new BoardPosition('e1'), new BoardPosition('a1'));
+          expect(board.at(new BoardPosition('a1')).empty()).toBeTruthy();
+          expect(board.at(new BoardPosition('c1')).empty()).toBeFalsy();
+          expect(board.at(new BoardPosition('e1')).empty()).toBeFalsy();
+        });
+      });
+      describe('black piece', function() {
+
+      });
+    });
+  });
+});
+
 describe('BoardPosition', function () {
   var position;
   beforeEach(function () {

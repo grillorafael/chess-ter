@@ -35,8 +35,9 @@ var Chess = (function (player1, player2) {
       selectedPiece = null;
     }
     else {
+      var beforeBoard = jQuery.extend(true, {}, game);;
       if(game.moveFromTo(selectedPiecePosition, clickedPosition)) {
-        uimoveFromTo(selectedPiecePosition, clickedPosition);
+        uimoveFromTo(selectedPiecePosition, clickedPosition, beforeBoard);
       }
     }
 
@@ -47,8 +48,9 @@ var Chess = (function (player1, player2) {
     var tdPosition = getCellPosition($(this));
     if(selectedPiece != null) {
       var selectedPiecePosition = getPiecePosition();
+      var beforeBoard = jQuery.extend(true, {}, game);;
       if(game.moveFromTo(selectedPiecePosition, tdPosition)) {
-        uimoveFromTo(selectedPiecePosition, tdPosition);
+        uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
       }
     }
   };
@@ -62,16 +64,50 @@ var Chess = (function (player1, player2) {
     return piecePosition;
   };
 
+  var refreshTurn = function() {
+    if(game.playerTurn.isBlack()) {
+      $('#board').addClass('inverse');
+      $('#currentTurn').removeClass('white');
+    }
+    else {
+      $('#board').removeClass('inverse');
+      $('#currentTurn').addClass('white');
+    }
+  };
+
   var getCellPosition = function(cell) {
     return new BoardPosition(cell.attr('id'));
   };
 
-  var uimoveFromTo = function(from, to) {
-    var piece = $('#' + from.prettyPrint()).find('.piece');
-    var cell = $('#' + to.prettyPrint());
-    cell.html('');
-    cell.append(piece);
+  var uimoveFromTo = function(fromPosition, toPosition, beforeBoard) {
+    var from = beforeBoard.at(fromPosition);
+    var to = beforeBoard.at(toPosition);
+
+    var fromContent = $('#' + fromPosition.prettyPrint()).find('.piece');
+    var toContent = $('#' + toPosition.prettyPrint()).find('.piece');
+
+    $('#' + fromPosition.prettyPrint()).html('');
+    $('#' + toPosition.prettyPrint()).html('');
+
+    if((!to.empty() && !to.isEnemyOf(from))) {
+      $('#' + fromPosition.prettyPrint()).append(toContent);
+      $('#' + toPosition.prettyPrint()).html('');
+
+      if(toPosition.column() > fromPosition.column()) {
+        $('#' + fromPosition.nextColumn().nextColumn().prettyPrint()).append(fromContent);
+      }
+      else {
+        $('#' + fromPosition.previousColumn().previousColumn().prettyPrint()).append(fromContent);
+      }
+    }
+    else {
+      $('#' + toPosition.prettyPrint()).append(fromContent);
+    }
+
+    $(".piece").unbind("click", handlePieceClick);
+    $('.piece').click(handlePieceClick);
     unselectPiece();
+    refreshTurn();
   };
 
   // Adding event listeners

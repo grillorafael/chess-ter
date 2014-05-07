@@ -30,6 +30,16 @@ describe('King', function(){
         ];
         compareMovementsAndExpected(movements, expected);
       });
+
+      it('should be able to do a roque with right tower', function() {
+        board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/1NBQ4/PPPPPPPP/RNBQK2R');
+        var movements = whiteKing.possibleMovements(new BoardPosition('e1'), board);
+        var expected = [
+          new BoardPosition('h1'),
+          new BoardPosition('f1')
+        ];
+        compareMovementsAndExpected(movements, expected);
+      });
     });
   });
 

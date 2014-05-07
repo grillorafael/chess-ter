@@ -25,7 +25,7 @@ Board.prototype.hasHorizontalCollision = function(from, to) {
   if(from.column() > to.column()) {
     while(!from.previousColumn().sameAs(to)) {
       from = from.previousColumn();
-      if(!from.empty()) {
+      if(!this.at(from).empty()) {
         return true;
       }
     }
@@ -33,7 +33,7 @@ Board.prototype.hasHorizontalCollision = function(from, to) {
   else {
     while(!from.nextColumn().sameAs(to)) {
       from = from.nextColumn();
-      if(!from.empty()) {
+      if(!this.at(from).empty()) {
         return true;
       }
     }
@@ -66,7 +66,7 @@ Board.prototype.isPositionVulnerable = function(position) {
     for(j = 0; j < lj; j++) {
       var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
       if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this, true);
         if(position.in(possibleMovements)) {
           return true;
         }

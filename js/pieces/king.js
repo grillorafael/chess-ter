@@ -7,7 +7,11 @@ King.prototype = new Piece();
 King.prototype.constructor = King;
 
 
-King.prototype.possibleMovements = function (position, board) {
+King.prototype.possibleMovements = function (position, board, calculatingRoque) {
+  if(arguments.length == 2) {
+    calculatingRoque = false;
+  }
+
   if(position instanceof BoardPosition) {
     var possibleMovements = [], currentPlayer = this.player();
 
@@ -69,28 +73,28 @@ King.prototype.possibleMovements = function (position, board) {
 
 
     // Roque
-    // if(board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
-      // if(player.isWhite() && !board.isPositionVulnerable(new BoardPosition('a1'))
-      //   && !board.isPositionVulnerable(new BoardPosition('h1'))) {
-      //
-      //   if(board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
-      //     possibleMovements.push(new BoardPosition('a1'));
-      //   }
-      //   if(board.hasHorizontalCollision(position, new BoardPosition('h1'))) {
-      //     possibleMovements.push(new BoardPosition('h1'));
-      //   }
-      // }
-      // else if(player.isBlack() && !board.isPositionVulnerable(new BoardPosition('a8'))
-      //   && !board.isPositionVulnerable(new BoardPosition('h8'))) {
-      //
-      //   if(board.hasHorizontalCollision(position, new BoardPosition('a8'))) {
-      //     possibleMovements.push(new BoardPosition('a8'));
-      //   }
-      //   if(board.hasHorizontalCollision(position, new BoardPosition('h8'))) {
-      //     possibleMovements.push(new BoardPosition('h8'));
-      //   }
-      // }
-    // }
+    if(!calculatingRoque && board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
+      if(this.player().isWhite() && !board.isPositionVulnerable(new BoardPosition('a1'))
+        && !board.isPositionVulnerable(new BoardPosition('h1'))) {
+
+        if(!board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
+          possibleMovements.push(new BoardPosition('a1'));
+        }
+        if(!board.hasHorizontalCollision(position, new BoardPosition('h1'))) {
+          possibleMovements.push(new BoardPosition('h1'));
+        }
+      }
+      else if(this.player().isBlack() && !board.isPositionVulnerable(new BoardPosition('a8'))
+        && !board.isPositionVulnerable(new BoardPosition('h8'))) {
+
+        if(!board.hasHorizontalCollision(position, new BoardPosition('a8'))) {
+          possibleMovements.push(new BoardPosition('a8'));
+        }
+        if(!board.hasHorizontalCollision(position, new BoardPosition('h8'))) {
+          possibleMovements.push(new BoardPosition('h8'));
+        }
+      }
+    }
 
     return possibleMovements;
   }
