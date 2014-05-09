@@ -274,8 +274,37 @@ h1#home .piece {
     height: 1em;
 }
 
+#game-info {
+  margin-left: 20px;
+  padding-left: 0px;
+  text-align: left;
+}
+
+#game-info li {
+  list-style-type: none;
+}
+
+.player-log {
+  margin-right: 10px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.log-piece {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+.player-log.white {
+  background-color: #FFFFFF;
+}
+
+.player-log.black {
+  background-color: #000000;
+}
+
 .piece {
-    text-decoration: none;
     font-size: 3em;
 }
 
@@ -283,7 +312,7 @@ h1#home .piece {
     color: #45B29D;
 }
 
-a[class*='white'] {
+.log-piece[class*='white'], a[class*='white'] {
     color: #FFFFFF;
 }
 
@@ -311,7 +340,7 @@ a[class*='white'] {
     content: "♙";
 }
 
-a[class*='black'] {
+.log-piece[class*='black'], a[class*='black'] {
     color: #000000;
 }
 
@@ -436,7 +465,7 @@ a[class*='black'] {
         font-weight: bold;
         color: #FFFFFF;
         width: 20%;
-        min-height: 400px;
+        height: 400px;
         position: absolute;
         top: 130px;
         right: 5px;

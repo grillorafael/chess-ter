@@ -88,17 +88,30 @@ Board.prototype.canPlayerRoque = function(player) {
   return !(player.isWhite() ? this.whiteTowerOrKingMoved : this.blackTowerOrKingMoved);
 };
 
-Board.prototype.moveFromTo = function(fromPosition , toPosition) {
+Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
     var msg = "Board#moveFromTo: Invalid position";
     alert(msg);
     throw new Error(msg);
   }
 
+  if(arguments.length == 2) {
+    forceMovement = false;
+  }
+
   var from = this.at(fromPosition);
   var to = this.at(toPosition);
+  var piecePossibleMovements = from.possibleMovements(fromPosition, this);
 
-  if(!from.empty() && toPosition.in(from.possibleMovements(fromPosition, this))) {
+  if(!forceMovement) {
+    var clone = this.clone();
+    clone.moveFromTo(fromPosition, toPosition, true);
+    if(clone.isPlayerInCheck(this.playerTurn)) {
+      return false;
+    }
+  }
+
+  if(!from.empty() && (toPosition.in(piecePossibleMovements) || forceMovement)) {
 
     if((from instanceof Tower) || (from instanceof King)) {
       if(from.player().isWhite()) {
@@ -238,6 +251,11 @@ Board.prototype.validateFen = function (fen) {
   /* everything's okay! */
   return {valid: true, error_number: 0, error: errors[0]};
 };
+
+Board.prototype.clone = function() {
+  return jQuery.extend(true, {}, this);
+};
+
 
 Board.EMPTY = {empty : function(){return true;}};
 Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';

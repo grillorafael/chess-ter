@@ -73,10 +73,26 @@ var Chess = (function (player1, player2) {
       $('#board').removeClass('inverse');
       $('#currentTurn').addClass('white');
     }
+
+    if(game.isPlayerInCheck(game.playerTurn)) {
+      var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
+      addTextLog('O jogador ' + player + ' está em cheque');
+    }
   };
 
   var getCellPosition = function(cell) {
     return new BoardPosition(cell.attr('id'));
+  };
+
+  var addTextLog = function(text) {
+    $('#game-info').prepend('<li>' + text + '</li>');
+  };
+
+  var addToLog = function(pieceClasses, from, to) {
+    pieceClasses = pieceClasses.replace('piece', "");
+    pieceClasses = pieceClasses.replace('selected', "");
+    var text = "De: " + from + " Para: " + to;
+    addTextLog('<li><span class="log-piece ' + pieceClasses + '"></span>' + text + '</li>');
   };
 
   var uimoveFromTo = function(fromPosition, toPosition, beforeBoard) {
@@ -90,17 +106,22 @@ var Chess = (function (player1, player2) {
     $('#' + toPosition.prettyPrint()).html('');
 
     if((!to.empty() && !to.isEnemyOf(from))) {
+      addToLog(toContent.attr('class'), toPosition.prettyPrint(), fromPosition.prettyPrint());
+
       $('#' + fromPosition.prettyPrint()).append(toContent);
       $('#' + toPosition.prettyPrint()).html('');
 
       if(toPosition.column() > fromPosition.column()) {
+        addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), fromPosition.nextColumn().nextColumn().prettyPrint());
         $('#' + fromPosition.nextColumn().nextColumn().prettyPrint()).append(fromContent);
       }
       else {
+        addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), fromPosition.previousColumn().previousColumn().prettyPrint());
         $('#' + fromPosition.previousColumn().previousColumn().prettyPrint()).append(fromContent);
       }
     }
     else {
+      addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), toPosition.prettyPrint());
       $('#' + toPosition.prettyPrint()).append(fromContent);
     }
 
