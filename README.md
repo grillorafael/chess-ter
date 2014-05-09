@@ -1,4 +1,5 @@
 # Chess-ter
+
 # Configuring
 To run all tasks in this project you need ```npm```.
 
