@@ -233,11 +233,11 @@ h1#home .piece {
 }
 
 #board.inverse {
-  transform: rotate(180deg) scaleX(-1);
+  transform: rotate(180deg);
 }
 
 #board.inverse td {
-  transform: rotate(180deg) scaleX(-1);
+  transform: rotate(180deg);
 }
 
 #board {
@@ -262,10 +262,12 @@ h1#home .piece {
 }
 
 #board td.header-cell {
+    display: none;
     width: 1em;
 }
 
 #board .header-line td {
+    display: none;
     height: 1em;
 }
 
