@@ -234,14 +234,19 @@ h1#home .piece {
 
 #board.inverse {
   transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
 }
 
 #board.inverse td {
   transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
 }
 
 #board {
     transition: transform .5s;
+    -webkit-transition: transform .5s;
     border: 2px solid #EFC94C;
     margin: auto;
     margin-top: 10px;
