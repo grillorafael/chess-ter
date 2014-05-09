@@ -79,6 +79,29 @@ Board.prototype.isPositionVulnerable = function(position) {
   return false;
 };
 
+Board.prototype.isPlayerInCheckMate = function(player) {
+  var i, j,
+    li = this.board[0].length,
+    lj = this.board.length;
+
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+      if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
+          var newBoard = this.clone();
+          if(newBoard.moveFromTo(currentPosition, possibleMovements[p])) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  return true;
+};
+
 Board.prototype.isPlayerInCheck = function(player) {
   var kingPosition = this.kingPositionOf(player);
   return this.isPositionVulnerable(kingPosition);

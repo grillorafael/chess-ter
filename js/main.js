@@ -74,7 +74,12 @@ var Chess = (function (player1, player2) {
       $('#currentTurn').addClass('white');
     }
 
-    if(game.isPlayerInCheck(game.playerTurn)) {
+    if(game.isPlayerInCheckMate(game.playerTurn)) {
+      var player = !game.playerTurn.isWhite() ? 'Branco' : 'Preto';
+      $(".piece").unbind("click", handlePieceClick);
+      addTextLog('O jogador ' + player + ' ganhou');
+    }
+    else if(game.isPlayerInCheck(game.playerTurn)) {
       var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
     }
