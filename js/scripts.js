@@ -1,3 +1,5 @@
+'use strict';
+
 $(function () {
   $("#start-pvp-game").click(function () {
     showBoard(true);
@@ -11,12 +13,10 @@ $(function () {
   $('.reinit').click(function () {
     location.reload();
   });
+
+  function showBoard(show) {
+    $('section.select_game')[show ? 'hide' : 'show']();
+    $('#main_board')[show ? 'show' : 'hide']();
+    $('nav')[show ? 'hide' : 'show']();
+  }
 });
-
-
-
-function showBoard(show) {
-  $('section.select_game')[show ? 'hide' : 'show']();
-  $('#main_board')[show ? 'show' : 'hide']();
-  $('nav')[show ? 'hide' : 'show']();
-}

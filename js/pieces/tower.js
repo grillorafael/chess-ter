@@ -1,7 +1,8 @@
+'use strict';
+
 function Tower(player) {
   Piece.call(this, player);
-};
-
+}
 
 Tower.prototype = new Piece();
 Tower.prototype.constructor = Tower;
@@ -10,8 +11,8 @@ Tower.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Tower#possibleMovements: position should be a BoardPosition";
     alert(msg);
-    throw Error(msg);
-  };
+    throw new Error(msg);
+  }
 
   var hasNextLine = true, hasPreviousLine = true, hasNextColumn = true, hasPreviousColumn = true, tmpPosition = position.nextLine(), possibleMovements = [], lastPosition = position;
   while(hasNextLine) {

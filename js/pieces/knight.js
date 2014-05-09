@@ -1,6 +1,8 @@
+'use strict';
+
 function Knight(player) {
   Piece.call(this, player);
-};
+}
 
 
 Knight.prototype = new Piece();

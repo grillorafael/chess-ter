@@ -10,7 +10,8 @@ module.exports = function (grunt) {
         'js/board.js',
         'js/player.js',
         'js/main.js',
-        'js/scripts.js'],
+        'js/scripts.js'
+      ],
       options: {
         vendor: 'js/vendor/*.js',
         specs: 'spec/*_spec.js',
@@ -19,7 +20,7 @@ module.exports = function (grunt) {
     },
     watch: {
       js: {
-        files: ['js/*.js', 'Gruntfile.js'],
+        files: ['js/*.js', 'js/pieces/**/*.js', 'Gruntfile.js'],
         tasks: ['jshint']
       }
     },
@@ -30,7 +31,9 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        'js/*.js'
+        'js/*.js',
+        'js/pieces/*.js',
+        'js/pieces/piece/*.js',
       ]
     },
     inline: {

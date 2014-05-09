@@ -1,7 +1,8 @@
+'use strict';
+
 function Piece(player) {
   this._player = player;
-};
-
+}
 
 Piece.prototype.player = function() {
   return this._player;
@@ -14,7 +15,7 @@ Piece.prototype.empty = function() {
 Piece.prototype.possibleMovements = function (position, board) {
   var msg = "Piece#possibleMovements: Not yet implemented";
   alert(msg);
-  throw Error(msg);
+  throw new Error(msg);
 };
 
 Piece.prototype.sameAs = function(pi) {
@@ -25,7 +26,7 @@ Piece.prototype.isEnemyOf = function(pi) {
   if(!(pi instanceof Piece)) {
     var msg = "Piece#isEnemyOf: parameter should be a piece";
     alert(msg);
-    throw Error(msg);
+    throw new Error(msg);
   }
 
   return this.player().isWhite() != pi.player().isWhite();

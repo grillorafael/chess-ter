@@ -1,11 +1,11 @@
+'use strict';
+
 function King(player) {
   Piece.call(this, player);
-};
-
+}
 
 King.prototype = new Piece();
 King.prototype.constructor = King;
-
 
 King.prototype.possibleMovements = function (position, board, calculatingRoque) {
   if(arguments.length == 2) {
@@ -74,8 +74,7 @@ King.prototype.possibleMovements = function (position, board, calculatingRoque) 
 
     // Roque
     if(!calculatingRoque && board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
-      if(this.player().isWhite() && !board.isPositionVulnerable(new BoardPosition('a1'))
-        && !board.isPositionVulnerable(new BoardPosition('h1'))) {
+      if(this.player().isWhite() && !board.isPositionVulnerable(new BoardPosition('a1')) && !board.isPositionVulnerable(new BoardPosition('h1'))) {
 
         if(!board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
           possibleMovements.push(new BoardPosition('a1'));
@@ -84,8 +83,7 @@ King.prototype.possibleMovements = function (position, board, calculatingRoque) 
           possibleMovements.push(new BoardPosition('h1'));
         }
       }
-      else if(this.player().isBlack() && !board.isPositionVulnerable(new BoardPosition('a8'))
-        && !board.isPositionVulnerable(new BoardPosition('h8'))) {
+      else if(this.player().isBlack() && !board.isPositionVulnerable(new BoardPosition('a8')) && !board.isPositionVulnerable(new BoardPosition('h8'))) {
 
         if(!board.hasHorizontalCollision(position, new BoardPosition('a8'))) {
           possibleMovements.push(new BoardPosition('a8'));

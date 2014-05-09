@@ -16,9 +16,19 @@
     "strict"        : true,  // Require `use strict` pragma  in every file.
     "globalstrict"  : true,  // Allow global "use strict" (also enables 'strict').
 
-    // "predef": [
-    //   "TableUtil"
-    // ],
+    "predef": [
+      "BoardPosition",
+      "Piece",
+      "Board",
+      "King",
+      "Tower",
+      "Pawn",
+      "Knight",
+      "Bishop",
+      "Player",
+      "Queen",
+      "_"
+    ],
 
     // The Good Parts.
     "asi"           : false,  // Tolerate Automatic Semicolon Insertion (no semicolons).

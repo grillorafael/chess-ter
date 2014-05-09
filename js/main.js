@@ -10,7 +10,7 @@ var Chess = (function (player1, player2) {
 
   this.getGame = function() {
     return game;
-  }
+  };
 
   var unselectPiece = function() {
     selectedPiece.removeClass('selected');
@@ -35,7 +35,7 @@ var Chess = (function (player1, player2) {
       selectedPiece = null;
     }
     else {
-      var beforeBoard = jQuery.extend(true, {}, game);;
+      var beforeBoard = jQuery.extend(true, {}, game);
       if(game.moveFromTo(selectedPiecePosition, clickedPosition)) {
         uimoveFromTo(selectedPiecePosition, clickedPosition, beforeBoard);
       }
@@ -48,7 +48,7 @@ var Chess = (function (player1, player2) {
     var tdPosition = getCellPosition($(this));
     if(selectedPiece != null) {
       var selectedPiecePosition = getPiecePosition();
-      var beforeBoard = jQuery.extend(true, {}, game);;
+      var beforeBoard = jQuery.extend(true, {}, game);
       if(game.moveFromTo(selectedPiecePosition, tdPosition)) {
         uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
       }

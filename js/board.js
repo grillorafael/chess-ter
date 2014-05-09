@@ -1,3 +1,5 @@
+'use strict';
+
 function Board(playerWhite, playerBlack, fen) {
   fen = fen || Board.initialFen;
 
@@ -11,7 +13,7 @@ function Board(playerWhite, playerBlack, fen) {
   this.playerTurn = playerWhite;
 
   this.buildBoard(fen);
-};
+}
 
 Board.prototype.switchTurn = function() {
   this.playerTurn = this.playerTurn.isWhite() ? this.playerBlack : this.playerWhite;
@@ -40,7 +42,7 @@ Board.prototype.hasHorizontalCollision = function(from, to) {
   }
 
   return false;
-}
+};
 
 Board.prototype.kingPositionOf = function(player) {
   var i, j, li = this.board[0].length, lj = this.board.length;
@@ -84,13 +86,13 @@ Board.prototype.isPlayerInCheck = function(player) {
 
 Board.prototype.canPlayerRoque = function(player) {
   return !(player.isWhite() ? this.whiteTowerOrKingMoved : this.blackTowerOrKingMoved);
-}
+};
 
 Board.prototype.moveFromTo = function(fromPosition , toPosition) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
     var msg = "Board#moveFromTo: Invalid position";
     alert(msg);
-    throw Error(msg);
+    throw new Error(msg);
   }
 
   var from = this.at(fromPosition);
@@ -133,7 +135,7 @@ Board.prototype.setPosition = function(position, value) {
   if (!(position instanceof BoardPosition)) {
     var msg = "Board#setPosition: Invalid position";
     alert(msg);
-    throw Error(msg);
+    throw new Error(msg);
   }
 
   this.board[Math.abs(7 - (position.line() - 1))][position.getColumnNumber()] = value;
@@ -143,7 +145,7 @@ Board.prototype.at = function (position) {
   if (!(position instanceof BoardPosition)) {
     var msg = "Board#at: Invalid position";
     alert(msg);
-    throw Error(msg);
+    throw new Error(msg);
   }
   return this.board[Math.abs(7 - (position.line() - 1))][position.getColumnNumber()];
 };
@@ -237,7 +239,7 @@ Board.prototype.validateFen = function (fen) {
   return {valid: true, error_number: 0, error: errors[0]};
 };
 
-Board.EMPTY = {empty : function(){return true}};
+Board.EMPTY = {empty : function(){return true;}};
 Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 Board.fenMap = {
   'r': function (player) {
@@ -277,4 +279,3 @@ Board.fenMap = {
     return new Pawn(player);
   }
 };
-//

@@ -1,9 +1,11 @@
+'use strict';
+
 function BoardPosition(position) {
   if(!(position && position.length == 2)) {
     var msg = "BoardPosition#new: position valid";
     alert(msg);
-    throw Error(msg);
-  };
+    throw new Error(msg);
+  }
 
   this.setColumn(position.charAt(0));
   this.setLine(parseInt(position.charAt(1)));
@@ -62,7 +64,7 @@ BoardPosition.prototype.previousLine = function() {
   }
   var nextLine = this.line() - 1;
   return new BoardPosition(this.column() + "" + nextLine);
-}
+};
 
 BoardPosition.prototype.nextLine = function() {
   if(this.isTopLine()) {
@@ -70,7 +72,7 @@ BoardPosition.prototype.nextLine = function() {
   }
   var nextLine = this.line() + 1;
   return new BoardPosition(this.column() + "" + nextLine);
-}
+};
 
 BoardPosition.prototype.previousColumn = function() {
   if(this.isLeftColumn()) {
@@ -78,7 +80,7 @@ BoardPosition.prototype.previousColumn = function() {
   }
   var nextColumn = this.column().charCodeAt(0) - 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
-}
+};
 
 BoardPosition.prototype.nextColumn = function() {
   if(this.isRightColumn()) {
@@ -86,18 +88,18 @@ BoardPosition.prototype.nextColumn = function() {
   }
   var nextColumn = this.column().charCodeAt(0) + 1;
   return new BoardPosition(String.fromCharCode(nextColumn) + "" + this.line());
-}
+};
 
 BoardPosition.prototype.setLine = function (val) {
   if ((!((typeof val).toLowerCase() == 'number') || isNaN(val)) || (val < 1 || val > 8)) {
-    throw Error("BoardPosition#setLine: Linha inválida");
+    throw new Error("BoardPosition#setLine: Linha inválida");
   }
   this._line = val;
-}
+};
 
 BoardPosition.prototype.setColumn = function (val) {
   if (!((typeof val).toLowerCase() == 'string') || (val < 'a' || val > 'h')) {
-    throw Error("BoardPosition#setColumn: Coluna inválida");
+    throw new Error("BoardPosition#setColumn: Coluna inválida");
   }
   this._column = val;
 };

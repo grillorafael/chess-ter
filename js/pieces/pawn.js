@@ -1,6 +1,8 @@
+'use strict';
+
 function Pawn(player) {
   Piece.call(this, player);
-};
+}
 
 Pawn.prototype = new Piece();
 Pawn.prototype.constructor = Pawn;
@@ -9,8 +11,8 @@ Pawn.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Pawn#possibleMovements: position should be a BoardPosition";
     alert(msg);
-    throw Error(msg);
-  };
+    throw new Error(msg);
+  }
 
   var possibleMovements = [];
   if(this.player().isWhite()) {

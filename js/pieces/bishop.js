@@ -1,7 +1,8 @@
+'use strict';
+
 function Bishop(player) {
   Piece.call(this, player);
-};
-
+}
 
 Bishop.prototype = new Piece();
 Bishop.prototype.constructor = Bishop;
@@ -10,8 +11,8 @@ Bishop.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Bishop#possibleMovements: position should be a BoardPosition";
     alert(msg);
-    throw Error(msg);
-  };
+    throw new Error(msg);
+  }
 
   var hasUpperRight = true,
     hasUpperLeft = true,
@@ -136,6 +137,6 @@ Bishop.prototype.possibleMovements = function (position, board) {
     }
     tmpPosition = tmpPosition.previousLine().previousColumn();
   }
-  
+
   return possibleMovements;
 };
