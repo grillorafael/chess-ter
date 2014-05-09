@@ -168,20 +168,25 @@ body {
     padding: 0 20px;
 }
 
+header {
+  width: 100%;
+  text-align: center;
+}
+
 h1 {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 h1#home {
-    margin-top: 1.5em;
+  margin-top: 1.5em;
 }
 
 h1#home .title {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 h1#home .piece {
-    font-size: 4em;
+  font-size: 4em;
 }
 
 #currentTurn {
@@ -206,14 +211,12 @@ h1#home .piece {
     display: inline-block;
     font-weight: bold;
     color: #FFFFFF;
-    margin: 0 10%;
+    margin: 3px 10%;
     width: 90%;
-
 }
 
 .main-btn-container3 {
     width: 33.3%;
-    float: left;
 }
 
 .container {
@@ -238,15 +241,15 @@ h1#home .piece {
 }
 
 #board {
-    transition: transform .7s;
+    transition: transform .5s;
     border: 2px solid #EFC94C;
     margin: auto;
     margin-top: 10px;
 }
 
 #board td {
-    height: 5em;
-    width: 5em;
+    height: 4em;
+    width: 4em;
     border: 1px solid #EFC94C;
     background-color: #EFC94C;
     text-align: center;
@@ -382,10 +385,10 @@ a[class*='black'] {
     /* ============
         WIDE: Menu
        ============ */
-    header {
+    /*header {
         width: 40%;
         float: left;
-    }
+    }*/
 
     nav {
         float: right;;
@@ -415,13 +418,12 @@ a[class*='black'] {
     }
 
     main section.board {
-        width: 65%;
-        float: left;
+        width: 100%;
     }
 
     main aside.right_pane {
         border: 1px solid #45B29D;
-        background-color: #5F6F7F;
+        background-color: rgba(95, 111, 127, 0.5);
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
@@ -431,9 +433,21 @@ a[class*='black'] {
         display: inline-block;
         font-weight: bold;
         color: #FFFFFF;
-        float: right;
-        width: 30%;
-        min-height: 700px;
+        width: 20%;
+        min-height: 400px;
+        position: absolute;
+        top: 130px;
+        right: 5px;
+        overflow-y: scroll;
+    }
+
+    .reinit {
+      width: 20%;
+      position: absolute;
+      top: 540px;
+      right: 5px;
+      margin-right: 0;
+      padding: 1% 0;
     }
 
 }

@@ -8,11 +8,15 @@ $(function () {
   $("#start-eve-game").click(function () {
     showBoard(true);
   });
+  $('.reinit').click(function () {
+    location.reload();
+  });
 });
 
 
 
 function showBoard(show) {
-  $('section.select_game')[show ? 'hide' : 'show']()
-  $('#main_board')[show ? 'show' : 'hide']()
+  $('section.select_game')[show ? 'hide' : 'show']();
+  $('#main_board')[show ? 'show' : 'hide']();
+  $('nav')[show ? 'hide' : 'show']();
 }
