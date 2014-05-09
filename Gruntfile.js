@@ -71,13 +71,28 @@ module.exports = function (grunt) {
         src: [ 'index.html' ],
         dest: ['dest/']
       }
-    }
+    },
+    autoprefixer: {
+      options: {
+        browsers: ['last 2 version', 'ie 8', 'ie 9']
+      },
+      single_file: {
+        options: {
+          // Target-specific options go here.
+        },
+        src: 'css/main.css',
+        dest: 'css/main.css'
+      },
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-inline');
+
+  grunt.registerTask('build', ["autoprefixer", "inline"]);
   grunt.registerTask('coverage', 'jasmine:istanbul');
   grunt.registerTask('test:coverage', ['jasmine:coverage']);
   grunt.registerTask('default', ['watch']);

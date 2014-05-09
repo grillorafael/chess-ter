@@ -202,8 +202,6 @@ h1#home .piece {
 .main-btn {
     border: 1px solid #45B29D;
     background-color: #334D5C;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
     border-radius: 3px;
     font-size: 12px;
     padding: 3% 0;
@@ -233,20 +231,20 @@ h1#home .piece {
 }
 
 #board.inverse {
-  transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 #board.inverse td {
-  transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 #board {
+    -webkit-transition: -webkit-transform .5s;
     transition: transform .5s;
-    -webkit-transition: transform .5s;
     border: 2px solid #EFC94C;
     margin: auto;
     margin-top: 10px;
@@ -277,6 +275,7 @@ h1#home .piece {
 }
 
 .piece {
+    text-decoration: none;
     font-size: 3em;
 }
 
@@ -384,8 +383,6 @@ a[class*='black'] {
        ==================== */
     .header-container,
     .main aside {
-        -webkit-box-shadow: 0 5px 10px #aaa;
-        -moz-box-shadow: 0 5px 10px #aaa;
         box-shadow: 0 5px 10px #aaa;
     }
 
@@ -431,8 +428,6 @@ a[class*='black'] {
     main aside.right_pane {
         border: 1px solid #45B29D;
         background-color: rgba(95, 111, 127, 0.5);
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
         border-radius: 3px;
         font-size: 12px;
         /*padding: 10px 10px 10px 10px;*/
