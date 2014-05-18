@@ -13,6 +13,9 @@ $(function () {
   $('.reinit').click(function () {
     location.reload();
   });
+  $('.draw').click(function () {
+    $('#drawAlert').fadeIn("slow");
+  });
 
   function showBoard(show) {
     $('section.select_game')[show ? 'hide' : 'show']();

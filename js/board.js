@@ -9,6 +9,8 @@ function Board(playerWhite, playerBlack, fen) {
   this.board = [];
   this.playerWhite = playerWhite;
   this.playerBlack = playerBlack;
+  this.countMoves = 0;
+  this.countLimits = 50;
 
   this.playerTurn = playerWhite;
 
@@ -134,6 +136,7 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
     }
   }
 
+  
   if(!from.empty() && (toPosition.in(piecePossibleMovements) || forceMovement)) {
 
     if((from instanceof Tower) || (from instanceof King)) {

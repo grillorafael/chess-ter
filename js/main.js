@@ -38,7 +38,8 @@ var Chess = (function (player1, player2) {
       var beforeBoard = jQuery.extend(true, {}, game);
       if(game.moveFromTo(selectedPiecePosition, clickedPosition)) {
         uimoveFromTo(selectedPiecePosition, clickedPosition, beforeBoard);
-      }
+		
+      }	  
     }
 
     return false;
@@ -48,10 +49,21 @@ var Chess = (function (player1, player2) {
     var tdPosition = getCellPosition($(this));
     if(selectedPiece != null) {
       var selectedPiecePosition = getPiecePosition();
-      var beforeBoard = jQuery.extend(true, {}, game);
-      if(game.moveFromTo(selectedPiecePosition, tdPosition)) {
-        uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
-      }
+      var beforeBoard = jQuery.extend(true, {}, game);	  
+	  var from = game.at(selectedPiecePosition);
+	  var to = game.at(tdPosition);
+	  if((game.countMoves < game.countLimits) && game.moveFromTo(selectedPiecePosition, tdPosition)) {
+		uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
+		game.countMoves ++; 
+		if((!to.empty() && !to.isEnemyOf(from)) || (from instanceof Pawn))
+		{
+			console.log(game.countMoves);
+			game.countMoves = 0;
+		}
+		if(game.countMoves === game.countLimits)
+			$('#drawAlert').fadeIn("slow");		
+	  }
+	  
     }
   };
 
