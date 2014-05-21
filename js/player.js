@@ -15,9 +15,31 @@ function Player(_color) {
   };
 }
 
+Player.prototype.isHuman = function() {
+  return true;
+};
+
 Player.prototype.sameAs = function(p) {
   return this.isWhite() == p.isWhite();
 };
 
 Player.BLACK = 'black';
 Player.WHITE = 'white';
+
+
+function PlayerIA(_color) {
+  Player.call(this, _color);
+}
+
+PlayerIA.prototype = new Player();
+PlayerIA.prototype.constructor = PlayerIA;
+
+PlayerIA.prototype.isHuman = function() {
+  return false;
+}
+
+PlayerIA.prototype.getNextMove = function() {
+  var searcher = new MinMaxSearcher(2);
+  var movement = searcher.getBestMove(this.board);
+  return movement;
+}

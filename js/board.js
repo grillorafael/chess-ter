@@ -10,6 +10,8 @@ function Board(playerWhite, playerBlack, fen) {
   this.playerWhite = this.MAX = playerWhite;
   this.playerBlack = this.MIN = playerBlack;
 
+  this.playerWhite.board = this.playerBlack.board = this;
+
   this.playerTurn = playerWhite;
 
   this.previousMove = [];
@@ -97,27 +99,6 @@ Board.prototype.isPositionVulnerable = function(position) {
   return false;
 };
 
-Board.prototype.diffNumOfPiecesHeuristic = function(player) {
-  var i, j,
-    li = this.board[0].length,
-    lj = this.board.length,
-    numOfCurrentPlayerPieces = 0,
-    numOfAdversaryPlayerPieces = 0;
-
-    for(i=0; i<li; i++) {
-      for(j=0; j<lj; j++) {
-      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
-      if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
-        numOfCurrentPlayerPieces++;
-      }
-      else if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-        numOfAdversaryPlayerPieces++;
-      }
-    }
-
-    return numOfCurrentPlayerPieces - numOfAdversaryPlayerPieces;
-};
-
 Board.prototype.isPlayerInCheckMate = function(player) {
   var i, j,
     li = this.board[0].length,
@@ -141,26 +122,28 @@ Board.prototype.isPlayerInCheckMate = function(player) {
   return true;
 };
 
-Board.prototype.expand = function()
-{
+Board.prototype.expand = function() {
   var children = [], i, j,
     li = this.board[0].length,
     lj = this.board.length;
 
     for(i = 0; i < li; i++) {
       for(j = 0; j < lj; j++) {
-        var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
-        if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
+        var currentPosition = BoardPosition.byColumnLineArray([j, i]),
+          currentPositionPiece = this.at(currentPosition);
+
+        if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(this.playerTurn)) {
           var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
           for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
             var child = this.clone();
             child.moveFromTo(currentPosition, possibleMovements[p]);
             children.push(child);
+          }
         }
       }
     }
-  }
 
+  console.log(children);
   return children;
 };
 
@@ -184,7 +167,7 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
     forceMovement = false;
   }
 
-  previousMove = [fromPosition, toPosition];
+  this.previousMove = [fromPosition, toPosition];
   var from = this.at(fromPosition);
   var to = this.at(toPosition);
   var piecePossibleMovements = from.possibleMovements(fromPosition, this);

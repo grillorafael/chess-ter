@@ -13,8 +13,10 @@ var Chess = (function (player1, player2) {
   };
 
   var unselectPiece = function() {
-    selectedPiece.removeClass('selected');
-    selectedPiece = null;
+    if(selectedPiece) {
+      selectedPiece.removeClass('selected');
+      selectedPiece = null;
+    }
   };
 
   var handlePieceClick = function(e) {
@@ -83,6 +85,15 @@ var Chess = (function (player1, player2) {
       var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
     }
+
+    if(!game.getCurrentPlayerTurn().isHuman()) {
+      var movement = game.getCurrentPlayerTurn().getNextMove();
+
+      var beforeBoard = jQuery.extend(true, {}, game);
+      if(game.moveFromTo(movement[0], movement[1])) {
+        uimoveFromTo(movement[0], movement[1], beforeBoard);
+      }
+    }
   };
 
   var getCellPosition = function(cell) {
@@ -141,5 +152,5 @@ var Chess = (function (player1, player2) {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess(new Player(Player.WHITE), new Player(Player.BLACK));
+var chess = new Chess(new Player(Player.WHITE), new PlayerIA(Player.BLACK));
 var a  = chess.getGame();
