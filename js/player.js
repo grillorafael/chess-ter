@@ -38,8 +38,9 @@ PlayerIA.prototype.isHuman = function() {
   return false;
 }
 
-PlayerIA.prototype.getNextMove = function() {
+PlayerIA.prototype.getNextMove = function(cb) {
   var searcher = new MinMaxSearcher(2);
-  var movement = searcher.getBestMove(this.board);
-  return movement;
+  searcher.getBestMove(this.board, function(movement) {
+    cb(movement);
+  });
 }

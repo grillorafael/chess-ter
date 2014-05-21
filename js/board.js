@@ -127,23 +127,21 @@ Board.prototype.expand = function() {
     li = this.board[0].length,
     lj = this.board.length;
 
-    for(i = 0; i < li; i++) {
-      for(j = 0; j < lj; j++) {
-        var currentPosition = BoardPosition.byColumnLineArray([j, i]),
-          currentPositionPiece = this.at(currentPosition);
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]),
+        currentPositionPiece = this.at(currentPosition);
 
-        if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(this.playerTurn)) {
-          var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
-          for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
-            var child = this.clone();
-            child.moveFromTo(currentPosition, possibleMovements[p]);
-            children.push(child);
-          }
+      if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(this.playerTurn)) {
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
+          var child = this.clone();
+          child.moveFromTo(currentPosition, possibleMovements[p]);
+          children.push(child);
         }
       }
     }
-
-  console.log(children);
+  }
   return children;
 };
 

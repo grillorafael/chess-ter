@@ -67,13 +67,15 @@ var Chess = (function (player1, player2) {
   };
 
   var refreshTurn = function() {
-    if(game.playerTurn.isBlack()) {
-      $('#board').addClass('inverse');
-      $('#currentTurn').removeClass('white');
-    }
-    else {
-      $('#board').removeClass('inverse');
-      $('#currentTurn').addClass('white');
+    if(game.playerBlack.isHuman() && game.playerWhite.isHuman()) {
+      if(game.playerTurn.isBlack()) {
+        $('#board').addClass('inverse');
+        $('#currentTurn').removeClass('white');
+      }
+      else {
+        $('#board').removeClass('inverse');
+        $('#currentTurn').addClass('white');
+      }
     }
 
     if(game.isPlayerInCheckMate(game.playerTurn)) {
@@ -87,12 +89,15 @@ var Chess = (function (player1, player2) {
     }
 
     if(!game.getCurrentPlayerTurn().isHuman()) {
-      var movement = game.getCurrentPlayerTurn().getNextMove();
-
-      var beforeBoard = jQuery.extend(true, {}, game);
-      if(game.moveFromTo(movement[0], movement[1])) {
-        uimoveFromTo(movement[0], movement[1], beforeBoard);
-      }
+      addTextLog('IA Pensando....');
+      setTimeout(function(){
+        game.getCurrentPlayerTurn().getNextMove(function(movement){
+          var beforeBoard = jQuery.extend(true, {}, game);
+          if(game.moveFromTo(movement[0], movement[1])) {
+            uimoveFromTo(movement[0], movement[1], beforeBoard);
+          }
+        });
+      }, 200);
     }
   };
 
