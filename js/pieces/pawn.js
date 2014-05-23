@@ -20,7 +20,7 @@ Pawn.prototype.possibleMovements = function (position, board) {
       possibleMovements.push(position.nextLine().nextLine());
     }
 
-    if(board.at(position.nextLine()).empty()) {
+    if(position.nextLine() && board.at(position.nextLine()).empty()) {
       possibleMovements.push(position.nextLine());
     }
 
@@ -45,7 +45,7 @@ Pawn.prototype.possibleMovements = function (position, board) {
       possibleMovements.push(position.previousLine().previousLine());
     }
 
-    if(board.at(position.previousLine()).empty()) {
+    if(position.previousLine() && board.at(position.previousLine()).empty()) {
       possibleMovements.push(position.previousLine());
     }
 
@@ -65,6 +65,5 @@ Pawn.prototype.possibleMovements = function (position, board) {
       }
     }
   }
-
   return possibleMovements;
 };

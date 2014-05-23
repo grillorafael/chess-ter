@@ -16,10 +16,14 @@ $(function () {
   $('.draw').click(function () {
     $('#drawAlert').fadeIn("slow");
   });
-
-  function showBoard(show) {
-    $('section.select_game')[show ? 'hide' : 'show']();
-    $('#main_board')[show ? 'show' : 'hide']();
-    $('nav')[show ? 'hide' : 'show']();
-  }
 });
+
+function showBoard(show) {
+  $('section.select_game')[show ? 'hide' : 'show']();
+  $('#main_board')[show ? 'show' : 'hide']();
+  $('nav')[show ? 'hide' : 'show']();
+
+  if(show) {
+    chess.startGame();
+  }
+}

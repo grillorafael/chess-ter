@@ -3,22 +3,46 @@
 function Board(playerWhite, playerBlack, fen) {
   fen = fen || Board.initialFen;
 
-  this.blackTowerOrKingMoved = false;
-  this.whiteTowerOrKingMoved = false;
+  this.blackKingMoved = false;
+  this.leftBlackTowerMoved = false;
+  this.rightBlackTowerMoved = false;
+  this.whiteKingMoved = false;
+  this.leftWhiteTowerMoved = false;
+  this.rightWhiteTowerMoved = false;
 
   this.board = [];
-  this.playerWhite = playerWhite;
-  this.playerBlack = playerBlack;
+  this.playerWhite = this.MAX = playerWhite;
+  this.playerBlack = this.MIN = playerBlack;
   this.countMoves = 0;
   this.countLimits = 50;
 
+  this.playerWhite.board = this.playerBlack.board = this;
+
   this.playerTurn = playerWhite;
+
+  this.previousMove = [];
 
   this.buildBoard(fen);
 }
 
 Board.prototype.switchTurn = function() {
   this.playerTurn = this.playerTurn.isWhite() ? this.playerBlack : this.playerWhite;
+};
+
+Board.prototype.getPreviousMove = function() {
+  return this.previousMove;
+};
+
+Board.prototype.getCurrentPlayerTurn = function() {
+  return this.playerTurn;
+};
+
+Board.prototype.getMax = function() {
+  return this.MAX;
+};
+
+Board.prototype.getMin = function() {
+  return this.MIN;
 };
 
 Board.prototype.isTurnOfPiecePosition = function(position) {
@@ -60,19 +84,21 @@ Board.prototype.kingPositionOf = function(player) {
 };
 
 Board.prototype.isPositionVulnerable = function(position) {
-  var player = this.at(position).player(),
-    i,
-    j,
-    li = this.board[0].length,
-    lj = this.board.length;
+  if(!this.at(position).empty()) {
+    var player = this.at(position).player(),
+      i,
+      j,
+      li = this.board[0].length,
+      lj = this.board.length;
 
-  for(i = 0; i < li; i++) {
-    for(j = 0; j < lj; j++) {
-      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
-      if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this, true);
-        if(position.in(possibleMovements)) {
-          return true;
+    for(i = 0; i < li; i++) {
+      for(j = 0; j < lj; j++) {
+        var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+        if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
+          var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this, true);
+          if(position.in(possibleMovements)) {
+            return true;
+          }
         }
       }
     }
@@ -104,14 +130,59 @@ Board.prototype.isPlayerInCheckMate = function(player) {
   return true;
 };
 
+Board.prototype.expand = function() {
+  var children = [], i, j,
+    li = this.board[0].length,
+    lj = this.board.length;
+
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]),
+        currentPositionPiece = this.at(currentPosition);
+
+      if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(this.playerTurn)) {
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
+          var child = this.clone();
+          if(child.moveFromTo(currentPosition, possibleMovements[p])) {
+            children.push(child);
+          }
+        }
+      }
+    }
+  }
+  return children;
+};
+
 Board.prototype.isPlayerInCheck = function(player) {
   var kingPosition = this.kingPositionOf(player);
   return this.isPositionVulnerable(kingPosition);
 };
 
 Board.prototype.canPlayerRoque = function(player) {
-  return !(player.isWhite() ? this.whiteTowerOrKingMoved : this.blackTowerOrKingMoved);
+  if(player.isWhite()) {
+    return this.whiteKingMoved ? false : !(this.leftWhiteTowerMoved && this.rightWhiteTowerMoved);
+  }
+  else {
+    return this.blackKingMoved ? false : !(this.leftBlackTowerMoved && this.rightBlackTowerMoved);
+  }
 };
+
+Board.prototype.isLeftBlackTowerMoved = function() {
+  return this.leftBlackTowerMoved;
+}
+
+Board.prototype.isRightBlackTowerMoved = function() {
+  return this.rightBlackTowerMoved;
+}
+
+Board.prototype.isLeftWhiteTowerMoved = function() {
+  return this.leftWhiteTowerMoved;
+}
+
+Board.prototype.isRightWhiteTowerMoved = function() {
+  return this.rightWhiteTowerMoved;
+}
 
 Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
@@ -124,6 +195,7 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
     forceMovement = false;
   }
 
+  this.previousMove = [fromPosition, toPosition];
   var from = this.at(fromPosition);
   var to = this.at(toPosition);
   var piecePossibleMovements = from.possibleMovements(fromPosition, this);
@@ -136,15 +208,32 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
     }
   }
 
-  
   if(!from.empty() && (toPosition.in(piecePossibleMovements) || forceMovement)) {
 
-    if((from instanceof Tower) || (from instanceof King)) {
+    if(!forceMovement && (from instanceof Tower)) {
       if(from.player().isWhite()) {
-        this.whiteTowerOrKingMoved = true;
+        if(fromPosition.sameAs(new BoardPosition('a1'))) {
+          this.leftWhiteTowerMoved = true;
+        }
+        else if(fromPosition.sameAs(new BoardPosition('h1'))) {
+          this.rightWhiteTowerMoved = true;
+        }
       }
       else {
-        this.blackTowerOrKingMoved = true;
+        if(fromPosition.sameAs(new BoardPosition('h8'))) {
+          this.leftBlackTowerMoved = true;
+        }
+        else if(fromPosition.sameAs(new BoardPosition('a8'))) {
+          this.rightBlackTowerMoved = true;
+        }
+      }
+    }
+    else if(!forceMovement && (from instanceof King))  {
+      if(from.player().isWhite()) {
+        this.whiteKingMoved = true;
+      }
+      else {
+        this.blackKingMoved = true;
       }
     }
 

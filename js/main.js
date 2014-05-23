@@ -8,13 +8,21 @@ var Chess = (function (player1, player2) {
     selectedPiece = null,
     game = new Board(player1, player2);
 
+  this.startGame = function() {
+    if(!this.player1.isHuman()) {
+      IAMove();
+    }
+  };
+
   this.getGame = function() {
     return game;
   };
 
   var unselectPiece = function() {
-    selectedPiece.removeClass('selected');
-    selectedPiece = null;
+    if(selectedPiece) {
+      selectedPiece.removeClass('selected');
+      selectedPiece = null;
+    }
   };
 
   var handlePieceClick = function(e) {
@@ -77,13 +85,15 @@ var Chess = (function (player1, player2) {
   };
 
   var refreshTurn = function() {
-    if(game.playerTurn.isBlack()) {
-      $('#board').addClass('inverse');
-      $('#currentTurn').removeClass('white');
-    }
-    else {
-      $('#board').removeClass('inverse');
-      $('#currentTurn').addClass('white');
+    if(game.playerBlack.isHuman() && game.playerWhite.isHuman()) {
+      if(game.playerTurn.isBlack()) {
+        $('#board').addClass('inverse');
+        $('#currentTurn').removeClass('white');
+      }
+      else {
+        $('#board').removeClass('inverse');
+        $('#currentTurn').addClass('white');
+      }
     }
 
     if(game.isPlayerInCheckMate(game.playerTurn)) {
@@ -95,6 +105,23 @@ var Chess = (function (player1, player2) {
       var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
     }
+
+    if(!game.getCurrentPlayerTurn().isHuman()) {
+      IAMove();
+    }
+  };
+
+  var IAMove = function() {
+    addTextLog('IA Pensando....');
+    setTimeout(function(){
+      console.log('TimeoutEnd');
+      game.getCurrentPlayerTurn().getNextMove(function(movement){
+        var beforeBoard = jQuery.extend(true, {}, game);
+        if(game.moveFromTo(movement[0], movement[1])) {
+          uimoveFromTo(movement[0], movement[1], beforeBoard);
+        }
+      });
+    }, 200);
   };
 
   var getCellPosition = function(cell) {
@@ -153,5 +180,5 @@ var Chess = (function (player1, player2) {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess(new Player(Player.WHITE), new Player(Player.BLACK));
+var chess = new Chess(new Player(Player.WHITE), new PlayerIA(Player.BLACK));
 var a  = chess.getGame();

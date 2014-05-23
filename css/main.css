@@ -265,12 +265,12 @@ h1#home .piece {
 }
 
 #board td.header-cell {
-    display: none;
+    /*display: none;*/
     width: 1em;
 }
 
 #board .header-line td {
-    display: none;
+    /*display: none;*/
     height: 1em;
 }
 
