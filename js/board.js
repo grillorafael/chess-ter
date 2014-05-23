@@ -261,6 +261,11 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
       }
     }
     else {
+      if((from instanceof Pawn)) {
+        if((from.player().isWhite() && toPosition.isTopLine()) || (!from.player().isWhite() && toPosition.isBottomLine())) {
+          from = new Queen(from.player());
+        }
+      }
       this.setPosition(fromPosition, Board.EMPTY);
       this.setPosition(toPosition, from);
     }

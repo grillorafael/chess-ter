@@ -160,6 +160,16 @@ var Chess = (function (player1, player2) {
       }
     }
     else {
+      if((from instanceof Pawn)) {
+        if((from.player().isWhite() && toPosition.isTopLine()) || (!from.player().isWhite() && toPosition.isBottomLine())) {
+          if(from.player().isWhite()) {
+            fromContent.removeClass('white-pawn').addClass('white-queen');
+          }
+          else {
+            fromContent.removeClass('black-pawn').addClass('black-queen');
+          }
+        }
+      }
       addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), toPosition.prettyPrint());
       $('#' + toPosition.prettyPrint()).append(fromContent);
     }
@@ -175,5 +185,5 @@ var Chess = (function (player1, player2) {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess(new PlayerIA(Player.WHITE), new PlayerIA(Player.BLACK));
+var chess = new Chess(new Player(Player.WHITE), new Player(Player.BLACK));
 var a  = chess.getGame();
