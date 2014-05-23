@@ -72,11 +72,8 @@ King.prototype.possibleMovements = function (position, board, calculatingRoque) 
     }
 
 
-    // Roque
-    console.log("Can player roque: " + board.canPlayerRoque(currentPlayer));
     if(!calculatingRoque && board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
       if(this.player().isWhite()) {
-        
         if(!board.isPositionVulnerable(new BoardPosition('a1')) && !board.isLeftWhiteTowerMoved() && !board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
           possibleMovements.push(new BoardPosition('a1'));
         }

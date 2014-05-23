@@ -82,19 +82,21 @@ Board.prototype.kingPositionOf = function(player) {
 };
 
 Board.prototype.isPositionVulnerable = function(position) {
-  var player = this.at(position).player(),
-    i,
-    j,
-    li = this.board[0].length,
-    lj = this.board.length;
+  if(!this.at(position).empty()) {
+    var player = this.at(position).player(),
+      i,
+      j,
+      li = this.board[0].length,
+      lj = this.board.length;
 
-  for(i = 0; i < li; i++) {
-    for(j = 0; j < lj; j++) {
-      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
-      if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this, true);
-        if(position.in(possibleMovements)) {
-          return true;
+    for(i = 0; i < li; i++) {
+      for(j = 0; j < lj; j++) {
+        var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+        if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
+          var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this, true);
+          if(position.in(possibleMovements)) {
+            return true;
+          }
         }
       }
     }
@@ -157,18 +159,10 @@ Board.prototype.isPlayerInCheck = function(player) {
 
 Board.prototype.canPlayerRoque = function(player) {
   if(player.isWhite()) {
-    console.log("WHITE");
-    console.log('this.whiteKingMoved', this.whiteKingMoved);
-    console.log('this.leftWhiteTowerMoved', this.leftWhiteTowerMoved);
-    console.log('this.rightWhiteTowerMoved', this.rightWhiteTowerMoved);
-    return this.whiteKingMoved ? false : (this.leftWhiteTowerMoved || this.rightWhiteTowerMoved);
+    return this.whiteKingMoved ? false : !(this.leftWhiteTowerMoved && this.rightWhiteTowerMoved);
   }
   else {
-    console.log("BLACK");
-    console.log('this.blackKingMoved', this.blackKingMoved);
-    console.log('this.leftBlackTowerMoved', this.leftBlackTowerMoved);
-    console.log('this.rightBlackTowerMoved', this.rightBlackTowerMoved);
-    return this.blackKingMoved ? false : (this.leftBlackTowerMoved || this.rightBlackTowerMoved); 
+    return this.blackKingMoved ? false : !(this.leftBlackTowerMoved && this.rightBlackTowerMoved);
   }
 };
 
