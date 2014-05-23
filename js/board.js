@@ -3,8 +3,12 @@
 function Board(playerWhite, playerBlack, fen) {
   fen = fen || Board.initialFen;
 
-  this.blackTowerOrKingMoved = false;
-  this.whiteTowerOrKingMoved = false;
+  this.blackKingMoved = false;
+  this.leftBlackTowerMoved = false;
+  this.rightBlackTowerMoved = false;
+  this.whiteKingMoved = false;
+  this.leftWhiteTowerMoved = false;
+  this.rightWhiteTowerMoved = false;
 
   this.board = [];
   this.playerWhite = this.MAX = playerWhite;
@@ -152,8 +156,37 @@ Board.prototype.isPlayerInCheck = function(player) {
 };
 
 Board.prototype.canPlayerRoque = function(player) {
-  return !(player.isWhite() ? this.whiteTowerOrKingMoved : this.blackTowerOrKingMoved);
+  if(player.isWhite()) {
+    console.log("WHITE");
+    console.log('this.whiteKingMoved', this.whiteKingMoved);
+    console.log('this.leftWhiteTowerMoved', this.leftWhiteTowerMoved);
+    console.log('this.rightWhiteTowerMoved', this.rightWhiteTowerMoved);
+    return this.whiteKingMoved ? false : (this.leftWhiteTowerMoved || this.rightWhiteTowerMoved);
+  }
+  else {
+    console.log("BLACK");
+    console.log('this.blackKingMoved', this.blackKingMoved);
+    console.log('this.leftBlackTowerMoved', this.leftBlackTowerMoved);
+    console.log('this.rightBlackTowerMoved', this.rightBlackTowerMoved);
+    return this.blackKingMoved ? false : (this.leftBlackTowerMoved || this.rightBlackTowerMoved); 
+  }
 };
+
+Board.prototype.isLeftBlackTowerMoved = function() {
+  return this.leftBlackTowerMoved;
+}
+
+Board.prototype.isRightBlackTowerMoved = function() {
+  return this.rightBlackTowerMoved;
+}
+
+Board.prototype.isLeftWhiteTowerMoved = function() {
+  return this.leftWhiteTowerMoved;
+}
+
+Board.prototype.isRightWhiteTowerMoved = function() {
+  return this.rightWhiteTowerMoved;
+}
 
 Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
@@ -181,12 +214,30 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
 
   if(!from.empty() && (toPosition.in(piecePossibleMovements) || forceMovement)) {
 
-    if((from instanceof Tower) || (from instanceof King)) {
+    if(!forceMovement && (from instanceof Tower)) {
       if(from.player().isWhite()) {
-        this.whiteTowerOrKingMoved = true;
+        if(fromPosition.sameAs(new BoardPosition('a1'))) {
+          this.leftWhiteTowerMoved = true;
+        }
+        else if(fromPosition.sameAs(new BoardPosition('h1'))) {
+          this.rightWhiteTowerMoved = true;
+        }
       }
       else {
-        this.blackTowerOrKingMoved = true;
+        if(fromPosition.sameAs(new BoardPosition('h8'))) {
+          this.leftBlackTowerMoved = true;
+        }
+        else if(fromPosition.sameAs(new BoardPosition('a8'))) {
+          this.rightBlackTowerMoved = true;
+        }
+      }
+    }
+    else if(!forceMovement && (from instanceof King))  {
+      if(from.player().isWhite()) {
+        this.whiteKingMoved = true;
+      }
+      else {
+        this.blackKingMoved = true;
       }
     }
 
