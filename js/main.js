@@ -185,5 +185,5 @@ var Chess = (function (player1, player2) {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess(new Player(Player.WHITE), new Player(Player.BLACK));
+var chess = new Chess(new Player(Player.WHITE), new PlayerIA(Player.BLACK));
 var a  = chess.getGame();
