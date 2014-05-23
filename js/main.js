@@ -46,8 +46,7 @@ var Chess = (function (player1, player2) {
       var beforeBoard = jQuery.extend(true, {}, game);
       if(game.moveFromTo(selectedPiecePosition, clickedPosition)) {
         uimoveFromTo(selectedPiecePosition, clickedPosition, beforeBoard);
-		
-      }	  
+      }
     }
 
     return false;
@@ -57,21 +56,12 @@ var Chess = (function (player1, player2) {
     var tdPosition = getCellPosition($(this));
     if(selectedPiece != null) {
       var selectedPiecePosition = getPiecePosition();
-      var beforeBoard = jQuery.extend(true, {}, game);	  
-	  var from = game.at(selectedPiecePosition);
-	  var to = game.at(tdPosition);
-	  if((game.countMoves < game.countLimits) && game.moveFromTo(selectedPiecePosition, tdPosition)) {
-		uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
-		game.countMoves ++; 
-		if((!to.empty() && !to.isEnemyOf(from)) || (from instanceof Pawn))
-		{
-			console.log(game.countMoves);
-			game.countMoves = 0;
-		}
-		if(game.countMoves === game.countLimits)
-			$('#drawAlert').fadeIn("slow");		
-	  }
-	  
+      var beforeBoard = jQuery.extend(true, {}, game);
+      var from = game.at(selectedPiecePosition);
+      var to = game.at(tdPosition);
+      if((game.countMoves < game.countLimits) && game.moveFromTo(selectedPiecePosition, tdPosition)) {
+        uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
+      }
     }
   };
 
@@ -96,7 +86,9 @@ var Chess = (function (player1, player2) {
       }
     }
 
+    var IAWillMove = true;
     if(game.isPlayerInCheckMate(game.playerTurn)) {
+      IAWillMove = false;
       var player = !game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       $(".piece").unbind("click", handlePieceClick);
       addTextLog('O jogador ' + player + ' ganhou');
@@ -105,8 +97,12 @@ var Chess = (function (player1, player2) {
       var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
     }
+    else if(game.isDraw()) {
+      IAWillMove = false;
+      addTextLog('O jogo empatou');
+    }
 
-    if(!game.getCurrentPlayerTurn().isHuman()) {
+    if(IAWillMove && !game.getCurrentPlayerTurn().isHuman()) {
       IAMove();
     }
   };
@@ -114,7 +110,6 @@ var Chess = (function (player1, player2) {
   var IAMove = function() {
     addTextLog('IA Pensando....');
     setTimeout(function(){
-      console.log('TimeoutEnd');
       game.getCurrentPlayerTurn().getNextMove(function(movement){
         var beforeBoard = jQuery.extend(true, {}, game);
         if(game.moveFromTo(movement[0], movement[1])) {
@@ -180,5 +175,5 @@ var Chess = (function (player1, player2) {
   $('td').click(handleSquareClick);
 });
 
-var chess = new Chess(new Player(Player.WHITE), new PlayerIA(Player.BLACK));
+var chess = new Chess(new PlayerIA(Player.WHITE), new PlayerIA(Player.BLACK));
 var a  = chess.getGame();

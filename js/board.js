@@ -13,6 +13,7 @@ function Board(playerWhite, playerBlack, fen) {
   this.board = [];
   this.playerWhite = this.MAX = playerWhite;
   this.playerBlack = this.MIN = playerBlack;
+
   this.countMoves = 0;
   this.countLimits = 50;
 
@@ -23,6 +24,10 @@ function Board(playerWhite, playerBlack, fen) {
   this.previousMove = [];
 
   this.buildBoard(fen);
+}
+
+Board.prototype.isDraw = function() {
+  return this.countMoves == this.countLimits;
 }
 
 Board.prototype.switchTurn = function() {
@@ -235,6 +240,13 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
       else {
         this.blackKingMoved = true;
       }
+    }
+
+    if((from instanceof Pawn) || (!to.empty() && from.isEnemyOf(to))) {
+      this.countMoves = 0;
+    }
+    else {
+      this.countMoves++;
     }
 
     if((!to.empty() && !to.isEnemyOf(from))) {

@@ -5,7 +5,6 @@ function NegaMax(depthLimit) {
 }
 
 NegaMax.prototype.getBestMove = function(board, cb) {
-	console.log('Starting IA movement...');
 	var beg = new Date();
 	var i = 0,
 		boards = this.orderBoards(board.expand()),
@@ -35,8 +34,6 @@ NegaMax.prototype.getBestMove = function(board, cb) {
 	console.log("Time: " + (diff / 1000));
 	console.log("Depth: " + this.depthLimit);
 
-	console.log(boards[bestValueIndex]);
-	console.log(boards[bestValueIndex].getPreviousMove());
 	cb(boards[bestValueIndex].getPreviousMove());
 };
 
@@ -83,11 +80,7 @@ NegaMax.prototype.diffNumOfPiecesHeuristic = function(board) {
 
 	for(i=0; i<li; i++) {
 		for(j=0; j<lj; j++) {
-			var currentPosition = BoardPosition.byColumnLineArray([j, i]);
-			if(currentPosition === false) {
-				console.log('Falso!');
-			}
-			var currentPositionPiece = board.at(currentPosition);
+			var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = board.at(currentPosition);
 			if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
 				numOfCurrentPlayerPieces++;
 			}
