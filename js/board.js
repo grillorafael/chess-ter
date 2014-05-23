@@ -136,8 +136,9 @@ Board.prototype.expand = function() {
         var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
         for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
           var child = this.clone();
-          child.moveFromTo(currentPosition, possibleMovements[p]);
-          children.push(child);
+          if(child.moveFromTo(currentPosition, possibleMovements[p])) {
+            children.push(child);
+          }
         }
       }
     }
