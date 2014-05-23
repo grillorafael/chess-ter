@@ -8,6 +8,12 @@ var Chess = (function (player1, player2) {
     selectedPiece = null,
     game = new Board(player1, player2);
 
+  this.startGame = function() {
+    if(!this.player1.isHuman()) {
+      IAMove();
+    }
+  };
+
   this.getGame = function() {
     return game;
   };
@@ -89,16 +95,21 @@ var Chess = (function (player1, player2) {
     }
 
     if(!game.getCurrentPlayerTurn().isHuman()) {
-      addTextLog('IA Pensando....');
-      setTimeout(function(){
-        game.getCurrentPlayerTurn().getNextMove(function(movement){
-          var beforeBoard = jQuery.extend(true, {}, game);
-          if(game.moveFromTo(movement[0], movement[1])) {
-            uimoveFromTo(movement[0], movement[1], beforeBoard);
-          }
-        });
-      }, 200);
+      IAMove();
     }
+  };
+
+  var IAMove = function() {
+    addTextLog('IA Pensando....');
+    setTimeout(function(){
+      console.log('TimeoutEnd');
+      game.getCurrentPlayerTurn().getNextMove(function(movement){
+        var beforeBoard = jQuery.extend(true, {}, game);
+        if(game.moveFromTo(movement[0], movement[1])) {
+          uimoveFromTo(movement[0], movement[1], beforeBoard);
+        }
+      });
+    }, 200);
   };
 
   var getCellPosition = function(cell) {
