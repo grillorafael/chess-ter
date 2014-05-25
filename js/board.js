@@ -156,7 +156,7 @@ Board.prototype.isPlayerInCheck = function(player) {
   return this.isPositionVulnerable(kingPosition);
 };
 
-Board.prototype.canPlayerRoque = function(player) {
+Board.prototype.canPlayerCastle = function(player) {
   if(player.isWhite()) {
     return this.whiteKingMoved ? false : !(this.leftWhiteTowerMoved && this.rightWhiteTowerMoved);
   }

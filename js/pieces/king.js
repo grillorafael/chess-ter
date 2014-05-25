@@ -7,9 +7,9 @@ function King(player) {
 King.prototype = new Piece();
 King.prototype.constructor = King;
 
-King.prototype.possibleMovements = function (position, board, calculatingRoque) {
+King.prototype.possibleMovements = function (position, board, calculatingCastle) {
   if(arguments.length == 2) {
-    calculatingRoque = false;
+    calculatingCastle = false;
   }
 
   if(position instanceof BoardPosition) {
@@ -72,7 +72,7 @@ King.prototype.possibleMovements = function (position, board, calculatingRoque) 
     }
 
 
-    if(!calculatingRoque && board.canPlayerRoque(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
+    if(!calculatingCastle && board.canPlayerCastle(currentPlayer) && !board.isPlayerInCheck(currentPlayer)) {
       if(this.player().isWhite()) {
         if(!board.isPositionVulnerable(new BoardPosition('a1')) && !board.isLeftWhiteTowerMoved() && !board.hasHorizontalCollision(position, new BoardPosition('a1'))) {
           possibleMovements.push(new BoardPosition('a1'));
