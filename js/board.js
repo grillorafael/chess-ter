@@ -11,8 +11,8 @@ function Board(playerWhite, playerBlack, fen) {
   this.rightWhiteTowerMoved = false;
 
   this.board = [];
-  this.playerWhite = this.MAX = playerWhite;
-  this.playerBlack = this.MIN = playerBlack;
+  this.playerWhite = playerWhite;
+  this.playerBlack = playerBlack;
 
   this.countMoves = 0;
   this.countLimits = 50;
@@ -40,14 +40,6 @@ Board.prototype.getPreviousMove = function() {
 
 Board.prototype.getCurrentPlayerTurn = function() {
   return this.playerTurn;
-};
-
-Board.prototype.getMax = function() {
-  return this.MAX;
-};
-
-Board.prototype.getMin = function() {
-  return this.MIN;
 };
 
 Board.prototype.isTurnOfPiecePosition = function(position) {
