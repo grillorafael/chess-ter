@@ -28,7 +28,7 @@ function Board(playerWhite, playerBlack, fen) {
 
 Board.prototype.isDraw = function() {
   return this.countMoves == this.countLimits;
-}
+};
 
 Board.prototype.switchTurn = function() {
   this.playerTurn = this.playerTurn.isWhite() ? this.playerBlack : this.playerWhite;
@@ -167,19 +167,19 @@ Board.prototype.canPlayerRoque = function(player) {
 
 Board.prototype.isLeftBlackTowerMoved = function() {
   return this.leftBlackTowerMoved;
-}
+};
 
 Board.prototype.isRightBlackTowerMoved = function() {
   return this.rightBlackTowerMoved;
-}
+};
 
 Board.prototype.isLeftWhiteTowerMoved = function() {
   return this.leftWhiteTowerMoved;
-}
+};
 
 Board.prototype.isRightWhiteTowerMoved = function() {
   return this.rightWhiteTowerMoved;
-}
+};
 
 Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) {
   if (!(fromPosition instanceof BoardPosition) || !(toPosition instanceof BoardPosition)) {
@@ -336,7 +336,7 @@ Board.prototype.validateFen = function (fen) {
     7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
     8: '1st field (piece positions) is invalid [consecutive numbers].',
     9: '1st field (piece positions) is invalid [invalid piece].',
-    10: '1st field (piece positions) is invalid [row too large].',
+    10: '1st field (piece positions) is invalid [row too large].'
   };
   var tokens = fen.split(/\s+/);
 

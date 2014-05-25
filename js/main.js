@@ -4,9 +4,8 @@ var Chess = (function (player1, player2) {
 
   this.player1 = player1;
   this.player2 = player2;
-  var _this = this,
-    selectedPiece = null,
-    game = new Board(player1, player2);
+  var selectedPiece = null,
+    game = new Board(this.player1, this.player2);
 
   this.startGame = function() {
     if(!this.player1.isHuman()) {
@@ -57,8 +56,6 @@ var Chess = (function (player1, player2) {
     if(selectedPiece != null) {
       var selectedPiecePosition = getPiecePosition();
       var beforeBoard = jQuery.extend(true, {}, game);
-      var from = game.at(selectedPiecePosition);
-      var to = game.at(tdPosition);
       if((game.countMoves < game.countLimits) && game.moveFromTo(selectedPiecePosition, tdPosition)) {
         uimoveFromTo(selectedPiecePosition, tdPosition, beforeBoard);
       }
@@ -70,8 +67,7 @@ var Chess = (function (player1, player2) {
       piece = selectedPiece;
     }
     var pieceTd = piece.parents('td');
-    var piecePosition = getCellPosition(pieceTd);
-    return piecePosition;
+    return getCellPosition(pieceTd);
   };
 
   var refreshTurn = function() {
@@ -86,15 +82,15 @@ var Chess = (function (player1, player2) {
       }
     }
 
-    var IAWillMove = true;
+    var IAWillMove = true, player;
     if(game.isPlayerInCheckMate(game.playerTurn)) {
       IAWillMove = false;
-      var player = !game.playerTurn.isWhite() ? 'Branco' : 'Preto';
+      player = !game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       $(".piece").unbind("click", handlePieceClick);
       addTextLog('O jogador ' + player + ' ganhou');
     }
     else if(game.isPlayerInCheck(game.playerTurn)) {
-      var player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
+      player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
     }
     else if(game.isDraw()) {
@@ -138,17 +134,19 @@ var Chess = (function (player1, player2) {
     var from = beforeBoard.at(fromPosition);
     var to = beforeBoard.at(toPosition);
 
-    var fromContent = $('#' + fromPosition.prettyPrint()).find('.piece');
-    var toContent = $('#' + toPosition.prettyPrint()).find('.piece');
+    var fromPrositionEl = $('#' + fromPosition.prettyPrint());
+    var toPositionEl = $('#' + toPosition.prettyPrint());
+    var fromContent = fromPrositionEl.find('.piece');
+    var toContent = toPositionEl.find('.piece');
 
-    $('#' + fromPosition.prettyPrint()).html('');
-    $('#' + toPosition.prettyPrint()).html('');
+    fromPrositionEl.html('');
+    toPositionEl.html('');
 
     if((!to.empty() && !to.isEnemyOf(from))) {
       addToLog(toContent.attr('class'), toPosition.prettyPrint(), fromPosition.prettyPrint());
 
-      $('#' + fromPosition.prettyPrint()).append(toContent);
-      $('#' + toPosition.prettyPrint()).html('');
+      fromPrositionEl.append(toContent);
+      toPositionEl.html('');
 
       if(toPosition.column() > fromPosition.column()) {
         addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), fromPosition.nextColumn().nextColumn().prettyPrint());
@@ -171,7 +169,7 @@ var Chess = (function (player1, player2) {
         }
       }
       addToLog(fromContent.attr('class'), fromPosition.prettyPrint(), toPosition.prettyPrint());
-      $('#' + toPosition.prettyPrint()).append(fromContent);
+      toPositionEl.append(fromContent);
     }
 
     $(".piece").unbind("click", handlePieceClick);

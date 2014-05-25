@@ -36,11 +36,11 @@ PlayerIA.prototype.constructor = PlayerIA;
 
 PlayerIA.prototype.isHuman = function() {
   return false;
-}
+};
 
 PlayerIA.prototype.getNextMove = function(cb) {
   var searcher = new NegaMax(2);
   searcher.getBestMove(this.board, function(movement) {
     cb(movement);
   });
-}
+};

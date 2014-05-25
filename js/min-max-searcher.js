@@ -45,7 +45,7 @@ NegaMax.prototype.orderBoards = function(boards, color) {
 	boards.sort(function(a, b){ return a.value - b.value });
 
 	return boards;
-}
+};
 
 NegaMax.prototype.negamax = function(board, depth, alfa, beta, player) {
 	if(board.isPlayerInCheckMate(board.playerTurn)) {
