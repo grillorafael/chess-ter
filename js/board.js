@@ -21,6 +21,9 @@ function Board(playerWhite, playerBlack, fen) {
 
   this.playerTurn = playerWhite;
 
+  this.endGamePhase = false;
+  this.score = 0;
+
   this.previousMove = [];
 
   this.buildBoard(fen);
@@ -28,6 +31,10 @@ function Board(playerWhite, playerBlack, fen) {
 
 Board.prototype.isDraw = function() {
   return this.countMoves == this.countLimits;
+};
+
+Board.prototype.staleMate = function() {
+  return;
 };
 
 Board.prototype.switchTurn = function() {
@@ -196,6 +203,8 @@ Board.prototype.moveFromTo = function(fromPosition , toPosition, forceMovement) 
   var from = this.at(fromPosition);
   var to = this.at(toPosition);
   var piecePossibleMovements = from.possibleMovements(fromPosition, this);
+
+  from.moved = true;
 
   if(!forceMovement) {
     var clone = this.clone();

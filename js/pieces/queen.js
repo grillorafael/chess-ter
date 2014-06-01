@@ -8,6 +8,13 @@ function Queen(player) {
 Queen.prototype = new Piece();
 Queen.prototype.constructor = Queen;
 
+Queen.prototype.getPieceValue = function () {
+  return 975;
+};
+
+Queen.prototype.getCountPossibleMoves = function() {
+  return _countPossibleMoves;
+};
 
 Queen.prototype.possibleMovements = function (position, board) {
   if(position instanceof BoardPosition) {
@@ -231,6 +238,7 @@ Queen.prototype.possibleMovements = function (position, board) {
     }
     /* FIM DOS MOVIMENTOS DIAGONAIS */
 
+    this._countPossibleMoves = possibleMovements.length;
     return possibleMovements;
   }
   else {

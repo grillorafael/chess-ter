@@ -2,6 +2,8 @@
 
 function Piece(player) {
   this._player = player;
+  this._countPossibleMoves = -1;
+  this._moved = false;
 }
 
 Piece.prototype.player = function() {
@@ -12,8 +14,24 @@ Piece.prototype.empty = function() {
   return false;
 };
 
+Piece.prototype.moved = function() {
+  return this._moved;
+};
+
+Piece.prototype.getCountPossibleMoves = function() {
+  var msg = "Piece#getCountPossibleMoves: Not yet implemented";
+  alert(msg);
+  throw new Error(msg);
+};
+
 Piece.prototype.possibleMovements = function (position, board) {
   var msg = "Piece#possibleMovements: Not yet implemented";
+  alert(msg);
+  throw new Error(msg);
+};
+
+Piece.prototype.getPieceValue = function () {
+  var msg = "Piece#getPieceValue: Not yet implemented";
   alert(msg);
   throw new Error(msg);
 };

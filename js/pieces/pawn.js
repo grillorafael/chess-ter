@@ -7,6 +7,14 @@ function Pawn(player) {
 Pawn.prototype = new Piece();
 Pawn.prototype.constructor = Pawn;
 
+Pawn.prototype.getPieceValue = function () {
+  return 100;
+};
+
+Pawn.prototype.getCountPossibleMoves = function() {
+  return _countPossibleMoves;
+};
+
 Pawn.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Pawn#possibleMovements: position should be a BoardPosition";
@@ -65,5 +73,7 @@ Pawn.prototype.possibleMovements = function (position, board) {
       }
     }
   }
+
+  this._countPossibleMoves = possibleMovements.length;
   return possibleMovements;
 };
