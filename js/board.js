@@ -22,6 +22,7 @@ function Board(playerWhite, playerBlack, fen) {
   this.playerTurn = playerWhite;
 
   this.endGamePhase = false;
+  this.insufficientMaterial = false;
   this.score = 0;
 
   this.previousMove = [];
@@ -30,11 +31,34 @@ function Board(playerWhite, playerBlack, fen) {
 }
 
 Board.prototype.isDraw = function() {
-  return this.countMoves == this.countLimits;
+  return ((this.countMoves == this.countLimits) || this.staleMate(this.playerTurn) || this.insufficientMaterial);
 };
 
-Board.prototype.staleMate = function() {
-  return;
+Board.prototype.staleMate = function(player) {
+  if(this.isPlayerInCheck(player)) {
+    return false;
+  }
+
+  var i, j,
+    li = this.board[0].length,
+    lj = this.board.length;
+
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+      if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
+        var possibleMovements = currentPositionPiece.possibleMovements(currentPosition, this);
+        for(var p = 0, pml = possibleMovements.length; p < pml; p++) {
+          var newBoard = this.clone();
+          if(newBoard.moveFromTo(currentPosition, possibleMovements[p])) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  return true;
 };
 
 Board.prototype.switchTurn = function() {

@@ -66,11 +66,11 @@ function Evaluator()
 	this.whitePawnCount = [];
 }
 
-Evaluator.evaluatePieceScore = function(position, piece, endGamePhase, bp)
+Evaluator.evaluatePiecescore = function(position, piece, endGamePhase, bp)
 {
 	if(!position instanceof BoardPosition)
 	{
-		var msg = "Evaluator#evaluatePieceScore: Invalid position type";
+		var msg = "Evaluator#evaluatePiecescore: Invalid position type";
     	alert(msg);
     	throw new Error(msg);
 	}
@@ -121,10 +121,10 @@ Evaluator.evaluatePieceScore = function(position, piece, endGamePhase, bp)
 		score += this.bishopTable[index];
 	}
 
-	else if(piece instanceof Tower)
+	/*else if(piece instanceof Tower)
 	{
 
-	}
+	}*/
 
 	else if(piece instanceof Queen)
 	{
@@ -145,6 +145,7 @@ Evaluator.evaluatePieceScore = function(position, piece, endGamePhase, bp)
 		{
 			score += this.kingTableEndGamePhase[index];
 		}
+		
 		else
 		{
 			score += this.kingTable[index];
@@ -154,11 +155,16 @@ Evaluator.evaluatePieceScore = function(position, piece, endGamePhase, bp)
 	return score;
 };
 
-Evaluator.evaluateBoardScore = function(board) 
+Evaluator.evaluateBoardscore = function(board) 
 {
 	board.score = 0;
+	var blackBishopCount = 0,
+		whiteBishopCount = 0,
+		knightCount = 0,
+		remainingPieces = 0,
+		insufficientMaterial = true;
 
-	if(board.isDraw() || board.staleMate())
+	if(board.isDraw())
 	{
 		return;
 	}
@@ -193,6 +199,230 @@ Evaluator.evaluateBoardScore = function(board)
 		}
 	}
 
+	var i, j,
+    li = this.board[0].length,
+    lj = this.board.length;
+
+  	for(i = 0; i < li; i++) 
+  	{
+    	for(j = 0; j < lj; j++) 
+    	{
+      		var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = this.at(currentPosition);
+      		if(!currentPositionPiece.empty()) 
+      		{
+      			remainingPieces++;
+        		
+      			if(currentPositionPiece.player().isWhite())
+      			{
+      				board.score += evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase);
+      			}
+
+      			else if(currentPosition.player().isBlack())
+      			{
+      				board.score -= evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase);
+      			}
+
+      			if(currentPositionPiece instanceof Knight)
+      			{
+      				knightCount++;
+
+      				if(knightCount > 1)
+      				{
+      					insufficientMaterial = false;
+      				}
+      			}
+
+      			if((blackBishopCount + whiteBishopCount) > 1)
+      			{
+      				insufficientMaterial = false;
+      			}
+      		}	
+    	}
+  	}
+
+  	if(insufficientMaterial)
+  	{
+  		board.score = 0;
+  		board.insufficientMaterial = true;
+  		return;
+  	}
+
+  	if(remainingPieces < 10)
+  	{
+  		board.endGamePhase = true;
+
+  		if(board.playerTurn.isBlack() && board.isPlayerInCheck(board.playerTurn))
+  		{
+  			board.score += 10;
+  		}
+
+  		else if(board.playerTurn.isWhite() && board.isPlayerInCheck(board.playerTurn))
+  		{
+  			board.score -= 10;
+  		}
+  	}
+
+  	//Black isolated pawns
+	if (blackPawnCount[0] >= 1 && blackPawnCount[1] == 0)
+	{
+	 	board.score += 12;
+	}
+
+	if (blackPawnCount[1] >= 1 && blackPawnCount[0] == 0 && blackPawnCount[2] == 0)
+	{
+	 	board.score += 14;
+	}
+
+	if (blackPawnCount[2] >= 1 && blackPawnCount[1] == 0 && blackPawnCount[3] == 0)
+	{
+	 	board.score += 16;
+	}
+
+	if (blackPawnCount[3] >= 1 && blackPawnCount[2] == 0 && blackPawnCount[4] == 0)
+	{
+	 	board.score += 20;
+	}
+
+	if (blackPawnCount[4] >= 1 && blackPawnCount[3] == 0 && blackPawnCount[5] == 0)
+	{
+	 	board.score += 20;
+	}
+
+	if (blackPawnCount[5] >= 1 && blackPawnCount[4] == 0 && blackPawnCount[6] == 0)
+	{
+	 	board.score += 16;
+	}
+
+	if (blackPawnCount[6] >= 1 && blackPawnCount[5] == 0 && blackPawnCount[7] == 0)
+	{
+	 	board.score += 14;
+	}
 	
+	if (blackPawnCount[7] >= 1 && blackPawnCount[6] == 0)
+	{
+	 	board.score += 12;
+	}
+
+	//White Isolated Pawns
+	if (whitePawnCount[0] >= 1 && whitePawnCount[1] == 0)
+	{
+	 	board.score -= 12;
+	}
+
+	if (whitePawnCount[1] >= 1 && whitePawnCount[0] == 0 && whitePawnCount[2] == 0)
+	{
+	 	board.score -= 14;
+	}
+
+	if (whitePawnCount[2] >= 1 && whitePawnCount[1] == 0 && whitePawnCount[3] == 0)
+	{
+		board.score -= 16;
+	}
+
+	if (whitePawnCount[3] >= 1 && whitePawnCount[2] == 0 && whitePawnCount[4] == 0)
+	{
+	 	board.score -= 20;
+	}
+
+	if (whitePawnCount[4] >= 1 && whitePawnCount[3] == 0 && whitePawnCount[5] == 0)
+	{
+	 	board.score -= 20;
+	}
+
+	if (whitePawnCount[5] >= 1 && whitePawnCount[4] == 0 && whitePawnCount[6] == 0)
+	{
+	 	board.score -= 16;
+	}
+
+	if (whitePawnCount[6] >= 1 && whitePawnCount[5] == 0 && whitePawnCount[7] == 0)
+	{
+	 	board.score -= 14;
+	}
+	
+	if (whitePawnCount[7] >= 1 && whitePawnCount[6] == 0)
+	{
+	 	board.score -= 12;
+	}
+
+	 //Black Passed Pawns
+	if (blackPawnCount[0] >= 1 && whitePawnCount[0] == 0)
+	{
+	 	board.score -= blackPawnCount[0];
+	}
+
+	if (blackPawnCount[1] >= 1 && whitePawnCount[1] == 0)
+	{
+	 	board.score -= blackPawnCount[1];
+	}
+
+	if (blackPawnCount[2] >= 1 && whitePawnCount[2] == 0)
+	{
+	 	board.score -= blackPawnCount[2];
+	}
+
+	if (blackPawnCount[3] >= 1 && whitePawnCount[3] == 0)
+	{
+	 	board.score -= blackPawnCount[3];
+	}
+
+	if (blackPawnCount[4] >= 1 && whitePawnCount[4] == 0)
+	{
+	 	board.score -= blackPawnCount[4];
+	}
+
+	if (blackPawnCount[5] >= 1 && whitePawnCount[5] == 0)
+	{
+	 	board.score -= blackPawnCount[5];
+	}
+	if (blackPawnCount[6] >= 1 && whitePawnCount[6] == 0)
+	{
+	 	board.score -= blackPawnCount[6];
+	}
+
+	if (blackPawnCount[7] >= 1 && whitePawnCount[7] == 0)
+	{
+	 	board.score -= blackPawnCount[7];
+	}
+
+	//White Passed Pawns
+	if (whitePawnCount[0] >= 1 && blackPawnCount[1] == 0)
+	{
+	 	board.score += whitePawnCount[0];
+	}
+
+	if (whitePawnCount[1] >= 1 && blackPawnCount[1] == 0)
+	{
+	 	board.score += whitePawnCount[1];
+	}
+
+	if (whitePawnCount[2] >= 1 && blackPawnCount[2] == 0)
+	{
+	 	board.score += whitePawnCount[2];
+	}
+
+	if (whitePawnCount[3] >= 1 && blackPawnCount[3] == 0)
+	{
+	 	board.score += whitePawnCount[3];
+	}
+
+	if (whitePawnCount[4] >= 1 && blackPawnCount[4] == 0)
+	{
+		board.score += whitePawnCount[4];
+	}
+
+	if (whitePawnCount[5] >= 1 && blackPawnCount[5] == 0)
+	{
+	 	board.score += whitePawnCount[5];
+	}
+
+	if (whitePawnCount[6] >= 1 && blackPawnCount[6] == 0)
+	{
+	 	board.score += whitePawnCount[6];
+	}
+
+	if (whitePawnCount[7] >= 1 && blackPawnCount[7] == 0)
+	{
+	 	board.score += whitePawnCount[7];
+	}  
 };
 
