@@ -39,7 +39,7 @@ PlayerIA.prototype.isHuman = function() {
 };
 
 PlayerIA.prototype.getNextMove = function(cb) {
-  var searcher = new NegaMax(2);
+  var searcher = new NegaMax(1);
   searcher.getBestMove(this.board, function(movement) {
     cb(movement);
   });

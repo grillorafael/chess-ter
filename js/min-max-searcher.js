@@ -7,7 +7,7 @@ function NegaMax(depthLimit) {
 NegaMax.prototype.getBestMove = function(board, cb) {
 	var beg = new Date();
 	var i = 0,
-		boards = this.orderBoards(board.expand()),
+		boards = board.expand(), //this.orderBoards(board.expand()),
 		l = boards.length,
 		bestValue = Number.NEGATIVE_INFINITY,
 		bestValueIndex = null;
@@ -18,10 +18,7 @@ NegaMax.prototype.getBestMove = function(board, cb) {
 	}
 
 	for(;i < l; i++) {
-		var value = this.negamax(boards[i], this.depthLimit - 1,  Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, -color);
-		if(color == -1) {
-			value = -value;
-		}
+		var value = -this.negamax(boards[i], this.depthLimit - 1,  Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, -color);
 
 		if(value >= bestValue) {
 			bestValue = value;
@@ -52,12 +49,12 @@ NegaMax.prototype.negamax = function(board, depth, alfa, beta, player) {
 	/*if(board.isPlayerInCheckMate(board.playerTurn)) {
 		return player * Number.POSITIVE_INFINITY;
 	}*/
-	if(depth == 0) {
+	if(depth == 0 || board.isPlayerInCheckMate(board.playerTurn)) {
 		return player * Evaluator.evaluateBoardscore(board);
 	}
 
 	var bestValue =  Number.NEGATIVE_INFINITY;
-	var boards = this.orderBoards(board.expand());
+	var boards = board.expand(); //this.orderBoards(board.expand());
 
 	for(var i = 0, l = boards.length; i < l; i++) {
 		var value = -this.negamax(boards[i], depth - 1, - beta, - alfa, - player);

@@ -143,6 +143,13 @@ var Chess = (function (player1, player2) {
     toPositionEl.html('');
 
     if((!to.empty() && !to.isEnemyOf(from))) {
+      if(from.player().isWhite()) {
+        game.whiteCastled = true;
+      }
+      else {
+        game.blackCastled = true;
+      }
+
       addToLog(toContent.attr('class'), toPosition.prettyPrint(), fromPosition.prettyPrint());
 
       fromPrositionEl.append(toContent);

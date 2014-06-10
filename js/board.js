@@ -23,7 +23,8 @@ function Board(playerWhite, playerBlack, fen) {
 
   this.endGamePhase = false;
   this.insufficientMaterial = false;
-  this.score = 0;
+  this.whiteCastled = false;
+  this.blackCastled = false;
 
   this.previousMove = [];
 

@@ -68,7 +68,7 @@ Evaluator.pawnTable =
 	Evaluator.blackPawnCount = [];
 	Evaluator.whitePawnCount = [];
 
-Evaluator.evaluatePiecescore = function(position, piece, endGamePhase, bp)
+Evaluator.evaluatePiecescore = function(position, piece, endGamePhase, bp, castled)
 {
 	if(!position instanceof BoardPosition)
 	{
@@ -125,7 +125,10 @@ Evaluator.evaluatePiecescore = function(position, piece, endGamePhase, bp)
 
 	else if(piece instanceof Tower)
 	{
-
+		if(piece.moved && !castled)
+		{
+			score -= 10;
+		}
 	}
 
 	else if(piece instanceof Queen)
@@ -152,6 +155,11 @@ Evaluator.evaluatePiecescore = function(position, piece, endGamePhase, bp)
 		{
 			score += Evaluator.kingTable[index];
 		}
+
+		if(piece.moved && !castled)
+		{
+			score -= 30;
+		}
 	}
 
 	return score;
@@ -169,7 +177,7 @@ Evaluator.evaluateBoardscore = function(board)
 
 	if(board.isDraw())
 	{
-		return; // Procurar um valor para colocar em caso de empate
+		return 0;
 	}
 
 
@@ -201,6 +209,16 @@ Evaluator.evaluateBoardscore = function(board)
 		}
 	}
 
+	if(board.whiteCastled)
+	{
+		score += 40;
+	}
+
+	if(board.blackCastled)
+	{
+		score -= 40;
+	}
+
 	var i, j,
     li = board.board[0].length,
     lj = board.board.length;
@@ -216,12 +234,12 @@ Evaluator.evaluateBoardscore = function(board)
         		
       			if(currentPositionPiece.player().isWhite())
       			{	
-      				score += Evaluator.evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase);
+      				score += Evaluator.evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase, board.whiteCastled);
       			}
 
       			else if(currentPositionPiece.player().isBlack())
       			{
-      				score -= Evaluator.evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase);
+      				score -= Evaluator.evaluatePiecescore(currentPosition, currentPositionPiece, board.endGamePhase, board.blackCastled);
       			}
 
       			if(currentPositionPiece instanceof Knight)
@@ -429,4 +447,3 @@ Evaluator.evaluateBoardscore = function(board)
 
 	return score;
 };
-
