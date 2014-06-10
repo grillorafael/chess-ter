@@ -13,7 +13,7 @@ Knight.prototype.getPieceValue = function () {
 };
 
 Knight.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 Knight.prototype.possibleMovements = function (position, board) {

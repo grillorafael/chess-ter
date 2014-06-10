@@ -12,7 +12,7 @@ Bishop.prototype.getPieceValue = function () {
 };
 
 Bishop.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 Bishop.prototype.possibleMovements = function (position, board) {

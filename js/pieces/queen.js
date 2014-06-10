@@ -13,7 +13,7 @@ Queen.prototype.getPieceValue = function () {
 };
 
 Queen.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 Queen.prototype.possibleMovements = function (position, board) {

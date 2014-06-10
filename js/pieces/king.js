@@ -12,7 +12,7 @@ King.prototype.getPieceValue = function () {
 };
 
 King.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 King.prototype.possibleMovements = function (position, board, calculatingCastle) {

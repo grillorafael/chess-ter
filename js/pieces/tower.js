@@ -12,7 +12,7 @@ Tower.prototype.getPieceValue = function () {
 };
 
 Tower.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 Tower.prototype.possibleMovements = function (position, board) {

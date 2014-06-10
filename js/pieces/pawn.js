@@ -12,7 +12,7 @@ Pawn.prototype.getPieceValue = function () {
 };
 
 Pawn.prototype.getCountPossibleMoves = function() {
-  return _countPossibleMoves;
+  return this._countPossibleMoves;
 };
 
 Pawn.prototype.possibleMovements = function (position, board) {
