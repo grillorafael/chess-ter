@@ -38,11 +38,6 @@ PlayerIA.prototype.isHuman = function() {
 };
 
 PlayerIA.prototype.getNextMove = function(cb) {
-  // var minInterations = 1,
-  //   maxInterations = 2;
-  //
-  // var depth = Math.ceil(minInterations + (1 - (this.board.getNumPieces() / Board.TOTAL_PIECES)) * maxInterations);
-
   var searcher = new NegaMax(2);
   searcher.getBestMove(this.board, function(movement) {
     cb(movement);

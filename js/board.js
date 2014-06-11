@@ -99,7 +99,7 @@ Board.prototype.isTurnOfPiecePosition = function(position) {
 
 Board.prototype.hasHorizontalCollision = function(from, to) {
   if(from.column() > to.column()) {
-    while(!from.previousColumn().sameAs(to)) {
+    while(from.previousColumn() && !from.previousColumn().sameAs(to)) {
       from = from.previousColumn();
       if(!this.at(from).empty()) {
         return true;
@@ -107,7 +107,7 @@ Board.prototype.hasHorizontalCollision = function(from, to) {
     }
   }
   else {
-    while(!from.nextColumn().sameAs(to)) {
+    while(from.nextColumn() && !from.nextColumn().sameAs(to)) {
       from = from.nextColumn();
       if(!this.at(from).empty()) {
         return true;

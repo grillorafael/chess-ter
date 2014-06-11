@@ -38,6 +38,84 @@ describe('Board', function() {
       });
     });
   });
+
+  describe('#', function() {
+    it('returns true if player is in check mate', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer, '4K3/8/3rqr2/8/8/8/8/4k3');
+      board.playerTurn = whitePlayer;
+
+      expect(board.isPlayerInCheckMate(whitePlayer)).toBe(true);
+    });
+
+    it('returns false if player is in not check mate', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer, '4K3/4q3/8/8/8/8/8/4k3');
+      board.playerTurn = whitePlayer;
+
+      expect(board.isPlayerInCheckMate(whitePlayer)).toBe(false);
+    });
+  });
+
+  describe('#getPreviousMove', function() {
+    it('returns the previous movement done by the board', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer);
+
+      board.moveFromTo(new BoardPosition('a2'), new BoardPosition('a3'));
+
+      expect(board.getPreviousMove()).toEqual([new BoardPosition('a2'), new BoardPosition('a3')]);
+    });
+
+    it('returns null if there is no previous movement', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer);
+      expect(board.getPreviousMove()).toEqual([]);
+    });
+  });
+
+  describe('#staleMate', function() {
+    it('returns true if theres a stalemate', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer, '8/6b1/8/8/8/n7/PP6/K7');
+      board.blackKingMoved = true;
+      board.whiteKingMoved = true;
+
+      expect(board.staleMate(whitePlayer)).toBe(true);
+    });
+
+    it('returns true if theres not a stalemate', function() {
+      var blackPlayer = new Player(Player.BLACK);
+      var whitePlayer = new Player(Player.WHITE);
+
+      var board = new Board(whitePlayer, blackPlayer);
+
+      expect(board.staleMate(whitePlayer)).toBe(false);
+    });
+  });
+
+  describe('#getNumPieces', function() {
+    it('returns the total number of pieces in game', function() {
+      blackPlayer = new Player(Player.BLACK);
+      whitePlayer = new Player(Player.WHITE);
+
+      board = new Board(whitePlayer, blackPlayer);
+      expect(board.getNumPieces()).toEqual(32);
+
+      board = new Board(whitePlayer, blackPlayer, 'rnbqkbnr/pppppppp/8/8/8/1NBQ4/PPPPPPPP/4KBNR');
+      expect(board.getNumPieces()).toEqual(31);
+    });
+  });
 });
 
 describe('BoardPosition', function () {

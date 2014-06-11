@@ -7,7 +7,7 @@ function NegaMax(depthLimit) {
 NegaMax.prototype.getBestMove = function(board, cb) {
 	var beg = new Date();
 	var i = 0,
-		boards = board.expand(), //this.orderBoards(board.expand()),
+		boards = board.expand(),
 		l = boards.length,
 		bestValue = Number.NEGATIVE_INFINITY,
 		bestValueIndex = null;
@@ -36,7 +36,6 @@ NegaMax.prototype.getBestMove = function(board, cb) {
 
 NegaMax.prototype.orderBoards = function(boards, color) {
 	for(var i = 0, l = boards.length; i < l; i++) {
-		//boards[i].value = this.diffNumOfPiecesHeuristic(boards[i]);
 		boards[i].value = Evaluator.evaluateBoardscore(boards[i]);
 	}
 
@@ -46,15 +45,12 @@ NegaMax.prototype.orderBoards = function(boards, color) {
 };
 
 NegaMax.prototype.negamax = function(board, depth, alfa, beta, player) {
-	/*if(board.isPlayerInCheckMate(board.playerTurn)) {
-		return player * Number.POSITIVE_INFINITY;
-	}*/
 	if(depth == 0 || board.isPlayerInCheckMate(board.playerTurn)) {
 		return player * Evaluator.evaluateBoardscore(board);
 	}
 
 	var bestValue =  Number.NEGATIVE_INFINITY;
-	var boards = board.expand(); //this.orderBoards(board.expand());
+	var boards = board.expand();
 
 	for(var i = 0, l = boards.length; i < l; i++) {
 		var value = -this.negamax(boards[i], depth - 1, - beta, - alfa, - player);
@@ -66,27 +62,4 @@ NegaMax.prototype.negamax = function(board, depth, alfa, beta, player) {
 	}
 
 	return bestValue;
-};
-
-NegaMax.prototype.diffNumOfPiecesHeuristic = function(board) {
-	var i, j,
-		player = board.playerWhite,
-		li = board.board[0].length,
-		lj = board.board.length,
-		numOfCurrentPlayerPieces = 0,
-		numOfAdversaryPlayerPieces = 0;
-
-	for(i=0; i<li; i++) {
-		for(j=0; j<lj; j++) {
-			var currentPosition = BoardPosition.byColumnLineArray([j, i]), currentPositionPiece = board.at(currentPosition);
-			if(!currentPositionPiece.empty() && !currentPositionPiece.isEnemyOfPlayer(player)) {
-				numOfCurrentPlayerPieces++;
-			}
-			else if(!currentPositionPiece.empty() && currentPositionPiece.isEnemyOfPlayer(player)) {
-				numOfAdversaryPlayerPieces++;
-			}
-		}
-	}
-
-	return (numOfCurrentPlayerPieces - numOfAdversaryPlayerPieces);
 };

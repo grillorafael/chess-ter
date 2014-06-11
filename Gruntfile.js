@@ -2,6 +2,11 @@
 
 module.exports = function (grunt) {
   grunt.initConfig({
+    execute: {
+        target: {
+            src: ['server.js']
+        }
+    },
     jasmine: {
     	coverage: {
         src: [
@@ -11,7 +16,9 @@ module.exports = function (grunt) {
           'js/board.js',
           'js/player.js',
           'js/main.js',
-          'js/scripts.js'
+          'js/scripts.js',
+          'js/min-max-searcher.js',
+          'js/evaluator.js',
         ],
         options: {
           vendor: 'js/vendor/*.js',
@@ -86,6 +93,7 @@ module.exports = function (grunt) {
     },
   });
 
+  grunt.loadNpmTasks('grunt-execute');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
