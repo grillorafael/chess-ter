@@ -2,7 +2,6 @@
 function Player(_color) {
 
   var color = function () {
-    //TODO: Verificar validacao  de cores
     return _color;
   };
 
@@ -39,7 +38,12 @@ PlayerIA.prototype.isHuman = function() {
 };
 
 PlayerIA.prototype.getNextMove = function(cb) {
-  var searcher = new NegaMax(1);
+  var minInterations = 1,
+    maxInterations = 2;
+
+  var depth = Math.ceil(minInterations + (1 - (this.board.getNumPieces() / Board.TOTAL_PIECES)) * maxInterations);
+
+  var searcher = new NegaMax(depth);
   searcher.getBestMove(this.board, function(movement) {
     cb(movement);
   });

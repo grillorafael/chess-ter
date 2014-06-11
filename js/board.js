@@ -31,6 +31,25 @@ function Board(playerWhite, playerBlack, fen) {
   this.buildBoard(fen);
 }
 
+Board.prototype.getNumPieces = function() {
+  var i, j,
+    li = this.board[0].length,
+    lj = this.board.length,
+    total = 0;
+
+  for(i = 0; i < li; i++) {
+    for(j = 0; j < lj; j++) {
+      var currentPosition = BoardPosition.byColumnLineArray([j, i]),
+        currentPositionPiece = this.at(currentPosition);
+      if(!currentPositionPiece.empty()) {
+        total++;
+      }
+    }
+  }
+
+  return total;
+};
+
 Board.prototype.isDraw = function() {
   return ((this.countMoves == this.countLimits) || this.staleMate(this.playerTurn) || this.insufficientMaterial);
 };
@@ -414,7 +433,7 @@ Board.prototype.clone = function() {
   return jQuery.extend(true, {}, this);
 };
 
-
+Board.TOTAL_PIECES = 38;
 Board.EMPTY = {empty : function(){return true;}};
 Board.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 Board.fenMap = {

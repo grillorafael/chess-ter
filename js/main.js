@@ -83,7 +83,11 @@ var Chess = (function (player1, player2) {
     }
 
     var IAWillMove = true, player;
-    if(game.isPlayerInCheckMate(game.playerTurn)) {
+    if(game.isDraw()) {
+      IAWillMove = false;
+      addTextLog('O jogo empatou');
+    }
+    else if(game.isPlayerInCheckMate(game.playerTurn)) {
       IAWillMove = false;
       player = !game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       $(".piece").unbind("click", handlePieceClick);
@@ -92,10 +96,6 @@ var Chess = (function (player1, player2) {
     else if(game.isPlayerInCheck(game.playerTurn)) {
       player = game.playerTurn.isWhite() ? 'Branco' : 'Preto';
       addTextLog('O jogador ' + player + ' está em cheque');
-    }
-    else if(game.isDraw()) {
-      IAWillMove = false;
-      addTextLog('O jogo empatou');
     }
 
     if(IAWillMove && !game.getCurrentPlayerTurn().isHuman()) {
