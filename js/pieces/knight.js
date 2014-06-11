@@ -8,6 +8,13 @@ function Knight(player) {
 Knight.prototype = new Piece();
 Knight.prototype.constructor = Knight;
 
+Knight.prototype.getPieceValue = function () {
+  return 320;
+};
+
+Knight.prototype.getCountPossibleMoves = function() {
+  return this._countPossibleMoves;
+};
 
 Knight.prototype.possibleMovements = function (position, board) {
   if(position instanceof BoardPosition) {
@@ -72,6 +79,7 @@ Knight.prototype.possibleMovements = function (position, board) {
       }
     }
 
+    this._countPossibleMoves = possibleMovements.length;
     return possibleMovements;
   }
   else {

@@ -7,6 +7,14 @@ function Tower(player) {
 Tower.prototype = new Piece();
 Tower.prototype.constructor = Tower;
 
+Tower.prototype.getPieceValue = function () {
+  return 500;
+};
+
+Tower.prototype.getCountPossibleMoves = function() {
+  return this._countPossibleMoves;
+};
+
 Tower.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Tower#possibleMovements: position should be a BoardPosition";
@@ -110,6 +118,6 @@ Tower.prototype.possibleMovements = function (position, board) {
   }
 
 
-
+  this._countPossibleMoves = possibleMovements.length;
   return possibleMovements;
 };

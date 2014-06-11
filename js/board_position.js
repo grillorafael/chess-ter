@@ -107,3 +107,7 @@ BoardPosition.prototype.setColumn = function (val) {
 BoardPosition.byColumnLineArray = function(arr) {
   return new BoardPosition(BoardPosition.getColumnByNumber(arr[0]) + "" + (8 - arr[1]));
 };
+
+BoardPosition.getPositionByIndex = function(pos) {
+  return ((pos.line() - 1) * 8) + pos.getColumnNumber();
+};

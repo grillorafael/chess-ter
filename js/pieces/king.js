@@ -7,6 +7,14 @@ function King(player) {
 King.prototype = new Piece();
 King.prototype.constructor = King;
 
+King.prototype.getPieceValue = function () {
+  return 32767;
+};
+
+King.prototype.getCountPossibleMoves = function() {
+  return this._countPossibleMoves;
+};
+
 King.prototype.possibleMovements = function (position, board, calculatingCastle) {
   if(arguments.length == 2) {
     calculatingCastle = false;
@@ -92,6 +100,7 @@ King.prototype.possibleMovements = function (position, board, calculatingCastle)
       }
     }
 
+    this._countPossibleMoves = possibleMovements.length;
     return possibleMovements;
   }
   else {

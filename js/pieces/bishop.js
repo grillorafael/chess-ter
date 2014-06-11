@@ -7,6 +7,14 @@ function Bishop(player) {
 Bishop.prototype = new Piece();
 Bishop.prototype.constructor = Bishop;
 
+Bishop.prototype.getPieceValue = function () {
+  return 325;
+};
+
+Bishop.prototype.getCountPossibleMoves = function() {
+  return this._countPossibleMoves;
+};
+
 Bishop.prototype.possibleMovements = function (position, board) {
   if(!(position instanceof BoardPosition)) {
     var msg = "Bishop#possibleMovements: position should be a BoardPosition";
@@ -138,5 +146,6 @@ Bishop.prototype.possibleMovements = function (position, board) {
     tmpPosition = tmpPosition.previousLine().previousColumn();
   }
 
+  this._countPossibleMoves = possibleMovements.length;
   return possibleMovements;
 };
